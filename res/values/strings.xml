@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2015 The CyanogenMod Project
-     Copyright (C) 2017-2020 The LineageOS Project
      Copyright (C) 2019-2022 Altair ROM Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,5 +18,35 @@
 
     <string name="altair_settings_activity_title">Additional settings</string>
     <string name="altair_settings_activity_summary">Buttons, navigation, status bar, themes</string>
+
+    <!-- Main menu entry titles -->
+    <string name="menu_button_settings_title">Buttons</string>
+    <string name="menu_button_settings_summary">Tweak the actions of physical buttons on the device</string>
+    <string name="menu_display_settings_title">Display</string>
+    <string name="menu_display_settings_summary">Adjust various elements of the display screen</string>
+    <string name="menu_gesture_settings_title">Gestures</string>
+    <string name="menu_gesture_settings_summary">Adjust touchscreen gestures and button quick actions</string>
+    <string name="menu_navigation_settings_title">Navigation</string>
+    <string name="menu_navigation_settings_summary">Customize navigation bar and hardware keys</string>
+    <string name="menu_qs_settings_title">Quick settings</string>
+    <string name="menu_qs_settings_summary">Manage your quick settings tiles</string>
+    <string name="menu_status_bar_settings_title">Status bar</string>
+    <string name="menu_status_bar_settings_summary">Adjust various status bar elements</string>
+    <string name="menu_theme_settings_title">Themes</string>
+    <string name="menu_theme_settings_summary">Change accent color, wallpaper, etc.</string>
+    <string name="menu_user_interface_settings_title">User interface</string>
+    <string name="menu_user_interface_settings_summary">Adjust various elements of the user interface</string>
+
+    <!-- Miscellaneous -->
+    <string name="reset">Reset</string>
+    <string name="cancel">Cancel</string>
+    <string name="none">None</string>
+
+    <!-- Dialogs -->
+    <string name="systemui_restart_title">SystemUI restart required</string>
+    <string name="systemui_restart_message">For all changes to take effect, a SystemUI restart is required. Restart SystemUI now?</string>
+
+    <!-- Common category titles -->
+    <string name="miscellaneous_category_title">Miscellaneous</string>
 
 </resources>
