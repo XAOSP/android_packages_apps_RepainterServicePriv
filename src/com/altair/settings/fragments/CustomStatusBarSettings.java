@@ -25,6 +25,9 @@ import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
+import android.text.format.DateFormat;
+import android.text.TextUtils;
+import android.view.View;
 
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -32,11 +35,17 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
+import com.altair.settings.utils.DeviceUtils;
+import com.altair.settings.utils.StatusBarIcon;
+import com.altair.settings.utils.TelephonyUtils;
+
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
+
+import com.lineage.support.preferences.SystemSettingSwitchPreference;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,9 +58,47 @@ public class CustomStatusBarSettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "CustomStatusBarSettings";
 
+    private static final String CATEGORY_NETWORK = "network_category";
+    private static final String CATEGORY_BATTERY = "status_bar_battery_key";
+    private static final String CATEGORY_CLOCK = "status_bar_clock_key";
+
+    private static final String KEY_USE_OLD_MOBILETYPE = "use_old_mobiletype";
+    private static final String KEY_DATA_DISABLED_ICON = "data_disabled_icon";
+    private static final String KEY_ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
+    private static final String KEY_SHOW_FOURG_ICON = "show_fourg_icon";
+    private static final String KEY_SHOW_VOLTE_ICON = "show_volte_icon";
+    private static final String KEY_SHOW_VOWIFI_ICON = "show_vowifi_icon";
+    private static final String KEY_VOLTE_VOWIFI_OVERRIDE = "volte_vowifi_override";
+
+    private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock";
+    private static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
+    private static final String STATUS_BAR_SHOW_BATTERY = "status_bar_show_battery";
+    private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
+    private static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+
+    private static final int STATUS_BAR_BATTERY_STYLE_TEXT = 2;
+
+    private static final String NETWORK_TRAFFIC_SETTINGS = "network_traffic_settings";
+
     private Context mContext;
     private Handler mHandler;
     private ContentResolver mResolver;
+
+    private StatusBarIcon mClockIcon;
+    private StatusBarIcon mBatteryIcon;
+
+    private LineageSystemSettingListPreference mStatusBarClock;
+    private LineageSystemSettingListPreference mStatusBarAmPm;
+
+    private SwitchPreference mStatusBarShowBattery;
+    private LineageSystemSettingListPreference mStatusBarBattery;
+    private LineageSystemSettingListPreference mStatusBarBatteryShowPercent;
+
+    private PreferenceCategory mStatusBarBatteryCategory;
+    private PreferenceCategory mStatusBarClockCategory;
+    private Preference mNetworkTrafficPref;
+
+    private boolean mHasNotch;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -68,6 +115,50 @@ public class CustomStatusBarSettings extends DashboardFragment implements
 
         final Resources res = getResources();
         final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        final PreferenceCategory networkCategory = prefScreen.findPreference(CATEGORY_NETWORK);
+        SystemSettingSwitchPreference useOldMobileType = findPreference(KEY_USE_OLD_MOBILETYPE);
+        SystemSettingSwitchPreference dataDisabledIcon = findPreference(KEY_DATA_DISABLED_ICON);
+        SystemSettingSwitchPreference roamingIndicatorIcon = findPreference(KEY_ROAMING_INDICATOR_ICON);
+        SystemSettingSwitchPreference showFourgIcon = findPreference(KEY_SHOW_FOURG_ICON);
+        SystemSettingSwitchPreference showVoLTEIcon = findPreference(KEY_SHOW_VOLTE_ICON);
+        SystemSettingSwitchPreference showVoWiFiIcon = findPreference(KEY_SHOW_VOWIFI_ICON);
+        SystemSettingSwitchPreference voLTEvoWiFiOverride = findPreference(KEY_VOLTE_VOWIFI_OVERRIDE);
+
+        if (!TelephonyUtils.isVoiceCapable(getActivity())) {
+            networkCategory.removePreference(useOldMobileType);
+            networkCategory.removePreference(dataDisabledIcon);
+            networkCategory.removePreference(roamingIndicatorIcon);
+            networkCategory.removePreference(showFourgIcon);
+            networkCategory.removePreference(showVoLTEIcon);
+            networkCategory.removePreference(showVoWiFiIcon);
+            networkCategory.removePreference(voLTEvoWiFiOverride);
+        }
+
+        mNetworkTrafficPref = findPreference(NETWORK_TRAFFIC_SETTINGS);
+
+        mHasNotch = DeviceUtils.hasNotch(getActivity());
+        if (mHasNotch) {
+            networkCategory.removePreference(mNetworkTrafficPref);
+        }
+
+        mClockIcon = new StatusBarIcon(mContext, "clock");
+        mStatusBarClockCategory = prefScreen.findPreference(CATEGORY_CLOCK);
+
+        mStatusBarAmPm = findPreference(STATUS_BAR_AM_PM);
+        mStatusBarClock = findPreference(STATUS_BAR_CLOCK_STYLE);
+        mStatusBarClock.setOnPreferenceChangeListener(this);
+
+        mBatteryIcon = new StatusBarIcon(mContext, "battery");
+        mStatusBarBatteryCategory = prefScreen.findPreference(CATEGORY_BATTERY);
+
+        mStatusBarShowBattery = findPreference(STATUS_BAR_SHOW_BATTERY);
+        mStatusBarShowBattery.setOnPreferenceChangeListener(this);
+
+        mStatusBarBatteryShowPercent = findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);
+        mStatusBarBattery = findPreference(STATUS_BAR_BATTERY_STYLE);
+        mStatusBarBattery.setOnPreferenceChangeListener(this);
+        enableStatusBarBatteryDependents(mStatusBarBattery.getIntValue(2));
     }
 
     @Override
@@ -83,6 +174,35 @@ public class CustomStatusBarSettings extends DashboardFragment implements
     @Override
     public void onResume() {
         super.onResume();
+
+        if (DateFormat.is24HourFormat(getActivity())) {
+            mStatusBarAmPm.setEnabled(false);
+            mStatusBarAmPm.setSummary(R.string.status_bar_am_pm_info);
+        }
+
+        final boolean disallowCenteredClock = mHasNotch || getNetworkTrafficStatus() != 0;
+
+        // Adjust status bar preferences for RTL
+        if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            if (disallowCenteredClock) {
+                mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries_notch_rtl);
+                mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values_notch_rtl);
+            } else {
+                mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries_rtl);
+                mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values_rtl);
+            }
+        } else if (disallowCenteredClock) {
+            mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries_notch);
+            mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values_notch);
+        } else {
+            mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries);
+            mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values);
+        }
+
+        // Disable network traffic preferences if clock is centered in the status bar
+        updateNetworkTrafficStatus(getClockPosition());
+
+        mStatusBarShowBattery.setChecked(mBatteryIcon.isEnabled());
     }
 
     @Override
@@ -97,7 +217,47 @@ public class CustomStatusBarSettings extends DashboardFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        return false;
+        String key = preference.getKey();
+        switch (key) {
+            case STATUS_BAR_CLOCK_STYLE:
+                updateNetworkTrafficStatus(Integer.parseInt((String) newValue));
+                break;
+            case STATUS_BAR_SHOW_BATTERY:
+                mBatteryIcon.setEnabled((Boolean) newValue);
+                break;
+            case STATUS_BAR_BATTERY_STYLE:
+                enableStatusBarBatteryDependents(Integer.parseInt((String) newValue));
+                break;
+        }
+        return true;
+    }
+
+    private void enableStatusBarBatteryDependents(int batteryIconStyle) {
+        mStatusBarBatteryShowPercent.setEnabled(batteryIconStyle != STATUS_BAR_BATTERY_STYLE_TEXT);
+    }
+
+    private void updateNetworkTrafficStatus(int clockPosition) {
+        if (mHasNotch) {
+            // Unconditional no network traffic for you
+            return;
+        }
+
+        boolean isClockCentered = clockPosition == 1;
+        mNetworkTrafficPref.setEnabled(!isClockCentered);
+        mNetworkTrafficPref.setSummary(getResources().getString(isClockCentered ?
+                R.string.network_traffic_disabled_clock :
+                R.string.network_traffic_settings_summary
+        ));
+    }
+
+    private int getNetworkTrafficStatus() {
+        return LineageSettings.Secure.getInt(getActivity().getContentResolver(),
+                LineageSettings.Secure.NETWORK_TRAFFIC_MODE, 0);
+    }
+
+    private int getClockPosition() {
+        return LineageSettings.System.getInt(getActivity().getContentResolver(),
+                STATUS_BAR_CLOCK_STYLE, 2);
     }
 
     @Override
@@ -118,6 +278,10 @@ public class CustomStatusBarSettings extends DashboardFragment implements
                 @Override
                 public List<String> getNonIndexableKeys(Context context) {
                     List<String> keys = super.getNonIndexableKeys(context);
+
+                    if (DeviceUtils.hasNotch(context)) {
+                        keys.add(NETWORK_TRAFFIC_SETTINGS);
+                    }
 
                     return keys;
                 }
