@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
+import android.view.View;
 
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -49,6 +50,14 @@ public class CustomQSSettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "CustomQSSettings";
 
+    private static final String QS_QUICK_PULLDOWN = "qs_quick_pulldown";
+
+    private static final int PULLDOWN_DIR_NONE = 0;
+    private static final int PULLDOWN_DIR_RIGHT = 1;
+    private static final int PULLDOWN_DIR_LEFT = 2;
+
+    private LineageSystemSettingListPreference mQuickPulldown;
+
     private Context mContext;
     private Handler mHandler;
     private ContentResolver mResolver;
@@ -68,6 +77,10 @@ public class CustomQSSettings extends DashboardFragment implements
 
         final Resources res = getResources();
         final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        mQuickPulldown = findPreference(QS_QUICK_PULLDOWN);
+        mQuickPulldown.setOnPreferenceChangeListener(this);
+        updateQuickPulldownSummary(mQuickPulldown.getIntValue(0));
     }
 
     @Override
@@ -83,6 +96,12 @@ public class CustomQSSettings extends DashboardFragment implements
     @Override
     public void onResume() {
         super.onResume();
+
+        // Adjust QS panel preferences for RTL
+        if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            mQuickPulldown.setEntries(R.array.qs_quick_pulldown_entries_rtl);
+            mQuickPulldown.setEntryValues(R.array.qs_quick_pulldown_values_rtl);
+        }
     }
 
     @Override
@@ -97,12 +116,38 @@ public class CustomQSSettings extends DashboardFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        return false;
+        String key = preference.getKey();
+        switch (key) {
+            case QS_QUICK_PULLDOWN:
+                updateQuickPulldownSummary(Integer.parseInt((String) newValue));
+                break;
+        }
+        return true;
     }
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         return super.onPreferenceTreeClick(preference);
+    }
+
+    private void updateQuickPulldownSummary(int value) {
+        String summary="";
+        switch (value) {
+            case PULLDOWN_DIR_NONE:
+                summary = getResources().getString(
+                    R.string.qs_quick_pulldown_off);
+                break;
+
+            case PULLDOWN_DIR_LEFT:
+            case PULLDOWN_DIR_RIGHT:
+                summary = getResources().getString(
+                    R.string.qs_quick_pulldown_summary,
+                    getResources().getString(value == PULLDOWN_DIR_LEFT
+                        ? R.string.qs_quick_pulldown_summary_left
+                        : R.string.qs_quick_pulldown_summary_right));
+                break;
+        }
+        mQuickPulldown.setSummary(summary);
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =

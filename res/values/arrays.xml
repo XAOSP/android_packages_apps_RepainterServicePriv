@@ -134,4 +134,29 @@
         <item>3</item>
     </string-array>
 
+    <!-- Quick pulldown -->
+    <string-array name="qs_quick_pulldown_entries" translatable="false">
+        <item>@string/qs_quick_pulldown_off</item>
+        <item>@string/qs_quick_pulldown_right</item>
+        <item>@string/qs_quick_pulldown_left</item>
+    </string-array>
+
+    <string-array name="qs_quick_pulldown_entries_rtl" translatable="false">
+        <item>@string/qs_quick_pulldown_off</item>
+        <item>@string/qs_quick_pulldown_left</item>
+        <item>@string/qs_quick_pulldown_right</item>
+    </string-array>
+
+    <string-array name="qs_quick_pulldown_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="qs_quick_pulldown_values_rtl" translatable="false">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
 </resources>

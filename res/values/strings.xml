@@ -49,6 +49,21 @@
     <!-- Common category titles -->
     <string name="miscellaneous_category_title">Miscellaneous</string>
 
+    <!-- QUICK SETTINGS -->
+    <string name="qs_quick_pulldown_title">Quick pulldown</string>
+    <string name="qs_quick_pulldown_summary">%1$s edge of the status bar pulls down Quick Settings</string>
+    <string name="qs_quick_pulldown_summary_left">Left</string>
+    <string name="qs_quick_pulldown_summary_right">Right</string>
+    <string name="qs_quick_pulldown_off">Off</string>
+    <string name="qs_quick_pulldown_left">Left</string>
+    <string name="qs_quick_pulldown_right">Right</string>
+
+    <string name="qs_header_category">Header</string>
+    <string name="qs_brightness_slider_title">Brightness slider</string>
+    <string name="qs_brightness_slider_summary">Adjust brightness from the Quick Settings</string>
+    <string name="qs_brightness_slider_auto_title">Auto brightness</string>
+    <string name="qs_brightness_slider_auto_summary">Show toggle for adaptive brightness near the slider</string>
+
     <!-- STATUS BAR -->
     <string name="status_bar_icons_title">Status bar icons</string>
     <string name="status_bar_system_icons_title">System icons</string>
