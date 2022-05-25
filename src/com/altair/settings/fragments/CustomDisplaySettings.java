@@ -49,6 +49,10 @@ public class CustomDisplaySettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "CustomDisplaySettings";
 
+    private static final String KEY_SMART_PIXELS = "smart_pixels";
+
+    private static final String CATEGORY_MISCELLANEOUS = "miscellaneous";
+
     private Context mContext;
     private Handler mHandler;
     private ContentResolver mResolver;
@@ -68,6 +72,14 @@ public class CustomDisplaySettings extends DashboardFragment implements
 
         final Resources res = getResources();
         final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        // Smart Pixels
+        boolean enableSmartPixels = getContext().getResources().
+                getBoolean(com.android.internal.R.bool.config_supportSmartPixels);
+        Preference smartPixels = findPreference(KEY_SMART_PIXELS);
+        if (!enableSmartPixels) {
+            smartPixels.setEnabled(false);
+        }
     }
 
     @Override
@@ -118,6 +130,12 @@ public class CustomDisplaySettings extends DashboardFragment implements
                 @Override
                 public List<String> getNonIndexableKeys(Context context) {
                     List<String> keys = super.getNonIndexableKeys(context);
+
+                    boolean enableSmartPixels = context.getResources().
+                            getBoolean(com.android.internal.R.bool.config_supportSmartPixels);
+                    if (!enableSmartPixels) {
+                        keys.add(KEY_SMART_PIXELS);
+                    }
 
                     return keys;
                 }
