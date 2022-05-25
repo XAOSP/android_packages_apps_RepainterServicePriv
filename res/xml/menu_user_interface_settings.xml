@@ -20,4 +20,37 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/menu_user_interface_settings_title">
 
+    <!-- Power menu -->
+    <PreferenceCategory
+        android:key="power_menu_category"
+        android:title="@string/power_menu_title">
+
+        <!-- Power menu settings -->
+        <Preference
+            android:key="power_menu_items"
+            android:title="@string/power_menu_items_title"
+            android:fragment="com.altair.settings.fragments.PowerMenuActions" />
+
+        <lineageos.preference.LineageSecureSettingSwitchPreference
+            android:key="advanced_reboot"
+            android:title="@string/power_menu_advanced_restart_title"
+            android:summary="@string/power_menu_advanced_restart_summary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <!-- Miscellaneous -->
+    <PreferenceCategory
+        android:key="miscellaneous"
+        android:title="@string/miscellaneous_category_title">
+
+        <!-- Toast icon -->
+        <com.lineage.support.preferences.SystemSettingSwitchPreference
+            android:key="toast_icon"
+            android:title="@string/toast_icon_title"
+            android:summary="@string/toast_icon_summary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
