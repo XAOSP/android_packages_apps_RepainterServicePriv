@@ -20,4 +20,84 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/menu_theme_settings_title">
 
+    <!-- Styles & wallpapers -->
+    <PreferenceCategory
+        android:key="theme_styles"
+        android:title="@string/theme_styles_category_title">
+
+        <com.android.settingslib.RestrictedPreference
+            android:key="wallpaper"
+            android:title="@string/wallpaper_settings_title"
+            settings:keywords="@string/keywords_display_wallpaper"
+            settings:useAdminDisabledSummary="true"
+            settings:controller="com.android.settings.display.WallpaperPreferenceController">
+        </com.android.settingslib.RestrictedPreference>
+
+        <com.android.settings.display.darkmode.DarkModePreference
+            android:key="theme_dark_ui_mode"
+            android:title="@string/dark_ui_mode"
+            android:fragment="com.android.settings.display.darkmode.DarkModeSettingsFragment"
+            android:widgetLayout="@null"
+            settings:widgetLayout="@null"
+            settings:controller="com.android.settings.display.DarkUIPreferenceController"
+            settings:searchable="false" />
+
+    </PreferenceCategory>
+
+    <!-- Monet settings -->
+    <PreferenceCategory
+        android:key="theme_monet"
+        android:title="@string/theme_monet_category_title">
+
+        <com.lineage.support.preferences.SecureSettingSwitchPreference
+            android:key="monet_engine_custom_color"
+            android:title="@string/monet_engine_custom_color_title"
+            android:summary="@string/monet_engine_custom_color_summary"
+            android:defaultValue="false" />
+
+        <com.lineage.support.colorpicker.SecureSettingColorPickerPreference
+            android:key="monet_engine_color_override"
+            android:title="@string/monet_engine_color_override_title"
+            android:dependency="monet_engine_custom_color"
+            android:defaultValue="0xffffffff" />
+
+        <com.lineage.support.preferences.SecureSettingSeekBarPreference
+            android:key="monet_engine_white_luminance_user"
+            android:title="@string/monet_engine_white_luminance_user_title"
+            android:defaultValue="425"
+            android:max="1000"
+            settings:min="0"
+            settings:interval="25"/>
+
+        <com.lineage.support.preferences.SecureSettingSwitchPreference
+            android:key="monet_engine_accurate_shades"
+            android:title="@string/monet_engine_accurate_shades_title"
+            android:defaultValue="true" />
+
+        <com.lineage.support.preferences.SecureSettingSeekBarPreference
+            android:key="monet_engine_chroma_factor"
+            android:title="@string/monet_engine_chroma_factor_title"
+            android:defaultValue="100"
+            android:max="400"
+            settings:min="50"
+            settings:interval="25"/>
+
+        <com.lineage.support.preferences.SecureSettingSwitchPreference
+            android:key="monet_engine_linear_lightness"
+            android:title="@string/monet_engine_linear_lightness_title"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <!-- Colors & elements -->
+    <PreferenceCategory
+        android:key="theme_elements"
+        android:title="@string/theme_elements_category_title">
+
+        <com.altair.settings.preferences.FontListPreference
+            android:key="android.theme.customization.font"
+            android:title="@string/theme_elements_font_title"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
