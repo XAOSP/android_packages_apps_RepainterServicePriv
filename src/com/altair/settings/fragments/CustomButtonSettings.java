@@ -44,7 +44,7 @@ import java.util.List;
 import lineageos.preference.LineageSystemSettingListPreference;
 import lineageos.providers.LineageSettings;
 
-@SearchIndexable
+@SearchIndexable(forTarget = SearchIndexable.ALL & ~SearchIndexable.ARC)
 public class CustomButtonSettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "CustomButtonSettings";
@@ -122,4 +122,4 @@ public class CustomButtonSettings extends DashboardFragment implements
                     return keys;
                 }
             };
-}
+}
