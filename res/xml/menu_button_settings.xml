@@ -26,7 +26,7 @@
         android:summary="@string/swap_capacitive_keys_summary"
         android:defaultValue="false" />
 
-    <com.altair.settings.fragments.ButtonBacklightBrightness
+    <com.altair.settings.fragments.button.ButtonBacklightBrightness
         android:key="button_backlight"
         android:title="@string/button_backlight_title"
         android:dialogTitle="@string/button_backlight_title"

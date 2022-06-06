@@ -29,7 +29,7 @@
         <Preference
             android:key="power_menu_items"
             android:title="@string/power_menu_items_title"
-            android:fragment="com.altair.settings.fragments.PowerMenuActions" />
+            android:fragment="com.altair.settings.fragments.ui.PowerMenuActions" />
 
         <lineageos.preference.LineageSecureSettingSwitchPreference
             android:key="advanced_reboot"

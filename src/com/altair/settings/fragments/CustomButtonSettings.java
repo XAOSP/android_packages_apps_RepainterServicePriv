@@ -43,6 +43,7 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
+import com.altair.settings.fragments.button.ButtonBacklightBrightness;
 import com.altair.settings.utils.DeviceUtils;
 import com.altair.settings.utils.TelephonyUtils;
 import com.android.internal.logging.nano.MetricsProto;

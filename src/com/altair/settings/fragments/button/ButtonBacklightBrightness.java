@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.altair.settings.fragments;
+package com.altair.settings.fragments.button;
 
 import android.content.ContentResolver;
 import android.content.Context;
