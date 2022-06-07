@@ -56,6 +56,10 @@ public class CustomThemeSettings extends DashboardFragment implements
 
     private static final String KEY_THEME_DARK_UI_MODE = "theme_dark_ui_mode";
     private static final String KEY_THEME_FONT = ThemeUtils.FONT_KEY;
+    private static final String KEY_THEME_ICON_SHAPE = ThemeUtils.ICON_SHAPE_KEY;
+    private static final String KEY_THEME_SIGNAL_ICON = ThemeUtils.SIGNAL_ICON_KEY;
+    private static final String KEY_THEME_WIFI_ICON = ThemeUtils.WIFI_ICON_KEY;
+    private static final String KEY_THEME_NAVBAR_STYLE = ThemeUtils.NAVBAR_KEY;
 
     private Context mContext;
     private Handler mHandler;
@@ -66,6 +70,10 @@ public class CustomThemeSettings extends DashboardFragment implements
 
     private DarkModePreference mDarkMode;
     private FontListPreference mFontPreference;
+    private Preference mIconShapePreference;
+    private Preference mSignalIconPreference;
+    private Preference mWiFiIconPreference;
+    private Preference mNavbarStylePreference;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -89,9 +97,21 @@ public class CustomThemeSettings extends DashboardFragment implements
         mDarkMode = findPreference(KEY_THEME_DARK_UI_MODE);
         mDarkMode.setOnPreferenceChangeListener(this);
 
-        mFontPreference = (FontListPreference) prefScreen.findPreference(KEY_THEME_FONT);
+        mFontPreference = prefScreen.findPreference(KEY_THEME_FONT);
         mFontPreference.setOnPreferenceChangeListener(this);
-        updateState((ListPreference) mFontPreference);
+        updateState(mFontPreference);
+
+        mIconShapePreference = prefScreen.findPreference(KEY_THEME_ICON_SHAPE);
+        updateSummary(mIconShapePreference, "android");
+
+        mSignalIconPreference = prefScreen.findPreference(KEY_THEME_SIGNAL_ICON);
+        updateSummary(mSignalIconPreference, "android");
+
+        mWiFiIconPreference = prefScreen.findPreference(KEY_THEME_WIFI_ICON);
+        updateSummary(mWiFiIconPreference, "android");
+
+        mNavbarStylePreference = prefScreen.findPreference(KEY_THEME_NAVBAR_STYLE);
+        updateSummary(mNavbarStylePreference, "com.android.systemui");
     }
 
     @Override
@@ -128,6 +148,16 @@ public class CustomThemeSettings extends DashboardFragment implements
                 break;
             case KEY_THEME_FONT:
                 mThemeUtils.setOverlayEnabled(ThemeUtils.FONT_KEY, (String) newValue);
+                updateState((ListPreference) mFontPreference);
+                break;
+            case KEY_THEME_SIGNAL_ICON:
+                updateSummary(mSignalIconPreference, "android");
+                break;
+            case KEY_THEME_WIFI_ICON:
+                updateSummary(mWiFiIconPreference, "android");
+                break;
+            case KEY_THEME_NAVBAR_STYLE:
+                updateSummary(mNavbarStylePreference, "com.android.systemui");
                 break;
         }
         return true;
@@ -152,6 +182,19 @@ public class CustomThemeSettings extends DashboardFragment implements
         preference.setEntryValues(pkgs.toArray(new String[pkgs.size()]));
         preference.setValue("Default".equals(currentPackageName) ? pkgs.get(0) : currentPackageName);
         preference.setSummary("Default".equals(currentPackageName) ? "Default" : labels.get(pkgs.indexOf(currentPackageName)));
+    }
+
+    public void updateSummary(Preference preference, String target) {
+        String currentPackageName = mThemeUtils.getOverlayInfos(preference.getKey(), target).stream()
+                .filter(info -> info.isEnabled())
+                .map(info -> info.packageName)
+                .findFirst()
+                .orElse(target);
+
+        List<String> pkgs = mThemeUtils.getOverlayPackagesForCategory(preference.getKey(), target);
+        List<String> labels = mThemeUtils.getLabels(preference.getKey(), target);
+
+        preference.setSummary(target.equals(currentPackageName) ? "Default" : labels.get(pkgs.indexOf(currentPackageName)));
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
