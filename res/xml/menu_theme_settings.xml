@@ -44,6 +44,42 @@
 
     </PreferenceCategory>
 
+    <!-- Theme elements -->
+    <PreferenceCategory
+        android:key="theme_elements"
+        android:title="@string/theme_elements_category_title">
+
+        <Preference
+            android:key="android.theme.customization.accent_color"
+            android:title="@string/theme_elements_accent_color_title"
+            android:fragment="com.altair.settings.fragments.ui.AccentColors"/>
+
+        <com.altair.settings.preferences.FontListPreference
+            android:key="android.theme.customization.font"
+            android:title="@string/theme_elements_font_title"/>
+
+        <Preference
+            android:key="android.theme.customization.adaptive_icon_shape"
+            android:title="@string/theme_elements_icon_shape_title"
+            android:fragment="com.altair.settings.fragments.ui.IconShapes"/>
+
+        <Preference
+            android:key="android.theme.customization.signal_icon"
+            android:title="@string/theme_elements_signal_icon_title"
+            android:fragment="com.altair.settings.fragments.ui.SignalIcons"/>
+
+        <Preference
+            android:key="android.theme.customization.wifi_icon"
+            android:title="@string/theme_elements_wifi_icon_title"
+            android:fragment="com.altair.settings.fragments.ui.WifiIcons"/>
+
+        <Preference
+            android:key="android.theme.customization.navbar"
+            android:title="@string/theme_elements_navbar_title"
+            android:fragment="com.altair.settings.fragments.ui.NavbarStyles"/>
+
+    </PreferenceCategory>
+
     <!-- Monet settings -->
     <PreferenceCategory
         android:key="theme_monet"
@@ -86,37 +122,6 @@
             android:key="monet_engine_linear_lightness"
             android:title="@string/monet_engine_linear_lightness_title"
             android:defaultValue="false" />
-
-    </PreferenceCategory>
-
-    <!-- Theme elements -->
-    <PreferenceCategory
-        android:key="theme_elements"
-        android:title="@string/theme_elements_category_title">
-
-        <com.altair.settings.preferences.FontListPreference
-            android:key="android.theme.customization.font"
-            android:title="@string/theme_elements_font_title"/>
-
-        <Preference
-            android:key="android.theme.customization.adaptive_icon_shape"
-            android:title="@string/theme_elements_icon_shape_title"
-            android:fragment="com.altair.settings.fragments.ui.IconShapes"/>
-
-        <Preference
-            android:key="android.theme.customization.signal_icon"
-            android:title="@string/theme_elements_signal_icon_title"
-            android:fragment="com.altair.settings.fragments.ui.SignalIcons"/>
-
-        <Preference
-            android:key="android.theme.customization.wifi_icon"
-            android:title="@string/theme_elements_wifi_icon_title"
-            android:fragment="com.altair.settings.fragments.ui.WifiIcons"/>
-
-        <Preference
-            android:key="android.theme.customization.navbar"
-            android:title="@string/theme_elements_navbar_title"
-            android:fragment="com.altair.settings.fragments.ui.NavbarStyles"/>
 
     </PreferenceCategory>
 

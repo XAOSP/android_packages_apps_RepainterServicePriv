@@ -256,6 +256,14 @@
     <!-- THEMES -->
     <string name="theme_styles_category_title">Styles &amp; wallpapers</string>
 
+    <string name="theme_elements_category_title">Theme elements</string>
+    <string name="theme_elements_accent_color_title">Accent color</string>
+    <string name="theme_elements_font_title">Headline &amp; body font</string>
+    <string name="theme_elements_icon_shape_title">Icon shape</string>
+    <string name="theme_elements_signal_icon_title">Signal icon style</string>
+    <string name="theme_elements_wifi_icon_title">Wi-Fi icon style</string>
+    <string name="theme_elements_navbar_title">Navigation bar style</string>
+
     <string name="theme_monet_category_title">Monet engine settings</string>
     <string name="monet_engine_custom_color_title">Use custom color</string>
     <string name="monet_engine_custom_color_summary">Use custom color for monet engine instead of wallpaper colors</string>
@@ -265,14 +273,7 @@
     <string name="monet_engine_chroma_factor_title">Chroma factor</string>
     <string name="monet_engine_linear_lightness_title">Use linear lightness</string>
 
-    <string name="theme_elements_category_title">Theme elements</string>
-    <string name="theme_elements_font_title">Headline &amp; body font</string>
-    <string name="theme_elements_icon_shape_title">Icon shape</string>
-    <string name="theme_elements_signal_icon_title">Signal icon style</string>
-    <string name="theme_elements_wifi_icon_title">Wi-Fi icon style</string>
-    <string name="theme_elements_navbar_title">Navigation bar style</string>
-
-    <string name="theme_substratum_warning">If you have elected to theme \"Android System\" using a Substratum theme, the settings for that theme will override the custom colors and elements configured here.</string>
+    <string name="theme_substratum_warning">If you theme \"Android System\" using a Substratum theme, or have selected a predefined accent color, those theme elements will override some or all of the system theme settings and disable the Monet settings.</string>
 
     <!-- USER INTERFACE -->
     <string name="power_menu_title">Power menu</string>
