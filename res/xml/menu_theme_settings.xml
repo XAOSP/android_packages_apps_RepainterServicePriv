@@ -54,9 +54,10 @@
             android:title="@string/theme_elements_accent_color_title"
             android:fragment="com.altair.settings.fragments.ui.AccentColors"/>
 
-        <com.altair.settings.preferences.FontListPreference
+        <Preference
             android:key="android.theme.customization.font"
-            android:title="@string/theme_elements_font_title"/>
+            android:title="@string/theme_elements_font_title"
+            android:fragment="com.altair.settings.fragments.ui.FontsPicker"/>
 
         <Preference
             android:key="android.theme.customization.adaptive_icon_shape"

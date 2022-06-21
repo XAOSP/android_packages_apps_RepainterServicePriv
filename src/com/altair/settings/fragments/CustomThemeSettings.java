@@ -33,8 +33,6 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
-import com.altair.settings.preferences.FontListPreference;
-
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.util.custom.ThemeUtils;
 import com.android.settings.R;
@@ -83,8 +81,8 @@ public class CustomThemeSettings extends DashboardFragment implements
     private ThemeUtils mThemeUtils;
 
     private DarkModePreference mDarkMode;
-    private FontListPreference mFontPreference;
     private Preference mAccentColorPreference;
+    private Preference mFontPreference;
     private Preference mIconShapePreference;
     private Preference mSignalIconPreference;
     private Preference mWiFiIconPreference;
@@ -118,12 +116,10 @@ public class CustomThemeSettings extends DashboardFragment implements
         mDarkMode = findPreference(KEY_THEME_DARK_UI_MODE);
         mDarkMode.setOnPreferenceChangeListener(this);
 
-        mFontPreference = prefScreen.findPreference(KEY_THEME_FONT);
-        mFontPreference.setOnPreferenceChangeListener(this);
-        updateState(mFontPreference);
-
         mAccentColorPreference = prefScreen.findPreference(KEY_THEME_ACCENT_COLOR);
         updateSummary(mAccentColorPreference, "android");
+        mFontPreference = prefScreen.findPreference(KEY_THEME_FONT);
+        updateSummary(mFontPreference, "android");
         mIconShapePreference = prefScreen.findPreference(KEY_THEME_ICON_SHAPE);
         updateSummary(mIconShapePreference, "android");
         mSignalIconPreference = prefScreen.findPreference(KEY_THEME_SIGNAL_ICON);
@@ -180,13 +176,12 @@ public class CustomThemeSettings extends DashboardFragment implements
             case KEY_THEME_DARK_UI_MODE:
                 mUiModeManager.setNightModeActivated((boolean) newValue);
                 break;
-            case KEY_THEME_FONT:
-                mThemeUtils.setOverlayEnabled(ThemeUtils.FONT_KEY, (String) newValue);
-                updateState((ListPreference) mFontPreference);
-                break;
             case KEY_THEME_ACCENT_COLOR:
                 updateSummary(mAccentColorPreference, "android");
                 updateMonetPreferences();
+                break;
+            case KEY_THEME_FONT:
+                updateSummary(mFontPreference, "android");
                 break;
             case KEY_THEME_SIGNAL_ICON:
                 updateSummary(mSignalIconPreference, "android");
@@ -204,22 +199,6 @@ public class CustomThemeSettings extends DashboardFragment implements
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         return super.onPreferenceTreeClick(preference);
-    }
-
-    public void updateState(ListPreference preference) {
-        String currentPackageName = mThemeUtils.getOverlayInfos(preference.getKey()).stream()
-                .filter(info -> info.isEnabled())
-                .map(info -> info.packageName)
-                .findFirst()
-                .orElse("Default");
-
-        List<String> pkgs = mThemeUtils.getOverlayPackagesForCategory(preference.getKey());
-        List<String> labels = mThemeUtils.getLabels(preference.getKey());
-
-        preference.setEntries(labels.toArray(new String[labels.size()]));
-        preference.setEntryValues(pkgs.toArray(new String[pkgs.size()]));
-        preference.setValue("Default".equals(currentPackageName) ? pkgs.get(0) : currentPackageName);
-        preference.setSummary("Default".equals(currentPackageName) ? "Default" : labels.get(pkgs.indexOf(currentPackageName)));
     }
 
     public void updateSummary(Preference preference, String target) {
