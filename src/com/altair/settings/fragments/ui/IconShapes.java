@@ -119,8 +119,8 @@ public class IconShapes extends SettingsPreferenceFragment {
 
             final boolean isDefault = mTarget.equals(currentPackageName) && mTarget.equals(pkg);
             final int color = ColorUtils.setAlphaComponent(
-                     Utils.getColorAttrDefaultColor(getContext(), android.R.attr.colorAccent),
-                     pkg.equals(currentPackageName) || isDefault ? 170 : 75);
+                     Utils.getColorAttrDefaultColor(getContext(), android.R.attr.textColorPrimary),
+                     pkg.equals(currentPackageName) || isDefault ? 255 : 61);
             holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
 
             holder.itemView.findViewById(R.id.option_tile).setBackgroundDrawable(null);

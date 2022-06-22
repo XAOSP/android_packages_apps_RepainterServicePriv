@@ -17,12 +17,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_activated="true"
-        android:color="@color/option_border_default"/>
+        android:color="?android:attr/textColorPrimary"/>
     <item
         android:state_activated="false"
         android:alpha="0.24"
-        android:color="@color/option_border_default"/>
+        android:color="?android:attr/textColorPrimary"/>
     <item
         android:alpha="0.05"
-        android:color="@color/option_border_default"/>
+        android:color="?android:attr/textColorPrimary"/>
 </selector>
