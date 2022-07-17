@@ -98,7 +98,7 @@ public class CustomStatusBarSettings extends DashboardFragment implements
     private PreferenceCategory mStatusBarClockCategory;
     private Preference mNetworkTrafficPref;
 
-    private boolean mHasNotch;
+    private boolean mHasCenteredCutout;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -137,8 +137,8 @@ public class CustomStatusBarSettings extends DashboardFragment implements
 
         mNetworkTrafficPref = findPreference(NETWORK_TRAFFIC_SETTINGS);
 
-        mHasNotch = DeviceUtils.hasNotch(getActivity());
-        if (mHasNotch) {
+        mHasCenteredCutout = DeviceUtils.hasCenteredCutout(getActivity());
+        if (mHasCenteredCutout) {
             networkCategory.removePreference(mNetworkTrafficPref);
         }
 
@@ -180,7 +180,7 @@ public class CustomStatusBarSettings extends DashboardFragment implements
             mStatusBarAmPm.setSummary(R.string.status_bar_am_pm_info);
         }
 
-        final boolean disallowCenteredClock = mHasNotch || getNetworkTrafficStatus() != 0;
+        final boolean disallowCenteredClock = mHasCenteredCutout || getNetworkTrafficStatus() != 0;
 
         // Adjust status bar preferences for RTL
         if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
@@ -237,7 +237,7 @@ public class CustomStatusBarSettings extends DashboardFragment implements
     }
 
     private void updateNetworkTrafficStatus(int clockPosition) {
-        if (mHasNotch) {
+        if (mHasCenteredCutout) {
             // Unconditional no network traffic for you
             return;
         }
@@ -279,7 +279,7 @@ public class CustomStatusBarSettings extends DashboardFragment implements
                 public List<String> getNonIndexableKeys(Context context) {
                     List<String> keys = super.getNonIndexableKeys(context);
 
-                    if (DeviceUtils.hasNotch(context)) {
+                    if (DeviceUtils.hasCenteredCutout(context)) {
                         keys.add(NETWORK_TRAFFIC_SETTINGS);
                     }
 
