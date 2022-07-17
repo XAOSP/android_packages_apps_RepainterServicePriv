@@ -271,7 +271,8 @@
     <string name="theme_elements_wifi_icon_title">Wi-Fi icon style</string>
     <string name="theme_elements_navbar_title">Navigation bar style</string>
 
-    <string name="theme_monet_category_title">Monet engine settings</string>
+    <string name="monet_settings_title">Monet settings</string>
+    <string name="monet_settings_summary">Customize Monet theme engine</string>
     <string name="monet_engine_custom_color_title">Use custom color</string>
     <string name="monet_engine_custom_color_summary">Use custom color for monet engine instead of wallpaper colors</string>
     <string name="monet_engine_color_override_title">Custom color</string>
@@ -280,7 +281,7 @@
     <string name="monet_engine_chroma_factor_title">Chroma factor</string>
     <string name="monet_engine_linear_lightness_title">Use linear lightness</string>
 
-    <string name="theme_substratum_warning">If you theme \"Android System\" using a Substratum theme, or have selected a predefined accent color, those theme elements will override some or all of the system theme settings and disable the Monet settings.</string>
+    <string name="theme_monet_warning">Using a predefined accent color will override the Monet theme engine (as will some Substratum themes that allow changing the accent color). If you wish to tweak Monet settings, you must leave the accent color set to Default.</string>
 
     <!-- USER INTERFACE -->
     <string name="power_menu_title">Power menu</string>

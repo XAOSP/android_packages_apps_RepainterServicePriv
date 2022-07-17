@@ -41,15 +41,8 @@ import com.android.settings.display.darkmode.DarkModePreference;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
-import com.lineage.support.colorpicker.SecureSettingColorPickerPreference;
-import com.lineage.support.preferences.SecureSettingSeekBarPreference;
-import com.lineage.support.preferences.SecureSettingSwitchPreference;
-
 import java.util.Arrays;
 import java.util.List;
-
-import lineageos.preference.LineageSystemSettingListPreference;
-import lineageos.providers.LineageSettings;
 
 @SearchIndexable(forTarget = SearchIndexable.ALL & ~SearchIndexable.ARC)
 public class CustomThemeSettings extends DashboardFragment implements
@@ -64,14 +57,7 @@ public class CustomThemeSettings extends DashboardFragment implements
     private static final String KEY_THEME_WIFI_ICON = ThemeUtils.WIFI_ICON_KEY;
     private static final String KEY_THEME_NAVBAR_STYLE = ThemeUtils.NAVBAR_KEY;
 
-    private static final String KEY_MONET_ENGINE_CUSTOM_COLOR = "monet_engine_custom_color";
-    private static final String KEY_MONET_ENGINE_COLOR_OVERRIDE = "monet_engine_color_override";
-    private static final String KEY_MONET_ENGINE_WHITE_LUMINANCE_USER =
-            "monet_engine_white_luminance_user";
-    private static final String KEY_MONET_ENGINE_ACCURATE_SHADES = "monet_engine_accurate_shades";
-    private static final String KEY_MONET_ENGINE_CHROMA_FACTOR = "monet_engine_chroma_factor";
-    private static final String KEY_MONET_ENGINE_LINEAR_LIGHTNESS =
-            "monet_engine_linear_lightness";
+    private static final String KEY_MONET_ENGINE = "monet_engine";
 
     private Context mContext;
     private Handler mHandler;
@@ -87,12 +73,7 @@ public class CustomThemeSettings extends DashboardFragment implements
     private Preference mSignalIconPreference;
     private Preference mWiFiIconPreference;
     private Preference mNavbarStylePreference;
-    private SecureSettingSwitchPreference mMonetEngineCustomColorPreference;
-    private SecureSettingColorPickerPreference mMonetEngineColorOverridePreference;
-    private SecureSettingSeekBarPreference mMonetEngineWhiteLuminanceUserPreference;
-    private SecureSettingSwitchPreference mMonetEngineAccurateShadesPreference;
-    private SecureSettingSeekBarPreference mMonetEngineChromaFactorPreference;
-    private SecureSettingSwitchPreference mMonetEngineLinearLightnessPreference;
+    private Preference mMonetEnginePreference;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -129,19 +110,9 @@ public class CustomThemeSettings extends DashboardFragment implements
         mNavbarStylePreference = prefScreen.findPreference(KEY_THEME_NAVBAR_STYLE);
         updateSummary(mNavbarStylePreference, "com.android.systemui");
 
-        mMonetEngineCustomColorPreference =
-                prefScreen.findPreference(KEY_MONET_ENGINE_CUSTOM_COLOR);
-        mMonetEngineColorOverridePreference =
-                prefScreen.findPreference(KEY_MONET_ENGINE_COLOR_OVERRIDE);
-        mMonetEngineWhiteLuminanceUserPreference =
-                prefScreen.findPreference(KEY_MONET_ENGINE_WHITE_LUMINANCE_USER);
-        mMonetEngineAccurateShadesPreference =
-                prefScreen.findPreference(KEY_MONET_ENGINE_ACCURATE_SHADES);
-        mMonetEngineChromaFactorPreference =
-                prefScreen.findPreference(KEY_MONET_ENGINE_CHROMA_FACTOR);
-        mMonetEngineLinearLightnessPreference =
-                prefScreen.findPreference(KEY_MONET_ENGINE_LINEAR_LIGHTNESS);
-        updateMonetPreferences();
+        mMonetEnginePreference = prefScreen.findPreference(KEY_MONET_ENGINE);
+
+        updatePreferences();
     }
 
     @Override
@@ -178,7 +149,6 @@ public class CustomThemeSettings extends DashboardFragment implements
                 break;
             case KEY_THEME_ACCENT_COLOR:
                 updateSummary(mAccentColorPreference, "android");
-                updateMonetPreferences();
                 break;
             case KEY_THEME_FONT:
                 updateSummary(mFontPreference, "android");
@@ -193,6 +163,7 @@ public class CustomThemeSettings extends DashboardFragment implements
                 updateSummary(mNavbarStylePreference, "com.android.systemui");
                 break;
         }
+        updatePreferences();
         return true;
     }
 
@@ -214,21 +185,15 @@ public class CustomThemeSettings extends DashboardFragment implements
         preference.setSummary(target.equals(currentPackageName) ? "Default" : labels.get(pkgs.indexOf(currentPackageName)));
     }
 
-    public void updateMonetPreferences() {
+    public void updatePreferences() {
         String currentPackageName = mThemeUtils.getOverlayInfos(KEY_THEME_ACCENT_COLOR).stream()
             .filter(info -> info.isEnabled())
             .map(info -> info.packageName)
             .findFirst()
             .orElse("Default");
         boolean isDefaultAccent = (currentPackageName.equals("Default"));
-        boolean isCustomColor = mMonetEngineCustomColorPreference.isChecked();
 
-        mMonetEngineCustomColorPreference.setEnabled(isDefaultAccent);
-        mMonetEngineColorOverridePreference.setEnabled(isDefaultAccent && isCustomColor);
-        mMonetEngineWhiteLuminanceUserPreference.setEnabled(isDefaultAccent);
-        mMonetEngineAccurateShadesPreference.setEnabled(isDefaultAccent);
-        mMonetEngineChromaFactorPreference.setEnabled(isDefaultAccent);
-        mMonetEngineLinearLightnessPreference.setEnabled(isDefaultAccent);
+        mMonetEnginePreference.setEnabled(isDefaultAccent);
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
