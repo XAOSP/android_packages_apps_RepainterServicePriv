@@ -58,6 +58,14 @@
             android:summary="@string/notification_heads_up_summary"
             android:defaultValue="true" />
 
+        <!-- Less boring heads up -->
+        <com.lineage.support.preferences.SystemSettingSwitchPreference
+            android:key="less_boring_heads_up"
+            android:title="@string/less_boring_heads_up_title"
+            android:summary="@string/less_boring_heads_up_summary"
+            android:defaultValue="false"
+            android:dependency="heads_up_notifications_enabled" />
+
     </PreferenceCategory>
 
     <!-- Miscellaneous -->

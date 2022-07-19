@@ -303,6 +303,8 @@
     <string name="notification_guts_kill_app_button_summary">Show a kill app button in the notification\'s longpress menu</string>
     <string name="notification_heads_up_title">Heads up</string>
     <string name="notification_heads_up_summary">Allow pop up notifications</string>
+    <string name="less_boring_heads_up_title">Limited heads up</string>
+    <string name="less_boring_heads_up_summary">Display popup notifications only for alarm, dialer and messaging app</string>
 
     <string name="charging_animation_title">Charging animation</string>
     <string name="charging_animation_summary">Display an animation when the device is plugged in</string>
