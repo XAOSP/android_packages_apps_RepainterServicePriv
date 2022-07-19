@@ -51,6 +51,13 @@
             android:summary="@string/notification_guts_kill_app_button_summary"
             android:defaultValue="false" />
 
+        <!-- Heads up -->
+        <com.lineage.support.preferences.GlobalSettingSwitchPreference
+            android:key="heads_up_notifications_enabled"
+            android:title="@string/notification_heads_up_title"
+            android:summary="@string/notification_heads_up_summary"
+            android:defaultValue="true" />
+
     </PreferenceCategory>
 
     <!-- Miscellaneous -->
