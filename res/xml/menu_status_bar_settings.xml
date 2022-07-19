@@ -57,8 +57,7 @@
         <com.lineage.support.preferences.SystemSettingSwitchPreference
              android:key="use_old_mobiletype"
              android:title="@string/status_bar_use_old_mobiletype_title"
-             android:summary="@string/status_bar_use_old_mobiletype_summary"
-             android:defaultValue="false" />
+             android:summary="@string/status_bar_use_old_mobiletype_summary" />
 
         <!-- Data disabled indicator -->
         <com.lineage.support.preferences.SystemSettingSwitchPreference

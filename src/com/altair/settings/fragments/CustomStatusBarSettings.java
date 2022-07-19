@@ -133,6 +133,13 @@ public class CustomStatusBarSettings extends DashboardFragment implements
             networkCategory.removePreference(showVoLTEIcon);
             networkCategory.removePreference(showVoWiFiIcon);
             networkCategory.removePreference(voLTEvoWiFiOverride);
+        } else {
+            boolean configUseOldMobileType = mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_useOldMobileIcons);
+            boolean showing = Settings.System.getIntForUser(resolver,
+                    Settings.System.USE_OLD_MOBILETYPE,
+                    configUseOldMobileType ? 1 : 0, UserHandle.USER_CURRENT) != 0;
+            useOldMobileType.setChecked(showing);
         }
 
         mNetworkTrafficPref = findPreference(NETWORK_TRAFFIC_SETTINGS);
