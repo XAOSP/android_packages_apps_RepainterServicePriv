@@ -16,6 +16,7 @@
 
 package com.altair.settings.fragments.ui;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -23,6 +24,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.util.custom.MonetUtils;
 import com.android.internal.util.custom.ThemeUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -45,23 +48,33 @@ import com.android.settingslib.Utils;
 import java.util.List;
 
 public class AccentColors extends SettingsPreferenceFragment {
+    private static final String TAG = "AccentColors";
+
+    private static final String KEY_MONET_COLOR_ACCENT = "monet_engine_color_accent";
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
+    private MonetUtils mMonetUtils;
     private String mCategory = ThemeUtils.ACCENT_KEY;
     private String mTarget = "android";
 
     private List<String> mPkgs;
     private List<Integer> mThemeColors;
 
+    private ContentResolver mResolver;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_elements_accent_color_title);
+        getActivity().setTitle(R.string.theme_colors_predefined_accent_colors_title);
+
+        mResolver = getActivity().getContentResolver();
 
         mThemeUtils = new ThemeUtils(getActivity());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, mTarget);
         mThemeColors = mThemeUtils.getColors();
+
+        mMonetUtils = new MonetUtils(getActivity());
     }
 
     @Override
@@ -193,5 +206,7 @@ public class AccentColors extends SettingsPreferenceFragment {
 
     public void enableOverlays(int position) {
         mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), mTarget);
+        mMonetUtils.setAccentColor(
+                ColorStateList.valueOf(mThemeColors.get(position)).getDefaultColor());
     }
 }

@@ -326,4 +326,17 @@
         <item>2</item>
     </string-array>
 
+    <!-- Monet engine color type -->
+    <string-array name="monet_engine_color_type_entries" translatable="false">
+        <item>@string/monet_engine_color_type_wallpaper</item>
+        <item>@string/monet_engine_color_type_custom</item>
+        <item>@string/monet_engine_color_type_theme</item>
+    </string-array>
+
+    <string-array name="monet_engine_color_type_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
 </resources>

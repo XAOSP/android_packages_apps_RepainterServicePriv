@@ -44,15 +44,52 @@
 
     </PreferenceCategory>
 
+    <!-- Theme colors -->
+    <PreferenceCategory
+        android:key="theme_colors"
+        android:title="@string/theme_colors_category_title">
+
+        <com.lineage.support.preferences.SecureSettingListPreference
+            android:key="monet_engine_color_type"
+            android:entries="@array/monet_engine_color_type_entries"
+            android:entryValues="@array/monet_engine_color_type_values"
+            android:defaultValue="0"
+            android:title="@string/theme_colors_monet_color_type_title"
+            android:dialogTitle="@string/theme_colors_monet_color_type_title" />
+
+        <com.lineage.support.colorpicker.SecureSettingColorPickerPreference
+            android:key="monet_engine_color_override"
+            android:title="@string/theme_colors_monet_color_override_title"
+            android:defaultValue="0xffffffff" />
+
+        <Preference
+            android:key="android.theme.customization.accent_color"
+            android:title="@string/theme_colors_predefined_accent_colors_title"
+            android:fragment="com.altair.settings.fragments.ui.AccentColors"/>
+
+        <com.lineage.support.preferences.SecureSettingSwitchPreference
+            android:key="monet_engine_tint_surface"
+            android:title="@string/theme_colors_monet_tint_surface_title"
+            android:summary="@string/theme_colors_monet_tint_surface_summary"
+            android:defaultValue="true" />
+
+        <Preference
+            android:key="theme_colors_reset_colors"
+            android:title="@string/theme_colors_reset_colors_title"
+            android:summary="@string/theme_colors_reset_colors_summary" />
+
+        <Preference
+            android:key="monet_engine"
+            android:title="@string/monet_settings_title"
+            android:summary="@string/monet_settings_summary"
+            android:fragment="com.altair.settings.fragments.ui.MonetSettings" />
+
+    </PreferenceCategory>
+
     <!-- Theme elements -->
     <PreferenceCategory
         android:key="theme_elements"
         android:title="@string/theme_elements_category_title">
-
-        <Preference
-            android:key="android.theme.customization.accent_color"
-            android:title="@string/theme_elements_accent_color_title"
-            android:fragment="com.altair.settings.fragments.ui.AccentColors"/>
 
         <Preference
             android:key="android.theme.customization.font"
@@ -78,12 +115,6 @@
             android:key="android.theme.customization.navbar"
             android:title="@string/theme_elements_navbar_title"
             android:fragment="com.altair.settings.fragments.ui.NavbarStyles"/>
-
-        <Preference
-            android:key="monet_engine"
-            android:title="@string/monet_settings_title"
-            android:summary="@string/monet_settings_summary"
-            android:fragment="com.altair.settings.fragments.ui.MonetSettings" />
 
     </PreferenceCategory>
 

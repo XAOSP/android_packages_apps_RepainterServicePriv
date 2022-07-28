@@ -263,8 +263,17 @@
     <!-- THEMES -->
     <string name="theme_styles_category_title">Styles &amp; wallpapers</string>
 
+    <string name="theme_colors_category_title">Theme colors</string>
+    <string name="theme_colors_monet_color_type_title">Accent color type</string>
+    <string name="theme_colors_monet_color_override_title">Custom color</string>
+    <string name="theme_colors_predefined_accent_colors_title">Accent colors</string>
+    <string name="theme_colors_monet_tint_surface_title">Tint surfaces</string>
+    <string name="theme_colors_monet_tint_surface_summary">Use accent color to create surface tint color</string>
+    <string name="theme_colors_reset_colors_title">Reset colors</string>
+    <string name="theme_colors_reset_colors_summary">Reset custom and accent colors to default settings</string>
+    <string name="theme_colors_reset_colors_message">This will reset the custom and accent colors back to their default settings. Are you sure you wish to continue?</string>
+
     <string name="theme_elements_category_title">Theme elements</string>
-    <string name="theme_elements_accent_color_title">Accent color</string>
     <string name="theme_elements_font_title">Font</string>
     <string name="theme_elements_icon_shape_title">Icon shape</string>
     <string name="theme_elements_signal_icon_title">Signal icon style</string>
@@ -273,13 +282,14 @@
 
     <string name="monet_settings_title">Monet settings</string>
     <string name="monet_settings_summary">Customize Monet theme engine</string>
-    <string name="monet_engine_custom_color_title">Use custom color</string>
-    <string name="monet_engine_custom_color_summary">Use custom color for monet engine instead of wallpaper colors</string>
-    <string name="monet_engine_color_override_title">Custom color</string>
     <string name="monet_engine_white_luminance_user_title">White luminance</string>
     <string name="monet_engine_accurate_shades_title">Use accurate shades</string>
     <string name="monet_engine_chroma_factor_title">Chroma factor</string>
     <string name="monet_engine_linear_lightness_title">Use linear lightness</string>
+
+    <string name="monet_engine_color_type_wallpaper">Default</string>
+    <string name="monet_engine_color_type_custom">Custom color</string>
+    <string name="monet_engine_color_type_theme">Built-in or theme color</string>
 
     <string name="theme_monet_warning">Using a predefined accent color will override the Monet theme engine (as will some Substratum themes that allow changing the accent color). If you wish to tweak Monet settings, you must leave the accent color set to Default.</string>
 

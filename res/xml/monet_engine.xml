@@ -20,18 +20,6 @@
     android:key="monet_settings"
     android:title="@string/monet_settings_title">
 
-    <com.lineage.support.preferences.SecureSettingSwitchPreference
-        android:key="monet_engine_custom_color"
-        android:title="@string/monet_engine_custom_color_title"
-        android:summary="@string/monet_engine_custom_color_summary"
-        android:defaultValue="false" />
-
-    <com.lineage.support.colorpicker.SecureSettingColorPickerPreference
-        android:key="monet_engine_color_override"
-        android:title="@string/monet_engine_color_override_title"
-        android:dependency="monet_engine_custom_color"
-        android:defaultValue="0xffffffff" />
-
     <com.lineage.support.preferences.SecureSettingSeekBarPreference
         android:key="monet_engine_white_luminance_user"
         android:title="@string/monet_engine_white_luminance_user_title"
