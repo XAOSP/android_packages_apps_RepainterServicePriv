@@ -33,6 +33,7 @@ import androidx.preference.SwitchPreference;
 import com.altair.settings.utils.TelephonyUtils;
 
 import com.android.internal.logging.nano.MetricsProto;
+import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -63,6 +64,9 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
 
     private LineageGlobalActions mLineageGlobalActions;
 
+    private EmergencyAffordanceManager mEmergencyAffordanceManager;
+    private boolean mForceEmergCheck = false;
+
     Context mContext;
     private LockPatternUtils mLockPatternUtils;
     private UserManager mUserManager;
@@ -78,6 +82,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         mLockPatternUtils = new LockPatternUtils(mContext);
         mUserManager = UserManager.get(mContext);
         mLineageGlobalActions = LineageGlobalActions.getInstance(mContext);
+        mEmergencyAffordanceManager = new EmergencyAffordanceManager(mContext);
 
         mPowerMenuItems = getPreferenceScreen();
 
@@ -136,8 +141,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         }
 
         if (mEmergencyPref != null) {
+            mForceEmergCheck = mEmergencyAffordanceManager.needsEmergencyAffordance();
             mEmergencyPref.setChecked(mLineageGlobalActions.userConfigContains(
-                    GLOBAL_ACTION_KEY_EMERGENCY));
+                    GLOBAL_ACTION_KEY_EMERGENCY) || mForceEmergCheck);
+            mEmergencyPref.setEnabled(!mForceEmergCheck);
         }
 
         if (mDeviceControlsPref != null) {
@@ -156,11 +163,14 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
                     services -> mDeviceControlsPref.setEnabled(!services.isEmpty()));
             serviceListing.reload();
         }
+
+        updatePreferences();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        updatePreferences();
     }
 
     @Override
@@ -191,5 +201,15 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
             return super.onPreferenceTreeClick(preference);
         }
         return true;
+    }
+
+    private void updatePreferences() {
+        if (mEmergencyPref != null) {
+            if (mForceEmergCheck) {
+                mEmergencyPref.setSummary(R.string.power_menu_emergency_affordance_enabled);
+            } else {
+                mEmergencyPref.setSummary(null);
+            }
+        }
     }
 }
