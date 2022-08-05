@@ -32,13 +32,6 @@
                 android:action="com.android.settings.action.STATUS_BAR_TUNER" />
         </Preference>
 
-        <!-- Show location indicator -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="show_location_indicator"
-            android:title="@string/status_bar_show_location_indicator_title"
-            android:summary="@string/status_bar_show_location_indicator_summary"
-            android:defaultValue="true"/>
-
     </PreferenceCategory>
 
     <!-- Network -->
