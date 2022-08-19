@@ -34,14 +34,12 @@ import com.altair.settings.utils.TelephonyUtils;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.util.EmergencyAffordanceManager;
-import com.android.internal.widget.LockPatternUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settingslib.applications.ServiceListing;
 
 import org.lineageos.internal.util.PowerMenuConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lineageos.app.LineageGlobalActions;
@@ -68,9 +66,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
     private boolean mForceEmergCheck = false;
 
     Context mContext;
-    private LockPatternUtils mLockPatternUtils;
     private UserManager mUserManager;
-    private List<String> mLocalUserConfig = new ArrayList<String>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +75,6 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         addPreferencesFromResource(R.xml.power_menu_actions);
         getActivity().setTitle(R.string.power_menu_items_title);
         mContext = getActivity().getApplicationContext();
-        mLockPatternUtils = new LockPatternUtils(mContext);
         mUserManager = UserManager.get(mContext);
         mLineageGlobalActions = LineageGlobalActions.getInstance(mContext);
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(mContext);
@@ -104,8 +99,6 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
             mPowerMenuItems.removePreference(mEmergencyPref);
             mEmergencyPref = null;
         }
-
-        mLocalUserConfig = mLineageGlobalActions.getLocalUserConfig();
     }
 
     @Override

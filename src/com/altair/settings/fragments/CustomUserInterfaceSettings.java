@@ -16,21 +16,12 @@
 
 package com.altair.settings.fragments;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceScreen;
-import androidx.preference.SwitchPreference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
@@ -41,17 +32,10 @@ import com.android.settingslib.search.SearchIndexable;
 import java.util.Arrays;
 import java.util.List;
 
-import lineageos.preference.LineageSystemSettingListPreference;
-import lineageos.providers.LineageSettings;
-
 @SearchIndexable(forTarget = SearchIndexable.ALL & ~SearchIndexable.ARC)
 public class CustomUserInterfaceSettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "CustomUserInterfaceSettings";
-
-    private Context mContext;
-    private Handler mHandler;
-    private ContentResolver mResolver;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -61,13 +45,6 @@ public class CustomUserInterfaceSettings extends DashboardFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mContext = getActivity().getApplicationContext();
-        mHandler = new Handler();
-        mResolver = getActivity().getContentResolver();
-
-        final Resources res = getResources();
-        final PreferenceScreen prefScreen = getPreferenceScreen();
     }
 
     @Override

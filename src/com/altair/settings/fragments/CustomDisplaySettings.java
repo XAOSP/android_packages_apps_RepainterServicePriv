@@ -16,21 +16,14 @@
 
 package com.altair.settings.fragments;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceScreen;
-import androidx.preference.SwitchPreference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
@@ -41,9 +34,6 @@ import com.android.settingslib.search.SearchIndexable;
 import java.util.Arrays;
 import java.util.List;
 
-import lineageos.preference.LineageSystemSettingListPreference;
-import lineageos.providers.LineageSettings;
-
 @SearchIndexable(forTarget = SearchIndexable.ALL & ~SearchIndexable.ARC)
 public class CustomDisplaySettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
@@ -53,10 +43,6 @@ public class CustomDisplaySettings extends DashboardFragment implements
 
     private static final String CATEGORY_MISCELLANEOUS = "miscellaneous";
 
-    private Context mContext;
-    private Handler mHandler;
-    private ContentResolver mResolver;
-
     @Override
     protected int getPreferenceScreenResId() {
         return R.xml.menu_display_settings;
@@ -65,13 +51,6 @@ public class CustomDisplaySettings extends DashboardFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mContext = getActivity().getApplicationContext();
-        mHandler = new Handler();
-        mResolver = getActivity().getContentResolver();
-
-        final Resources res = getResources();
-        final PreferenceScreen prefScreen = getPreferenceScreen();
 
         // Smart Pixels
         boolean enableSmartPixels = getContext().getResources().

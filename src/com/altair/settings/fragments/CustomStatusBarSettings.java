@@ -19,9 +19,7 @@ package com.altair.settings.fragments;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
@@ -29,7 +27,6 @@ import android.text.format.DateFormat;
 import android.text.TextUtils;
 import android.view.View;
 
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
@@ -81,7 +78,6 @@ public class CustomStatusBarSettings extends DashboardFragment implements
     private static final String NETWORK_TRAFFIC_SETTINGS = "network_traffic_settings";
 
     private Context mContext;
-    private Handler mHandler;
     private ContentResolver mResolver;
 
     private StatusBarIcon mClockIcon;
@@ -91,7 +87,6 @@ public class CustomStatusBarSettings extends DashboardFragment implements
     private LineageSystemSettingListPreference mStatusBarAmPm;
 
     private SwitchPreference mStatusBarShowBattery;
-    private LineageSystemSettingListPreference mStatusBarBattery;
     private LineageSystemSettingListPreference mStatusBarBatteryShowPercent;
 
     private PreferenceCategory mStatusBarBatteryCategory;
@@ -110,20 +105,20 @@ public class CustomStatusBarSettings extends DashboardFragment implements
         super.onCreate(savedInstanceState);
 
         mContext = getActivity().getApplicationContext();
-        mHandler = new Handler();
         mResolver = getActivity().getContentResolver();
 
-        final Resources res = getResources();
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         final PreferenceCategory networkCategory = prefScreen.findPreference(CATEGORY_NETWORK);
         SystemSettingSwitchPreference useOldMobileType = findPreference(KEY_USE_OLD_MOBILETYPE);
         SystemSettingSwitchPreference dataDisabledIcon = findPreference(KEY_DATA_DISABLED_ICON);
-        SystemSettingSwitchPreference roamingIndicatorIcon = findPreference(KEY_ROAMING_INDICATOR_ICON);
+        SystemSettingSwitchPreference roamingIndicatorIcon =
+                findPreference(KEY_ROAMING_INDICATOR_ICON);
         SystemSettingSwitchPreference showFourgIcon = findPreference(KEY_SHOW_FOURG_ICON);
         SystemSettingSwitchPreference showVoLTEIcon = findPreference(KEY_SHOW_VOLTE_ICON);
         SystemSettingSwitchPreference showVoWiFiIcon = findPreference(KEY_SHOW_VOWIFI_ICON);
-        SystemSettingSwitchPreference voLTEvoWiFiOverride = findPreference(KEY_VOLTE_VOWIFI_OVERRIDE);
+        SystemSettingSwitchPreference voLTEvoWiFiOverride =
+                findPreference(KEY_VOLTE_VOWIFI_OVERRIDE);
 
         if (!TelephonyUtils.isVoiceCapable(getActivity())) {
             networkCategory.removePreference(useOldMobileType);
@@ -163,9 +158,10 @@ public class CustomStatusBarSettings extends DashboardFragment implements
         mStatusBarShowBattery.setOnPreferenceChangeListener(this);
 
         mStatusBarBatteryShowPercent = findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);
-        mStatusBarBattery = findPreference(STATUS_BAR_BATTERY_STYLE);
-        mStatusBarBattery.setOnPreferenceChangeListener(this);
-        enableStatusBarBatteryDependents(mStatusBarBattery.getIntValue(2));
+        LineageSystemSettingListPreference statusBarBattery =
+                findPreference(STATUS_BAR_BATTERY_STYLE);
+        statusBarBattery.setOnPreferenceChangeListener(this);
+        enableStatusBarBatteryDependents(statusBarBattery.getIntValue(2));
     }
 
     @Override

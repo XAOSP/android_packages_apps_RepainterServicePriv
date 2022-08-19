@@ -98,7 +98,8 @@ public class IconShapes extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent,
+                    false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
@@ -115,7 +116,8 @@ public class IconShapes extends SettingsPreferenceFragment {
                 .findFirst()
                 .orElse(mTarget);
 
-            holder.name.setText(mTarget.equals(pkg) ? "Default" : getLabel(holder.name.getContext(), pkg));
+            holder.name.setText(mTarget.equals(pkg) ? "Default"
+                    : getLabel(holder.name.getContext(), pkg));
 
             final boolean isDefault = mTarget.equals(currentPackageName) && mTarget.equals(pkg);
             final int color = ColorUtils.setAlphaComponent(

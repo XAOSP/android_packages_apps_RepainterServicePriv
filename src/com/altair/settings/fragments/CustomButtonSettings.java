@@ -26,7 +26,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
@@ -110,8 +109,6 @@ public class CustomButtonSettings extends DashboardFragment implements
     private static final String CATEGORY_BACKLIGHT = "key_backlight";
     private static final String CATEGORY_EXTRAS = "extras_category";
 
-    private Context mContext;
-    private Handler mHandler;
     private ContentResolver mResolver;
 
     private ListPreference mBackLongPressAction;
@@ -125,15 +122,11 @@ public class CustomButtonSettings extends DashboardFragment implements
     private ListPreference mAppSwitchLongPressAction;
     private SwitchPreference mCameraWakeScreen;
     private SwitchPreference mCameraSleepOnRelease;
-    private SwitchPreference mCameraLaunch;
     private ListPreference mVolumeKeyCursorControl;
-    private SwitchPreference mVolumeWakeScreen;
-    private SwitchPreference mVolumeMusicControls;
     private SwitchPreference mSwapVolumeButtons;
     private SwitchPreference mVolumePanelOnLeft;
     private SwitchPreference mPowerEndCall;
     private SwitchPreference mHomeAnswerCall;
-    private SwitchPreference mTorchLongPressPowerGesture;
     private ListPreference mTorchLongPressPowerTimeout;
     private SwitchPreference mSwapCapacitiveKeys;
 
@@ -148,8 +141,6 @@ public class CustomButtonSettings extends DashboardFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mContext = getActivity().getApplicationContext();
-        mHandler = new Handler();
         mResolver = getActivity().getContentResolver();
 
         final Resources res = getResources();
@@ -174,7 +165,6 @@ public class CustomButtonSettings extends DashboardFragment implements
         final boolean showCameraWake = DeviceUtils.canWakeUsingCameraKey(getActivity());
         final boolean showVolumeWake = DeviceUtils.canWakeUsingVolumeKeys(getActivity());
 
-        boolean hasAnyBindableKey = false;
         final PreferenceCategory powerCategory = prefScreen.findPreference(CATEGORY_POWER);
         final PreferenceCategory homeCategory = prefScreen.findPreference(CATEGORY_HOME);
         final PreferenceCategory backCategory = prefScreen.findPreference(CATEGORY_BACK);
@@ -189,7 +179,8 @@ public class CustomButtonSettings extends DashboardFragment implements
         mPowerEndCall = findPreference(KEY_POWER_END_CALL);
 
         // Long press power while display is off to activate torchlight
-        mTorchLongPressPowerGesture = findPreference(KEY_TORCH_LONG_PRESS_POWER_GESTURE);
+        SwitchPreference torchLongPressPowerGesture =
+                findPreference(KEY_TORCH_LONG_PRESS_POWER_GESTURE);
         final int torchLongPressPowerTimeout = LineageSettings.System.getInt(mResolver,
                 LineageSettings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0);
         mTorchLongPressPowerTimeout = initList(KEY_TORCH_LONG_PRESS_POWER_TIMEOUT,
@@ -222,8 +213,9 @@ public class CustomButtonSettings extends DashboardFragment implements
                 LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION,
                 Action.NOTHING);
 
-        final boolean navkeysEnabled = LineageSettings.System.getIntForUser(getActivity().getContentResolver(),
-                LineageSettings.System.FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) != 0;
+        final boolean navkeysEnabled = LineageSettings.System.getIntForUser(
+                getActivity().getContentResolver(), LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
+                UserHandle.USER_CURRENT) != 0;
         updateDisableNavkeysCategories(navkeysEnabled, /* force */ true);
 
         if (hasPowerKey) {
@@ -232,7 +224,7 @@ public class CustomButtonSettings extends DashboardFragment implements
                 mPowerEndCall = null;
             }
             if (!DeviceUtils.deviceSupportsFlashLight(getActivity())) {
-                powerCategory.removePreference(mTorchLongPressPowerGesture);
+                powerCategory.removePreference(torchLongPressPowerGesture);
                 powerCategory.removePreference(mTorchLongPressPowerTimeout);
             }
         }
@@ -256,8 +248,6 @@ public class CustomButtonSettings extends DashboardFragment implements
                 mHomeLongPressAction.setEnabled(false);
                 mHomeDoubleTapAction.setEnabled(false);
             }
-
-            hasAnyBindableKey = true;
         }
         if (!hasHomeKey || homeCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(homeCategory);
@@ -272,8 +262,6 @@ public class CustomButtonSettings extends DashboardFragment implements
             if (navkeysEnabled) {
                 mBackLongPressAction.setEnabled(false);
             }
-
-            hasAnyBindableKey = true;
         }
         if (!hasBackKey || backCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(backCategory);
@@ -292,8 +280,6 @@ public class CustomButtonSettings extends DashboardFragment implements
                         LineageSettings.System.KEY_MENU_LONG_PRESS_ACTION,
                         hasAssistKey ? Action.NOTHING : Action.APP_SWITCH);
             mMenuLongPressAction = initList(KEY_MENU_LONG_PRESS, longPressAction);
-
-            hasAnyBindableKey = true;
         }
         if (!hasMenuKey || menuCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(menuCategory);
@@ -311,8 +297,6 @@ public class CustomButtonSettings extends DashboardFragment implements
             Action longPressAction = Action.fromSettings(mResolver,
                     LineageSettings.System.KEY_ASSIST_LONG_PRESS_ACTION, Action.VOICE_SEARCH);
             mAssistLongPressAction = initList(KEY_ASSIST_LONG_PRESS, longPressAction);
-
-            hasAnyBindableKey = true;
         }
         if (!hasAssistKey || assistCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(assistCategory);
@@ -327,9 +311,8 @@ public class CustomButtonSettings extends DashboardFragment implements
                     LineageSettings.System.KEY_APP_SWITCH_ACTION, Action.APP_SWITCH);
             mAppSwitchPressAction = initList(KEY_APP_SWITCH_PRESS, pressAction);
 
-            mAppSwitchLongPressAction = initList(KEY_APP_SWITCH_LONG_PRESS, appSwitchLongPressAction);
-
-            hasAnyBindableKey = true;
+            mAppSwitchLongPressAction = initList(KEY_APP_SWITCH_LONG_PRESS,
+                    appSwitchLongPressAction);
         }
         if (!hasAppSwitchKey || appSwitchCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(appSwitchCategory);
@@ -338,13 +321,13 @@ public class CustomButtonSettings extends DashboardFragment implements
         if (hasCameraKey) {
             mCameraWakeScreen = findPreference(KEY_CAMERA_WAKE_SCREEN);
             mCameraSleepOnRelease = findPreference(KEY_CAMERA_SLEEP_ON_RELEASE);
-            mCameraLaunch = findPreference(KEY_CAMERA_LAUNCH);
 
             if (!showCameraWake) {
                 prefScreen.removePreference(mCameraWakeScreen);
             }
             // Only show 'Camera sleep on release' if the device has a focus key
-            if (res.getBoolean(org.lineageos.platform.internal.R.bool.config_singleStageCameraKey)) {
+            if (res.getBoolean(
+                    org.lineageos.platform.internal.R.bool.config_singleStageCameraKey)) {
                 prefScreen.removePreference(mCameraSleepOnRelease);
             }
         }
@@ -400,13 +383,13 @@ public class CustomButtonSettings extends DashboardFragment implements
             }
         }
 
-        mVolumeWakeScreen = findPreference(KEY_VOLUME_WAKE_SCREEN);
-        mVolumeMusicControls = findPreference(KEY_VOLUME_MUSIC_CONTROLS);
+        SwitchPreference volumeWakeScreen = findPreference(KEY_VOLUME_WAKE_SCREEN);
+        SwitchPreference volumeMusicControls = findPreference(KEY_VOLUME_MUSIC_CONTROLS);
 
-        if (mVolumeWakeScreen != null) {
-            if (mVolumeMusicControls != null) {
-                mVolumeMusicControls.setDependency(KEY_VOLUME_WAKE_SCREEN);
-                mVolumeWakeScreen.setDisableDependentsState(true);
+        if (volumeWakeScreen != null) {
+            if (volumeMusicControls != null) {
+                volumeMusicControls.setDependency(KEY_VOLUME_WAKE_SCREEN);
+                volumeWakeScreen.setDisableDependentsState(true);
             }
         }
 

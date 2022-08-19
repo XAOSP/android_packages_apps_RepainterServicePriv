@@ -113,7 +113,8 @@ public class AccentColors extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent,
+                    false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
@@ -131,7 +132,8 @@ public class AccentColors extends SettingsPreferenceFragment {
                 .map(info -> info.packageName)
                 .findFirst()
                 .orElse(mTarget);
-            holder.name.setText(mTarget.equals(accentPkg) ? "Default" : getLabel(holder.name.getContext(), accentPkg));
+            holder.name.setText(mTarget.equals(accentPkg) ? "Default"
+                    : getLabel(holder.name.getContext(), accentPkg));
 
             if (currentPackageName.equals(accentPkg)) {
                 mAppliedPkg = accentPkg;
@@ -141,7 +143,6 @@ public class AccentColors extends SettingsPreferenceFragment {
             }
 
             holder.itemView.setActivated(accentPkg == mSelectedPkg);
-            //holder.itemView.findViewById(R.id.option_tile).setBackgroundDrawable(null);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

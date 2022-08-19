@@ -97,7 +97,8 @@ public class NavbarStyles extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.navbar_option, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.navbar_option,
+                    parent, false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
@@ -106,9 +107,12 @@ public class NavbarStyles extends SettingsPreferenceFragment {
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
             String navPkg = mPkgs.get(position);
 
-            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), navPkg, "ic_sysbar_back"));
-            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), navPkg, "ic_sysbar_home"));
-            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), navPkg, "ic_sysbar_recent"));
+            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), navPkg,
+                    "ic_sysbar_back"));
+            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), navPkg,
+                    "ic_sysbar_home"));
+            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), navPkg,
+                    "ic_sysbar_recent"));
 
             String currentPackageName = mThemeUtils.getOverlayInfos(mCategory, mTarget).stream()
                 .filter(info -> info.isEnabled())
@@ -116,7 +120,8 @@ public class NavbarStyles extends SettingsPreferenceFragment {
                 .findFirst()
                 .orElse(mTarget);
 
-            holder.name.setText(mTarget.equals(navPkg) ? "Default" : getLabel(holder.name.getContext(), navPkg));
+            holder.name.setText(mTarget.equals(navPkg) ? "Default"
+                    : getLabel(holder.name.getContext(), navPkg));
 
             if (currentPackageName.equals(navPkg)) {
                 mAppliedPkg = navPkg;

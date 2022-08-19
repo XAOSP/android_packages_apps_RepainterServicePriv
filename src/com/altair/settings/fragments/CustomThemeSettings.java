@@ -17,23 +17,17 @@
 package com.altair.settings.fragments;
 
 import android.app.UiModeManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
-import androidx.preference.SwitchPreference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.util.custom.MonetUtils;
@@ -45,7 +39,6 @@ import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
 import com.lineage.support.colorpicker.SecureSettingColorPickerPreference;
-import com.lineage.support.preferences.SecureSettingListPreference;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,8 +58,6 @@ public class CustomThemeSettings extends DashboardFragment implements
     private static final String KEY_THEME_NAVBAR_STYLE = ThemeUtils.NAVBAR_KEY;
 
     private Context mContext;
-    private Handler mHandler;
-    private ContentResolver mResolver;
 
     private UiModeManager mUiModeManager;
     private ThemeUtils mThemeUtils;
@@ -94,10 +85,7 @@ public class CustomThemeSettings extends DashboardFragment implements
         super.onCreate(savedInstanceState);
 
         mContext = getActivity().getApplicationContext();
-        mHandler = new Handler();
-        mResolver = getActivity().getContentResolver();
 
-        final Resources res = getResources();
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         mUiModeManager = getContext().getSystemService(UiModeManager.class);
@@ -187,7 +175,8 @@ public class CustomThemeSettings extends DashboardFragment implements
                     .setMessage(R.string.theme_colors_reset_colors_message)
                     .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
-                             mThemeUtils.setOverlayEnabled(ThemeUtils.ACCENT_KEY, "android", "android");
+                             mThemeUtils.setOverlayEnabled(ThemeUtils.ACCENT_KEY, "android",
+                                    "android");
                              updateSummary(mAccentColorPreference, "android");
                              mMonetUtils.setOverrideColor(-1);
                              mMonetUtils.resetAccentColor();
@@ -200,7 +189,8 @@ public class CustomThemeSettings extends DashboardFragment implements
     }
 
     public void updateSummary(Preference preference, String target) {
-        String currentPackageName = mThemeUtils.getOverlayInfos(preference.getKey(), target).stream()
+        String currentPackageName = mThemeUtils.getOverlayInfos(preference.getKey(), target)
+                .stream()
                 .filter(info -> info.isEnabled())
                 .map(info -> info.packageName)
                 .findFirst()
@@ -209,7 +199,8 @@ public class CustomThemeSettings extends DashboardFragment implements
         List<String> pkgs = mThemeUtils.getOverlayPackagesForCategory(preference.getKey(), target);
         List<String> labels = mThemeUtils.getLabels(preference.getKey(), target);
 
-        preference.setSummary(target.equals(currentPackageName) ? "Default" : labels.get(pkgs.indexOf(currentPackageName)));
+        preference.setSummary(target.equals(currentPackageName) ? "Default"
+                : labels.get(pkgs.indexOf(currentPackageName)));
     }
 
     public void updatePreferences() {

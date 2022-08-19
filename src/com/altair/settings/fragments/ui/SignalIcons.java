@@ -95,7 +95,8 @@ public class SignalIcons extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_option, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_option, parent,
+                    false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
@@ -104,10 +105,14 @@ public class SignalIcons extends SettingsPreferenceFragment {
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
             String iconPkg = mPkgs.get(position);
 
-            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), iconPkg, "ic_signal_cellular_0_5_bar"));
-            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), iconPkg, "ic_signal_cellular_1_5_bar"));
-            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), iconPkg, "ic_signal_cellular_3_5_bar"));
-            holder.image4.setBackgroundDrawable(getDrawable(holder.image4.getContext(), iconPkg, "ic_signal_cellular_5_5_bar"));
+            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), iconPkg,
+                    "ic_signal_cellular_0_5_bar"));
+            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), iconPkg,
+                    "ic_signal_cellular_1_5_bar"));
+            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), iconPkg,
+                    "ic_signal_cellular_3_5_bar"));
+            holder.image4.setBackgroundDrawable(getDrawable(holder.image4.getContext(), iconPkg,
+                    "ic_signal_cellular_5_5_bar"));
 
             String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
                 .filter(info -> info.isEnabled())
@@ -115,7 +120,8 @@ public class SignalIcons extends SettingsPreferenceFragment {
                 .findFirst()
                 .orElse(mTarget);
 
-            holder.name.setText(mTarget.equals(iconPkg) ? "Default" : getLabel(holder.name.getContext(), iconPkg));
+            holder.name.setText(mTarget.equals(iconPkg) ? "Default"
+                    : getLabel(holder.name.getContext(), iconPkg));
 
             if (currentPackageName.equals(iconPkg)) {
                 mAppliedPkg = iconPkg;

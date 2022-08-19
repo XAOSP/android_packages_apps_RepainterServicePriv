@@ -29,6 +29,7 @@ import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
@@ -42,7 +43,6 @@ import android.view.WindowManagerGlobal;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
@@ -60,7 +60,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import lineageos.hardware.LineageHardwareManager;
-import lineageos.preference.LineageSystemSettingListPreference;
 import lineageos.providers.LineageSettings;
 
 import static org.lineageos.internal.util.DeviceKeysConstants.*;
@@ -113,7 +112,7 @@ public class CustomNavigationSettings extends DashboardFragment implements
         super.onCreate(savedInstanceState);
 
         mContext = getActivity().getApplicationContext();
-        mHandler = new Handler();
+        mHandler = new Handler(Looper.getMainLooper());
         mResolver = getActivity().getContentResolver();
 
         final Resources res = getResources();
@@ -377,22 +376,28 @@ public class CustomNavigationSettings extends DashboardFragment implements
                     mNavigationActionsPreferencesCat.addPreference(mEdgeLongSwipeAction);
 
                     mNavigationActionsPreferencesCat.removePreference(mNavigationArrowKeys);
-                    mNavigationActionsPreferencesCat.removePreference(mNavigationBackLongPressAction);
-                    mNavigationActionsPreferencesCat.removePreference(mNavigationHomeLongPressAction);
-                    mNavigationActionsPreferencesCat.removePreference(mNavigationHomeDoubleTapAction);
-                    mNavigationActionsPreferencesCat.removePreference(mNavigationAppSwitchLongPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationBackLongPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationHomeLongPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationHomeDoubleTapAction);
+                    mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationAppSwitchLongPressAction);
                 } else if (DeviceUtils.isSwipeUpEnabled(getContext())) {
                     mNavigationActionsPreferencesCat.addPreference(mNavigationBackLongPressAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeLongPressAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeDoubleTapAction);
 
-                    mNavigationActionsPreferencesCat.removePreference(mNavigationAppSwitchLongPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationAppSwitchLongPressAction);
                     mNavigationActionsPreferencesCat.removePreference(mEdgeLongSwipeAction);
                 } else {
                     mNavigationActionsPreferencesCat.addPreference(mNavigationBackLongPressAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeLongPressAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeDoubleTapAction);
-                    mNavigationActionsPreferencesCat.addPreference(mNavigationAppSwitchLongPressAction);
+                    mNavigationActionsPreferencesCat.addPreference(
+                            mNavigationAppSwitchLongPressAction);
 
                     mNavigationActionsPreferencesCat.removePreference(mEdgeLongSwipeAction);
                 }
