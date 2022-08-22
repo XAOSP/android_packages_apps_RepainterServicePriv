@@ -16,7 +16,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="altair_settings_activity_title">Additional settings</string>
+    <string name="altair_settings_activity_title">Altair ROM settings</string>
     <string name="altair_settings_activity_summary">Buttons, navigation, status bar, themes</string>
 
     <!-- Main menu entry titles -->
@@ -267,8 +267,8 @@
     <string name="theme_colors_monet_color_type_title">Accent color type</string>
     <string name="theme_colors_monet_color_override_title">Custom color</string>
     <string name="theme_colors_predefined_accent_colors_title">Accent colors</string>
-    <string name="theme_colors_monet_tint_surface_title">Tint surfaces</string>
-    <string name="theme_colors_monet_tint_surface_summary">Use accent color to create surface tint color</string>
+    <string name="theme_colors_monet_tint_surface_title">Tint neutral colors</string>
+    <string name="theme_colors_monet_tint_surface_summary">Use accent color to tint neutral colors for surfaces</string>
     <string name="theme_colors_reset_colors_title">Reset colors</string>
     <string name="theme_colors_reset_colors_summary">Reset custom and accent colors to default settings</string>
     <string name="theme_colors_reset_colors_message">This will reset the custom and accent colors back to their default settings. Are you sure you wish to continue?</string>
