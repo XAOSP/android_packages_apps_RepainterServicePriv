@@ -17,22 +17,36 @@
 
 package com.altair.settings.fragments.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.preference.PreferenceScreen;
+
 import com.android.internal.logging.nano.MetricsProto;
+import com.android.internal.util.custom.MonetUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
-import lineageos.providers.LineageSettings;
-
 public class MonetSettings extends SettingsPreferenceFragment {
     final static String TAG = "MonetSettings";
+
+    private Context mContext;
+
+    private MonetUtils mMonetUtils;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.monet_engine);
+
+        mContext = getActivity().getApplicationContext();
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        mMonetUtils = new MonetUtils(mContext);
+        if (!mMonetUtils.isSurfaceTintEnabled()) {
+            prefScreen.findPreference(MonetUtils.KEY_MONET_CHROMA_FACTOR).setEnabled(false);
+        }
     }
 
     @Override
