@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2022 crDroid Android Project
  * Copyright (C) 2022 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,48 +14,52 @@
  * limitations under the License.
  */
 
-package com.altair.settings.fragments.ui;
+package com.altair.settings.fragments.theme;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
-import android.provider.SearchIndexableResource;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.custom.ThemeUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settingslib.Utils;
 
 import java.util.List;
 
-public class FontsPicker extends SettingsPreferenceFragment {
+public class IconShapes extends SettingsPreferenceFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private String mCategory = ThemeUtils.FONT_KEY;
+    private String mCategory = ThemeUtils.ICON_SHAPE_KEY;
+    private String mTarget = "android";
 
     private List<String> mPkgs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_elements_font_title);
+        getActivity().setTitle(R.string.theme_elements_icon_shape_title);
 
         mThemeUtils = new ThemeUtils(getActivity());
-        mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "android");
+        mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, mTarget);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class FontsPicker extends SettingsPreferenceFragment {
                 R.layout.item_view, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         Adapter mAdapter = new Adapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -95,8 +98,8 @@ public class FontsPicker extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fonts_option,
-                    parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent,
+                    false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
@@ -104,33 +107,28 @@ public class FontsPicker extends SettingsPreferenceFragment {
         @Override
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
             String pkg = mPkgs.get(position);
-            String label = getLabel(holder.itemView.getContext(), pkg);
+
+            holder.image.setBackgroundDrawable(mThemeUtils.createShapeDrawable(pkg));
 
             String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
                 .filter(info -> info.isEnabled())
                 .map(info -> info.packageName)
                 .findFirst()
-                .orElse("android");
+                .orElse(mTarget);
 
-            holder.title.setText("android".equals(pkg) ? "Default" : label);
-            holder.title.setTextSize(20);
-            holder.title.setTypeface(getTypeface(holder.title.getContext(), pkg));
-            holder.name.setVisibility(View.GONE);
+            holder.name.setText(mTarget.equals(pkg) ? "Default"
+                    : getLabel(holder.name.getContext(), pkg));
 
-            if (currentPackageName.equals(pkg)) {
-                mAppliedPkg = pkg;
-                if (mSelectedPkg == null) {
-                    mSelectedPkg = pkg;
-                }
-            }
+            final boolean isDefault = mTarget.equals(currentPackageName) && mTarget.equals(pkg);
+            final int color = ColorUtils.setAlphaComponent(
+                     Utils.getColorAttrDefaultColor(getContext(), android.R.attr.textColorPrimary),
+                     pkg.equals(currentPackageName) || isDefault ? 255 : 61);
+            holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
 
-            holder.itemView.setActivated(pkg == mSelectedPkg);
+            holder.itemView.findViewById(R.id.option_tile).setBackgroundDrawable(null);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateActivatedStatus(mSelectedPkg, false);
-                    updateActivatedStatus(pkg, true);
-                    mSelectedPkg = pkg;
                     enableOverlays(position);
                 }
             });
@@ -143,34 +141,21 @@ public class FontsPicker extends SettingsPreferenceFragment {
 
         public class CustomViewHolder extends RecyclerView.ViewHolder {
             TextView name;
-            TextView title;
+            ImageView image;
             public CustomViewHolder(View itemView) {
                 super(itemView);
-                title = (TextView) itemView.findViewById(R.id.option_title);
                 name = (TextView) itemView.findViewById(R.id.option_label);
-            }
-        }
-
-        private void updateActivatedStatus(String pkg, boolean isActivated) {
-            int index = mPkgs.indexOf(pkg);
-            if (index < 0) {
-                return;
-            }
-            RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForAdapterPosition(index);
-            if (holder != null && holder.itemView != null) {
-                holder.itemView.setActivated(isActivated);
+                image = (ImageView) itemView.findViewById(R.id.option_thumbnail);
             }
         }
     }
 
-    public Typeface getTypeface(Context context, String pkg) {
+    public Drawable getDrawable(Context context, String pkg, String drawableName) {
         try {
             PackageManager pm = context.getPackageManager();
-            Resources res = pkg.equals("android") ? Resources.getSystem()
+            Resources res = pkg.equals(mTarget) ? Resources.getSystem()
                     : pm.getResourcesForApplication(pkg);
-            return Typeface.create(res.getString(
-                    res.getIdentifier("config_bodyFontFamily",
-                    "string", pkg)), Typeface.NORMAL);
+            return res.getDrawable(res.getIdentifier(drawableName, "drawable", pkg));
         }
         catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -190,6 +175,6 @@ public class FontsPicker extends SettingsPreferenceFragment {
     }
 
     public void enableOverlays(int position) {
-        mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), "android");
+        mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), mTarget);
     }
 }

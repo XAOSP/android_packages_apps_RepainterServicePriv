@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2022 crDroid Android Project
  * Copyright (C) 2022 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,16 +15,14 @@
  * limitations under the License.
  */
 
-package com.altair.settings.fragments.ui;
+package com.altair.settings.fragments.theme;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,48 +32,33 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.custom.MonetUtils;
 import com.android.internal.util.custom.ThemeUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settingslib.Utils;
 
 import java.util.List;
 
-public class AccentColors extends SettingsPreferenceFragment {
-    private static final String TAG = "AccentColors";
-
-    private static final String KEY_MONET_COLOR_ACCENT = "monet_engine_color_accent";
+public class NavbarStyles extends SettingsPreferenceFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private MonetUtils mMonetUtils;
-    private String mCategory = ThemeUtils.ACCENT_KEY;
-    private String mTarget = "android";
+    private String mCategory = ThemeUtils.NAVBAR_KEY;
+    private String mTarget = "com.android.systemui";
 
     private List<String> mPkgs;
-    private List<Integer> mThemeColors;
-
-    private ContentResolver mResolver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_colors_predefined_accent_colors_title);
-
-        mResolver = getActivity().getContentResolver();
+        getActivity().setTitle(R.string.theme_elements_navbar_title);
 
         mThemeUtils = new ThemeUtils(getActivity());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, mTarget);
-        mThemeColors = mThemeUtils.getColors();
-
-        mMonetUtils = new MonetUtils(getActivity());
     }
 
     @Override
@@ -84,7 +68,7 @@ public class AccentColors extends SettingsPreferenceFragment {
                 R.layout.item_view, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         Adapter mAdapter = new Adapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -113,43 +97,49 @@ public class AccentColors extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent,
-                    false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.navbar_option,
+                    parent, false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
-            String accentPkg = mPkgs.get(position);
+            String navPkg = mPkgs.get(position);
 
-            final int color = mThemeColors.get(position);
-            holder.image.setBackgroundResource(R.drawable.accent_background);
-            holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
+            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), navPkg,
+                    "ic_sysbar_back"));
+            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), navPkg,
+                    "ic_sysbar_home"));
+            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), navPkg,
+                    "ic_sysbar_recent"));
 
-            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
+            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory, mTarget).stream()
                 .filter(info -> info.isEnabled())
                 .map(info -> info.packageName)
                 .findFirst()
                 .orElse(mTarget);
-            holder.name.setText(mTarget.equals(accentPkg) ? "Default"
-                    : getLabel(holder.name.getContext(), accentPkg));
 
-            if (currentPackageName.equals(accentPkg)) {
-                mAppliedPkg = accentPkg;
+            holder.name.setText(mTarget.equals(navPkg) ? "Default"
+                    : getLabel(holder.name.getContext(), navPkg));
+
+            if (currentPackageName.equals(navPkg)) {
+                mAppliedPkg = navPkg;
                 if (mSelectedPkg == null) {
-                    mSelectedPkg = accentPkg;
+                    mSelectedPkg = navPkg;
                 }
             }
 
-            holder.itemView.setActivated(accentPkg == mSelectedPkg);
+            holder.itemView.setActivated(navPkg == mSelectedPkg);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     updateActivatedStatus(mSelectedPkg, false);
-                    updateActivatedStatus(accentPkg, true);
-                    mSelectedPkg = accentPkg;
+                    updateActivatedStatus(navPkg, true);
+                    mSelectedPkg = navPkg;
                     enableOverlays(position);
+                    Settings.System.putStringForUser(getContext().getContentResolver(),
+                            Settings.System.NAVBAR_STYLE, navPkg, UserHandle.USER_CURRENT);
                 }
             });
         }
@@ -161,11 +151,15 @@ public class AccentColors extends SettingsPreferenceFragment {
 
         public class CustomViewHolder extends RecyclerView.ViewHolder {
             TextView name;
-            ImageView image;
+            ImageView image1;
+            ImageView image2;
+            ImageView image3;
             public CustomViewHolder(View itemView) {
                 super(itemView);
                 name = (TextView) itemView.findViewById(R.id.option_label);
-                image = (ImageView) itemView.findViewById(R.id.option_thumbnail);
+                image1 = (ImageView) itemView.findViewById(R.id.image1);
+                image2 = (ImageView) itemView.findViewById(R.id.image2);
+                image3 = (ImageView) itemView.findViewById(R.id.image3);
             }
         }
 
@@ -182,11 +176,13 @@ public class AccentColors extends SettingsPreferenceFragment {
     }
 
     public Drawable getDrawable(Context context, String pkg, String drawableName) {
+        if (pkg.equals(mTarget))
+            pkg = "com.android.settings";
         try {
             PackageManager pm = context.getPackageManager();
-            Resources res = pkg.equals(mTarget) ? Resources.getSystem()
-                    : pm.getResourcesForApplication(pkg);
-            return res.getDrawable(res.getIdentifier(drawableName, "drawable", pkg));
+            Resources res = pm.getResourcesForApplication(pkg);
+            int resId = res.getIdentifier(drawableName, "drawable", pkg);
+            return res.getDrawable(resId);
         }
         catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -207,7 +203,5 @@ public class AccentColors extends SettingsPreferenceFragment {
 
     public void enableOverlays(int position) {
         mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), mTarget);
-        mMonetUtils.setAccentColor(
-                ColorStateList.valueOf(mThemeColors.get(position)).getDefaultColor());
     }
 }

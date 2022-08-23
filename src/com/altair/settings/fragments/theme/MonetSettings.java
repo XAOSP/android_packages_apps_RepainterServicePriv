@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.altair.settings.fragments.ui;
+package com.altair.settings.fragments.theme;
 
 import android.content.Context;
 import android.os.Bundle;

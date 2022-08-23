@@ -65,7 +65,7 @@
         <Preference
             android:key="android.theme.customization.accent_color"
             android:title="@string/theme_colors_predefined_accent_colors_title"
-            android:fragment="com.altair.settings.fragments.ui.AccentColors"/>
+            android:fragment="com.altair.settings.fragments.theme.AccentColors"/>
 
         <com.lineage.support.preferences.SecureSettingSwitchPreference
             android:key="monet_engine_tint_surface"
@@ -82,7 +82,7 @@
             android:key="monet_engine"
             android:title="@string/monet_settings_title"
             android:summary="@string/monet_settings_summary"
-            android:fragment="com.altair.settings.fragments.ui.MonetSettings" />
+            android:fragment="com.altair.settings.fragments.theme.MonetSettings" />
 
     </PreferenceCategory>
 
@@ -94,27 +94,27 @@
         <Preference
             android:key="android.theme.customization.font"
             android:title="@string/theme_elements_font_title"
-            android:fragment="com.altair.settings.fragments.ui.FontsPicker"/>
+            android:fragment="com.altair.settings.fragments.theme.FontsPicker"/>
 
         <Preference
             android:key="android.theme.customization.adaptive_icon_shape"
             android:title="@string/theme_elements_icon_shape_title"
-            android:fragment="com.altair.settings.fragments.ui.IconShapes"/>
+            android:fragment="com.altair.settings.fragments.theme.IconShapes"/>
 
         <Preference
             android:key="android.theme.customization.signal_icon"
             android:title="@string/theme_elements_signal_icon_title"
-            android:fragment="com.altair.settings.fragments.ui.SignalIcons"/>
+            android:fragment="com.altair.settings.fragments.theme.SignalIcons"/>
 
         <Preference
             android:key="android.theme.customization.wifi_icon"
             android:title="@string/theme_elements_wifi_icon_title"
-            android:fragment="com.altair.settings.fragments.ui.WifiIcons"/>
+            android:fragment="com.altair.settings.fragments.theme.WifiIcons"/>
 
         <Preference
             android:key="android.theme.customization.navbar"
             android:title="@string/theme_elements_navbar_title"
-            android:fragment="com.altair.settings.fragments.ui.NavbarStyles"/>
+            android:fragment="com.altair.settings.fragments.theme.NavbarStyles"/>
 
     </PreferenceCategory>
 

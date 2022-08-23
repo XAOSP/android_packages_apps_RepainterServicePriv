@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.altair.settings.fragments.ui;
+package com.altair.settings.fragments.theme;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -23,6 +24,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.util.custom.MonetUtils;
 import com.android.internal.util.custom.ThemeUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -44,22 +47,34 @@ import com.android.settingslib.Utils;
 
 import java.util.List;
 
-public class IconShapes extends SettingsPreferenceFragment {
+public class AccentColors extends SettingsPreferenceFragment {
+    private static final String TAG = "AccentColors";
+
+    private static final String KEY_MONET_COLOR_ACCENT = "monet_engine_color_accent";
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private String mCategory = ThemeUtils.ICON_SHAPE_KEY;
+    private MonetUtils mMonetUtils;
+    private String mCategory = ThemeUtils.ACCENT_KEY;
     private String mTarget = "android";
 
     private List<String> mPkgs;
+    private List<Integer> mThemeColors;
+
+    private ContentResolver mResolver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_elements_icon_shape_title);
+        getActivity().setTitle(R.string.theme_colors_predefined_accent_colors_title);
+
+        mResolver = getActivity().getContentResolver();
 
         mThemeUtils = new ThemeUtils(getActivity());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, mTarget);
+        mThemeColors = mThemeUtils.getColors();
+
+        mMonetUtils = new MonetUtils(getActivity());
     }
 
     @Override
@@ -106,29 +121,34 @@ public class IconShapes extends SettingsPreferenceFragment {
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
-            String pkg = mPkgs.get(position);
+            String accentPkg = mPkgs.get(position);
 
-            holder.image.setBackgroundDrawable(mThemeUtils.createShapeDrawable(pkg));
+            final int color = mThemeColors.get(position);
+            holder.image.setBackgroundResource(R.drawable.accent_background);
+            holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
 
             String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
                 .filter(info -> info.isEnabled())
                 .map(info -> info.packageName)
                 .findFirst()
                 .orElse(mTarget);
+            holder.name.setText(mTarget.equals(accentPkg) ? "Default"
+                    : getLabel(holder.name.getContext(), accentPkg));
 
-            holder.name.setText(mTarget.equals(pkg) ? "Default"
-                    : getLabel(holder.name.getContext(), pkg));
+            if (currentPackageName.equals(accentPkg)) {
+                mAppliedPkg = accentPkg;
+                if (mSelectedPkg == null) {
+                    mSelectedPkg = accentPkg;
+                }
+            }
 
-            final boolean isDefault = mTarget.equals(currentPackageName) && mTarget.equals(pkg);
-            final int color = ColorUtils.setAlphaComponent(
-                     Utils.getColorAttrDefaultColor(getContext(), android.R.attr.textColorPrimary),
-                     pkg.equals(currentPackageName) || isDefault ? 255 : 61);
-            holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
-
-            holder.itemView.findViewById(R.id.option_tile).setBackgroundDrawable(null);
+            holder.itemView.setActivated(accentPkg == mSelectedPkg);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    updateActivatedStatus(mSelectedPkg, false);
+                    updateActivatedStatus(accentPkg, true);
+                    mSelectedPkg = accentPkg;
                     enableOverlays(position);
                 }
             });
@@ -146,6 +166,17 @@ public class IconShapes extends SettingsPreferenceFragment {
                 super(itemView);
                 name = (TextView) itemView.findViewById(R.id.option_label);
                 image = (ImageView) itemView.findViewById(R.id.option_thumbnail);
+            }
+        }
+
+        private void updateActivatedStatus(String pkg, boolean isActivated) {
+            int index = mPkgs.indexOf(pkg);
+            if (index < 0) {
+                return;
+            }
+            RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForAdapterPosition(index);
+            if (holder != null && holder.itemView != null) {
+                holder.itemView.setActivated(isActivated);
             }
         }
     }
@@ -176,5 +207,7 @@ public class IconShapes extends SettingsPreferenceFragment {
 
     public void enableOverlays(int position) {
         mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), mTarget);
+        mMonetUtils.setAccentColor(
+                ColorStateList.valueOf(mThemeColors.get(position)).getDefaultColor());
     }
 }
