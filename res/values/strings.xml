@@ -182,6 +182,10 @@
     <string name="status_bar_icons_title">Status bar icons</string>
     <string name="status_bar_system_icons_title">System icons</string>
     <string name="status_bar_system_icons_summary">Control which status bar icons are shown</string>
+    <string name="status_bar_mic_camera_privacy_indicator_title">Microphone and camera privacy indicator</string>
+    <string name="status_bar_mic_camera_privacy_indicator_summary">Show separate indicator when any app uses microphone or camera</string>
+    <string name="status_bar_location_privacy_indicator_title">Location privacy indicator</string>
+    <string name="status_bar_location_privacy_indicator_summary">Show separate indicator when any app uses location services</string>
 
     <string name="status_bar_network_category_title">Network</string>
 
