@@ -214,7 +214,7 @@ public class CustomButtonSettings extends DashboardFragment implements
                 Action.NOTHING);
 
         final boolean navkeysEnabled = LineageSettings.System.getIntForUser(
-                getActivity().getContentResolver(), LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
+                mResolver, LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
                 UserHandle.USER_CURRENT) != 0;
         updateDisableNavkeysCategories(navkeysEnabled, /* force */ true);
 
@@ -349,16 +349,15 @@ public class CustomButtonSettings extends DashboardFragment implements
             mVolumeKeyCursorControl = initList(KEY_VOLUME_KEY_CURSOR_CONTROL,
                     cursorControlAction);
 
-            int swapVolumeKeys = LineageSettings.System.getInt(getContentResolver(),
+            int swapVolumeKeys = LineageSettings.System.getInt(mResolver,
                     LineageSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0);
             mSwapVolumeButtons = prefScreen.findPreference(KEY_SWAP_VOLUME_BUTTONS);
             if (mSwapVolumeButtons != null) {
                 mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
             }
 
-            final boolean volumePanelOnLeft = LineageSettings.Secure.getIntForUser(
-                    getContentResolver(), LineageSettings.Secure.VOLUME_PANEL_ON_LEFT, 0,
-                    UserHandle.USER_CURRENT) != 0;
+            final boolean volumePanelOnLeft = LineageSettings.Secure.getIntForUser(mResolver,
+                    LineageSettings.Secure.VOLUME_PANEL_ON_LEFT, 0, UserHandle.USER_CURRENT) != 0;
             mVolumePanelOnLeft = prefScreen.findPreference(KEY_VOLUME_PANEL_ON_LEFT);
             if (mVolumePanelOnLeft != null) {
                 mVolumePanelOnLeft.setChecked(volumePanelOnLeft);
@@ -460,7 +459,7 @@ public class CustomButtonSettings extends DashboardFragment implements
 
         // Power button ends calls.
         if (mPowerEndCall != null) {
-            final int incallPowerBehavior = Settings.Secure.getInt(getContentResolver(),
+            final int incallPowerBehavior = Settings.Secure.getInt(mResolver,
                     Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,
                     Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
             final boolean powerButtonEndsCall =
@@ -470,7 +469,7 @@ public class CustomButtonSettings extends DashboardFragment implements
 
         // Home button answers calls.
         if (mHomeAnswerCall != null) {
-            final int incallHomeBehavior = LineageSettings.Secure.getInt(getContentResolver(),
+            final int incallHomeBehavior = LineageSettings.Secure.getInt(mResolver,
                     LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR,
                     LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR_DEFAULT);
             final boolean homeButtonAnswersCall =
@@ -506,14 +505,14 @@ public class CustomButtonSettings extends DashboardFragment implements
         String value = (String) newValue;
         int index = pref.findIndexOfValue(value);
         pref.setSummary(pref.getEntries()[index]);
-        LineageSettings.System.putInt(getContentResolver(), setting, Integer.valueOf(value));
+        LineageSettings.System.putInt(mResolver, setting, Integer.valueOf(value));
     }
 
     private void handleSystemListChange(ListPreference pref, Object newValue, String setting) {
         String value = (String) newValue;
         int index = pref.findIndexOfValue(value);
         pref.setSummary(pref.getEntries()[index]);
-        Settings.System.putInt(getContentResolver(), setting, Integer.valueOf(value));
+        Settings.System.putInt(mResolver, setting, Integer.valueOf(value));
     }
 
     @Override
@@ -682,10 +681,10 @@ public class CustomButtonSettings extends DashboardFragment implements
                 /* Disable the re-orient functionality */
                 value = 0;
             }
-            LineageSettings.System.putInt(getActivity().getContentResolver(),
+            LineageSettings.System.putInt(mResolver,
                     LineageSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION, value);
         } else if (preference == mVolumePanelOnLeft) {
-            LineageSettings.Secure.putIntForUser(getActivity().getContentResolver(),
+            LineageSettings.Secure.putIntForUser(mResolver,
                     LineageSettings.Secure.VOLUME_PANEL_ON_LEFT,
                     mVolumePanelOnLeft.isChecked() ? 1 : 0, UserHandle.USER_CURRENT);
             return true;
@@ -701,14 +700,14 @@ public class CustomButtonSettings extends DashboardFragment implements
     }
 
     private void handleTogglePowerButtonEndsCallPreferenceClick() {
-        Settings.Secure.putInt(getContentResolver(),
+        Settings.Secure.putInt(mResolver,
                 Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR, (mPowerEndCall.isChecked()
                         ? Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP
                         : Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF));
     }
 
     private void handleToggleHomeButtonAnswersCallPreferenceClick() {
-        LineageSettings.Secure.putInt(getContentResolver(),
+        LineageSettings.Secure.putInt(mResolver,
                 LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR, (mHomeAnswerCall.isChecked()
                         ? LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR_ANSWER
                         : LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR_DO_NOTHING));
