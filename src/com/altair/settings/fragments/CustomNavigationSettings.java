@@ -198,7 +198,7 @@ public class CustomNavigationSettings extends DashboardFragment implements
                 mNavigationActionsPreferencesCat.removePreference(mEnableTaskbar);
             } else {
                 mEnableTaskbar.setOnPreferenceChangeListener(this);
-                mEnableTaskbar.setChecked(LineageSettings.System.getInt(getContentResolver(),
+                mEnableTaskbar.setChecked(LineageSettings.System.getInt(mResolver,
                         LineageSettings.System.ENABLE_TASKBAR,
                         isTablet(getContext()) ? 1 : 0) == 1);
                 toggleTaskBarDependencies(mEnableTaskbar.isChecked());
@@ -269,14 +269,14 @@ public class CustomNavigationSettings extends DashboardFragment implements
         String value = (String) newValue;
         int index = pref.findIndexOfValue(value);
         pref.setSummary(pref.getEntries()[index]);
-        LineageSettings.System.putInt(getContentResolver(), setting, Integer.valueOf(value));
+        LineageSettings.System.putInt(mResolver, setting, Integer.valueOf(value));
     }
 
     private void handleSystemListChange(ListPreference pref, Object newValue, String setting) {
         String value = (String) newValue;
         int index = pref.findIndexOfValue(value);
         pref.setSummary(pref.getEntries()[index]);
-        Settings.System.putInt(getContentResolver(), setting, Integer.valueOf(value));
+        Settings.System.putInt(mResolver, setting, Integer.valueOf(value));
     }
 
     @Override
@@ -307,8 +307,8 @@ public class CustomNavigationSettings extends DashboardFragment implements
                 // Let's switch to gestural mode if user previously had 2 buttons enabled.
                 setButtonNavigationMode(NAV_BAR_MODE_GESTURAL_OVERLAY);
             }
-            LineageSettings.System.putInt(getContentResolver(),
-                    LineageSettings.System.ENABLE_TASKBAR, ((Boolean) newValue) ? 1 : 0);
+            LineageSettings.System.putInt(mResolver, LineageSettings.System.ENABLE_TASKBAR,
+                    ((Boolean) newValue) ? 1 : 0);
             return true;
         }
         return false;
@@ -361,7 +361,7 @@ public class CustomNavigationSettings extends DashboardFragment implements
     }
 
     private void updateDisableNavkeysOption() {
-        boolean enabled = LineageSettings.System.getIntForUser(getActivity().getContentResolver(),
+        boolean enabled = LineageSettings.System.getIntForUser(mResolver,
                 LineageSettings.System.FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) != 0;
 
         mDisableNavigationKeys.setChecked(enabled);
