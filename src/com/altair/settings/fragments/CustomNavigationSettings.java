@@ -329,30 +329,19 @@ public class CustomNavigationSettings extends DashboardFragment implements
         }
     }
 
+    private void enablePreference(Preference pref, boolean enabled) {
+        if (pref != null) {
+            pref.setEnabled(enabled);
+        }
+    }
+
     private void toggleTaskBarDependencies(boolean enabled) {
-        if (mNavigationArrowKeys != null) {
-            mNavigationArrowKeys.setEnabled(!enabled);
-        }
-
-        if (mNavBarInverse != null) {
-            mNavBarInverse.setEnabled(!enabled);
-        }
-
-        if (mNavigationBackLongPressAction != null) {
-            mNavigationBackLongPressAction.setEnabled(!enabled);
-        }
-
-        if (mNavigationHomeLongPressAction != null) {
-            mNavigationHomeLongPressAction.setEnabled(!enabled);
-        }
-
-        if (mNavigationHomeDoubleTapAction != null) {
-            mNavigationHomeDoubleTapAction.setEnabled(!enabled);
-        }
-
-        if (mNavigationAppSwitchLongPressAction != null) {
-            mNavigationAppSwitchLongPressAction.setEnabled(!enabled);
-        }
+        enablePreference(mNavigationArrowKeys, !enabled);
+        enablePreference(mNavBarInverse, !enabled);
+        enablePreference(mNavigationBackLongPressAction, !enabled);
+        enablePreference(mNavigationHomeLongPressAction, !enabled);
+        enablePreference(mNavigationHomeDoubleTapAction, !enabled);
+        enablePreference(mNavigationAppSwitchLongPressAction, !enabled);
     }
 
     private static void writeDisableNavkeysOption(Context context, boolean enabled) {
