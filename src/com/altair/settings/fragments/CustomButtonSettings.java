@@ -568,6 +568,12 @@ public class CustomButtonSettings extends DashboardFragment implements
         return false;
     }
 
+    private void enablePreference(Preference pref, boolean enabled) {
+        if (pref != null) {
+            pref.setEnabled(enabled);
+        }
+    }
+
     private void updateDisableNavkeysCategories(boolean navbarEnabled, boolean force) {
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
@@ -594,44 +600,24 @@ public class CustomButtonSettings extends DashboardFragment implements
 
         /* Toggle hardkey control availability depending on navbar state */
         if (backCategory != null) {
-            if (mBackLongPressAction != null) {
-                mBackLongPressAction.setEnabled(!navbarEnabled);
-            }
+            enablePreference(mBackLongPressAction, !navbarEnabled);
         }
         if (homeCategory != null) {
-            if (mHomeAnswerCall != null) {
-                mHomeAnswerCall.setEnabled(!navbarEnabled);
-            }
-            if (mHomeLongPressAction != null) {
-                mHomeLongPressAction.setEnabled(!navbarEnabled);
-            }
-            if (mHomeDoubleTapAction != null) {
-                mHomeDoubleTapAction.setEnabled(!navbarEnabled);
-            }
+            enablePreference(mHomeAnswerCall, !navbarEnabled);
+            enablePreference(mHomeLongPressAction, !navbarEnabled);
+            enablePreference(mHomeDoubleTapAction, !navbarEnabled);
         }
         if (menuCategory != null) {
-            if (mMenuPressAction != null) {
-                mMenuPressAction.setEnabled(!navbarEnabled);
-            }
-            if (mMenuLongPressAction != null) {
-                mMenuLongPressAction.setEnabled(!navbarEnabled);
-            }
+            enablePreference(mMenuPressAction, !navbarEnabled);
+            enablePreference(mMenuLongPressAction, !navbarEnabled);
         }
         if (assistCategory != null) {
-            if (mAssistPressAction != null) {
-                mAssistPressAction.setEnabled(!navbarEnabled);
-            }
-            if (mAssistLongPressAction != null) {
-                mAssistLongPressAction.setEnabled(!navbarEnabled);
-            }
+            enablePreference(mAssistPressAction, !navbarEnabled);
+            enablePreference(mAssistLongPressAction, !navbarEnabled);
         }
         if (appSwitchCategory != null) {
-            if (mAppSwitchPressAction != null) {
-                mAppSwitchPressAction.setEnabled(!navbarEnabled);
-            }
-            if (mAppSwitchLongPressAction != null) {
-                mAppSwitchLongPressAction.setEnabled(!navbarEnabled);
-            }
+            enablePreference(mAppSwitchPressAction, !navbarEnabled);
+            enablePreference(mAppSwitchLongPressAction, !navbarEnabled);
         }
     }
 
