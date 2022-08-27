@@ -56,6 +56,7 @@ import com.android.settingslib.search.SearchIndexable;
 
 import static com.android.systemui.shared.recents.utilities.Utilities.isTablet;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -205,26 +206,39 @@ public class CustomNavigationSettings extends DashboardFragment implements
             }
         }
 
+        List<Integer> unsupportedValues = new ArrayList<>();
+        List<String> entries = new ArrayList<>(
+                Arrays.asList(res.getStringArray(R.array.hardware_keys_action_entries)));
+        List<String> values = new ArrayList<>(
+                Arrays.asList(res.getStringArray(R.array.hardware_keys_action_values)));
+
         // Override key actions on Go devices in order to hide any unsupported features
         if (ActivityManager.isLowRamDeviceStatic()) {
-            String[] actionEntriesGo = res.getStringArray(R.array.hardware_keys_action_entries_go);
-            String[] actionValuesGo = res.getStringArray(R.array.hardware_keys_action_values_go);
-
-            mNavigationBackLongPressAction.setEntries(actionEntriesGo);
-            mNavigationBackLongPressAction.setEntryValues(actionValuesGo);
-
-            mNavigationHomeLongPressAction.setEntries(actionEntriesGo);
-            mNavigationHomeLongPressAction.setEntryValues(actionValuesGo);
-
-            mNavigationHomeDoubleTapAction.setEntries(actionEntriesGo);
-            mNavigationHomeDoubleTapAction.setEntryValues(actionValuesGo);
-
-            mNavigationAppSwitchLongPressAction.setEntries(actionEntriesGo);
-            mNavigationAppSwitchLongPressAction.setEntryValues(actionValuesGo);
-
-            mEdgeLongSwipeAction.setEntries(actionEntriesGo);
-            mEdgeLongSwipeAction.setEntryValues(actionValuesGo);
+            unspportedValues.add(Action.SPLIT_SCREEN.ordinal());
         }
+
+        for (int unsupportedValue: unsupportedValues) {
+            entries.remove(unsupportedValue);
+            values.remove(unsupportedValue);
+        }
+
+        String[] actionEntries = entries.toArray(new String[0]);
+        String[] actionValues = values.toArray(new String[0]);
+
+        mNavigationBackLongPressAction.setEntries(actionEntries);
+        mNavigationBackLongPressAction.setEntryValues(actionValues);
+
+        mNavigationHomeLongPressAction.setEntries(actionEntries);
+        mNavigationHomeLongPressAction.setEntryValues(actionValues);
+
+        mNavigationHomeDoubleTapAction.setEntries(actionEntries);
+        mNavigationHomeDoubleTapAction.setEntryValues(actionValues);
+
+        mNavigationAppSwitchLongPressAction.setEntries(actionEntries);
+        mNavigationAppSwitchLongPressAction.setEntryValues(actionValues);
+
+        mEdgeLongSwipeAction.setEntries(actionEntries);
+        mEdgeLongSwipeAction.setEntryValues(actionValues);
     }
 
     @Override

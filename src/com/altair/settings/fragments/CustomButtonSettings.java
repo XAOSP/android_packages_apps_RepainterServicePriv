@@ -53,6 +53,7 @@ import com.android.settingslib.search.SearchIndexable;
 
 import static org.lineageos.internal.util.DeviceKeysConstants.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -399,47 +400,65 @@ public class CustomButtonSettings extends DashboardFragment implements
             mSwapCapacitiveKeys.setOnPreferenceChangeListener(this);
         }
 
+        List<Integer> unsupportedValues = new ArrayList<>();
+        List<String> entries = new ArrayList<>(
+                Arrays.asList(res.getStringArray(R.array.hardware_keys_action_entries)));
+        List<String> values = new ArrayList<>(
+                Arrays.asList(res.getStringArray(R.array.hardware_keys_action_values)));
+
         // Override key actions on Go devices in order to hide any unsupported features
         if (ActivityManager.isLowRamDeviceStatic()) {
-            String[] actionEntriesGo = res.getStringArray(R.array.hardware_keys_action_entries_go);
-            String[] actionValuesGo = res.getStringArray(R.array.hardware_keys_action_values_go);
+            unspportedValues.add(Action.SPLIT_SCREEN.ordinal());
+        }
 
-            if (hasBackKey) {
-                mBackLongPressAction.setEntries(actionEntriesGo);
-                mBackLongPressAction.setEntryValues(actionValuesGo);
-            }
+        for (int unsupportedValue: unsupportedValues) {
+            entries.remove(unsupportedValue);
+            values.remove(unsupportedValue);
+        }
 
-            if (hasHomeKey) {
-                mHomeLongPressAction.setEntries(actionEntriesGo);
-                mHomeLongPressAction.setEntryValues(actionValuesGo);
+        for (int unsupportedValue: unsupportedValues) {
+            entries.remove(unsupportedValue);
+            values.remove(unsupportedValue);
+        }
 
-                mHomeDoubleTapAction.setEntries(actionEntriesGo);
-                mHomeDoubleTapAction.setEntryValues(actionValuesGo);
-            }
+        String[] actionEntries = entries.toArray(new String[0]);
+        String[] actionValues = values.toArray(new String[0]);
 
-            if (hasMenuKey) {
-                mMenuPressAction.setEntries(actionEntriesGo);
-                mMenuPressAction.setEntryValues(actionValuesGo);
+        if (hasBackKey) {
+            mBackLongPressAction.setEntries(actionEntries);
+            mBackLongPressAction.setEntryValues(actionValues);
+        }
 
-                mMenuLongPressAction.setEntries(actionEntriesGo);
-                mMenuLongPressAction.setEntryValues(actionValuesGo);
-            }
+        if (hasHomeKey) {
+            mHomeLongPressAction.setEntries(actionEntries);
+            mHomeLongPressAction.setEntryValues(actionValues);
 
-            if (hasAssistKey) {
-                mAssistPressAction.setEntries(actionEntriesGo);
-                mAssistPressAction.setEntryValues(actionValuesGo);
+            mHomeDoubleTapAction.setEntries(actionEntries);
+            mHomeDoubleTapAction.setEntryValues(actionValues);
+        }
 
-                mAssistLongPressAction.setEntries(actionEntriesGo);
-                mAssistLongPressAction.setEntryValues(actionValuesGo);
-            }
+        if (hasMenuKey) {
+            mMenuPressAction.setEntries(actionEntries);
+            mMenuPressAction.setEntryValues(actionValues);
 
-            if (hasAppSwitchKey) {
-                mAppSwitchPressAction.setEntries(actionEntriesGo);
-                mAppSwitchPressAction.setEntryValues(actionValuesGo);
+            mMenuLongPressAction.setEntries(actionEntries);
+            mMenuLongPressAction.setEntryValues(actionValues);
+        }
 
-                mAppSwitchLongPressAction.setEntries(actionEntriesGo);
-                mAppSwitchLongPressAction.setEntryValues(actionValuesGo);
-            }
+        if (hasAssistKey) {
+            mAssistPressAction.setEntries(actionEntries);
+            mAssistPressAction.setEntryValues(actionValues);
+
+            mAssistLongPressAction.setEntries(actionEntries);
+            mAssistLongPressAction.setEntryValues(actionValues);
+        }
+
+        if (hasAppSwitchKey) {
+            mAppSwitchPressAction.setEntries(actionEntries);
+            mAppSwitchPressAction.setEntryValues(actionValues);
+
+            mAppSwitchLongPressAction.setEntries(actionEntries);
+            mAppSwitchLongPressAction.setEntryValues(actionValues);
         }
     }
 
