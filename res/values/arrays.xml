@@ -280,14 +280,71 @@
     <!-- Monet engine color type -->
     <string-array name="monet_engine_color_type_entries" translatable="false">
         <item>@string/monet_engine_color_type_wallpaper</item>
-        <item>@string/monet_engine_color_type_custom</item>
         <item>@string/monet_engine_color_type_theme</item>
     </string-array>
 
     <string-array name="monet_engine_color_type_values" translatable="false">
         <item>0</item>
         <item>1</item>
-        <item>2</item>
+    </string-array>
+
+    <!-- Predefined theme accent colors -->
+    <string-array name="theme_accent_color_values">
+        <item>#000000</item> <!-- Wallpaper -->
+        <item>#1a73e8</item> <!-- Google Blue -->
+        <item>#ffb300</item> <!-- Material Amber -->
+        <item>#1e88e5</item> <!-- Material Blue -->
+        <item>#6d4c41</item> <!-- Material Brown -->
+        <item>#00acc1</item> <!-- Material Cyan -->
+        <item>#f4511e</item> <!-- Material Deep Orange -->
+        <item>#5e35b1</item> <!-- Material Deep Purple -->
+        <item>#43a047</item> <!-- Material Green -->
+        <item>#3949ab</item> <!-- Material Indigo -->
+        <item>#039be5</item> <!-- Material Light Blue -->
+        <item>#7cb342</item> <!-- Material Light Green -->
+        <item>#c0ca33</item> <!-- Material Lime -->
+        <item>#fb8c00</item> <!-- Material Orange -->
+        <item>#d81b60</item> <!-- Material Pink -->
+        <item>#8e24aa</item> <!-- Material Purple -->
+        <item>#e53935</item> <!-- Material Red -->
+        <item>#00897b</item> <!-- Material Teal -->
+        <item>#fdd835</item> <!-- Material Yellow -->
+        <item>#0857c3</item> <!-- Pantone Blue -->
+        <item>#00873e</item> <!-- Pantone Green -->
+        <item>#de7c00</item> <!-- Pantone Orange -->
+        <item>#da1984</item> <!-- Pantone Pink -->
+        <item>#6a397b</item> <!-- Pantone Purple -->
+        <item>#d01c1f</item> <!-- Pantone Red -->
+        <item>#f1c400</item> <!-- Pantone Yellow -->
+    </string-array>
+
+    <string-array name="theme_accent_color_names" translatable="false">
+        <item>@string/theme_accent_color_wallpaper</item>
+        <item>@string/theme_accent_color_google_blue</item>
+        <item>@string/theme_accent_color_material_amber</item>
+        <item>@string/theme_accent_color_material_blue</item>
+        <item>@string/theme_accent_color_material_brown</item>
+        <item>@string/theme_accent_color_material_cyan</item>
+        <item>@string/theme_accent_color_material_deep_orange</item>
+        <item>@string/theme_accent_color_material_deep_purple</item>
+        <item>@string/theme_accent_color_material_green</item>
+        <item>@string/theme_accent_color_material_indigo</item>
+        <item>@string/theme_accent_color_material_light_blue</item>
+        <item>@string/theme_accent_color_material_light_green</item>
+        <item>@string/theme_accent_color_material_lime</item>
+        <item>@string/theme_accent_color_material_orange</item>
+        <item>@string/theme_accent_color_material_pink</item>
+        <item>@string/theme_accent_color_material_purple</item>
+        <item>@string/theme_accent_color_material_red</item>
+        <item>@string/theme_accent_color_material_teal</item>
+        <item>@string/theme_accent_color_material_yellow</item>
+        <item>@string/theme_accent_color_pantone_blue</item>
+        <item>@string/theme_accent_color_pantone_green</item>
+        <item>@string/theme_accent_color_pantone_orange</item>
+        <item>@string/theme_accent_color_pantone_pink</item>
+        <item>@string/theme_accent_color_pantone_purple</item>
+        <item>@string/theme_accent_color_pantone_red</item>
+        <item>@string/theme_accent_color_pantone_yellow</item>
     </string-array>
 
 </resources>

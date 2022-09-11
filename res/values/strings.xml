@@ -283,9 +283,9 @@
     <string name="theme_colors_predefined_accent_colors_title">Accent colors</string>
     <string name="theme_colors_monet_tint_surface_title">Tint neutral colors</string>
     <string name="theme_colors_monet_tint_surface_summary">Use accent color to tint neutral colors for surfaces</string>
-    <string name="theme_colors_reset_colors_title">Reset colors</string>
-    <string name="theme_colors_reset_colors_summary">Reset custom and accent colors to default settings</string>
-    <string name="theme_colors_reset_colors_message">This will reset the custom and accent colors back to their default settings. Are you sure you wish to continue?</string>
+    <string name="theme_colors_reset_settings_title">Reset color settings</string>
+    <string name="theme_colors_reset_settings_summary">Restore accent color and settings to defaults</string>
+    <string name="theme_colors_reset_settings_message">This will restore the accent color and associated settings to their defaults values. Are you sure you wish to continue?</string>
 
     <string name="theme_elements_category_title">Theme elements</string>
     <string name="theme_elements_font_title">Font</string>
@@ -301,11 +301,35 @@
     <string name="monet_engine_chroma_factor_title">Chroma factor</string>
     <string name="monet_engine_linear_lightness_title">Use linear lightness</string>
 
-    <string name="monet_engine_color_type_wallpaper">Default</string>
-    <string name="monet_engine_color_type_custom">Custom color</string>
-    <string name="monet_engine_color_type_theme">Built-in or theme color</string>
+    <string name="monet_engine_color_type_wallpaper">Wallpaper</string>
+    <string name="monet_engine_color_type_theme">Predefined color</string>
 
-    <string name="theme_monet_warning">Using a predefined accent color will override the Monet theme engine (as will some Substratum themes that allow changing the accent color). If you wish to tweak Monet settings, you must leave the accent color set to Default.</string>
+    <string name="theme_accent_color_wallpaper">Wallpaper (default)</string>
+    <string name="theme_accent_color_google_blue">Google Blue</string>
+    <string name="theme_accent_color_material_amber">Material Amber</string>
+    <string name="theme_accent_color_material_blue">Material Blue</string>
+    <string name="theme_accent_color_material_brown">Material Brown</string>
+    <string name="theme_accent_color_material_cyan">Material Cyan</string>
+    <string name="theme_accent_color_material_deep_orange">Material Deep Orange</string>
+    <string name="theme_accent_color_material_deep_purple">Material Deep Purple</string>
+    <string name="theme_accent_color_material_green">Material Green</string>
+    <string name="theme_accent_color_material_indigo">Material Indigo</string>
+    <string name="theme_accent_color_material_light_blue">Material Light Blue</string>
+    <string name="theme_accent_color_material_light_green">Material Light Green</string>
+    <string name="theme_accent_color_material_lime">Material Lime</string>
+    <string name="theme_accent_color_material_orange">Material Orange</string>
+    <string name="theme_accent_color_material_pink">Material Pink</string>
+    <string name="theme_accent_color_material_purple">Material Purple</string>
+    <string name="theme_accent_color_material_red">Material Red</string>
+    <string name="theme_accent_color_material_teal">Material Teal</string>
+    <string name="theme_accent_color_material_yellow">Material Yellow</string>
+    <string name="theme_accent_color_pantone_blue">Pantone Blue</string>
+    <string name="theme_accent_color_pantone_green">Pantone Green</string>
+    <string name="theme_accent_color_pantone_orange">Pantone Orange</string>
+    <string name="theme_accent_color_pantone_pink">Pantone Pink</string>
+    <string name="theme_accent_color_pantone_purple">Pantone Purple</string>
+    <string name="theme_accent_color_pantone_red">Pantone Red</string>
+    <string name="theme_accent_color_pantone_yellow">Pantone Yellow</string>
 
     <!-- USER INTERFACE -->
     <string name="power_menu_title">Power menu</string>

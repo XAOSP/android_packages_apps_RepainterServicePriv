@@ -20,6 +20,7 @@ import android.app.UiModeManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
@@ -40,6 +41,7 @@ import com.android.settingslib.search.SearchIndexable;
 
 import com.lineage.support.colorpicker.SecureSettingColorPickerPreference;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,25 +51,28 @@ public class CustomThemeSettings extends DashboardFragment implements
     private static final String TAG = "CustomThemeSettings";
 
     private static final String KEY_THEME_DARK_UI_MODE = "theme_dark_ui_mode";
-    private static final String KEY_THEME_RESET_COLORS = "theme_colors_reset_colors";
+    private static final String KEY_THEME_COLORS_ACCENT_COLOR = "theme_colors_accent_color";
+    private static final String KEY_THEME_COLORS_RESET_SETTINGS = "theme_colors_reset_settings";
     private static final String KEY_THEME_FONT = ThemeUtils.FONT_KEY;
-    private static final String KEY_THEME_ACCENT_COLOR = ThemeUtils.ACCENT_KEY;
     private static final String KEY_THEME_ICON_SHAPE = ThemeUtils.ICON_SHAPE_KEY;
     private static final String KEY_THEME_SIGNAL_ICON = ThemeUtils.SIGNAL_ICON_KEY;
     private static final String KEY_THEME_WIFI_ICON = ThemeUtils.WIFI_ICON_KEY;
     private static final String KEY_THEME_NAVBAR_STYLE = ThemeUtils.NAVBAR_KEY;
 
     private Context mContext;
+    private Resources mResources;
 
     private UiModeManager mUiModeManager;
     private ThemeUtils mThemeUtils;
     private MonetUtils mMonetUtils;
 
+    private List<String> mAccentColorValues;
+    private List<String> mAccentColorNames;
+
     private DarkModePreference mDarkMode;
 
-    private SecureSettingColorPickerPreference mMonetColorOverridePreference;
     private Preference mAccentColorPreference;
-    private Preference mResetColorsPreference;
+    private Preference mResetSettingsPreference;
 
     private Preference mFontPreference;
     private Preference mIconShapePreference;
@@ -85,6 +90,7 @@ public class CustomThemeSettings extends DashboardFragment implements
         super.onCreate(savedInstanceState);
 
         mContext = getActivity().getApplicationContext();
+        mResources = getResources();
 
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
@@ -92,14 +98,18 @@ public class CustomThemeSettings extends DashboardFragment implements
         mThemeUtils = new ThemeUtils(mContext);
         mMonetUtils = new MonetUtils(mContext);
 
+        mAccentColorValues = Arrays.asList(mResources.getStringArray(
+                R.array.theme_accent_color_values));
+        mAccentColorNames = Arrays.asList(mResources.getStringArray(
+                R.array.theme_accent_color_names));
+
         mDarkMode = findPreference(KEY_THEME_DARK_UI_MODE);
         mDarkMode.setOnPreferenceChangeListener(this);
 
-        mMonetColorOverridePreference = prefScreen.findPreference(
-                MonetUtils.KEY_MONET_COLOR_OVERRIDE);
-        mAccentColorPreference = prefScreen.findPreference(KEY_THEME_ACCENT_COLOR);
-        updateSummary(mAccentColorPreference, "android");
-        mResetColorsPreference = prefScreen.findPreference(KEY_THEME_RESET_COLORS);
+        mAccentColorPreference = prefScreen.findPreference(KEY_THEME_COLORS_ACCENT_COLOR);
+        updateAccentColorSummary();
+
+        mResetSettingsPreference = prefScreen.findPreference(KEY_THEME_COLORS_RESET_SETTINGS);
 
         mFontPreference = prefScreen.findPreference(KEY_THEME_FONT);
         updateSummary(mFontPreference, "android");
@@ -111,8 +121,6 @@ public class CustomThemeSettings extends DashboardFragment implements
         updateSummary(mWiFiIconPreference, "android");
         mNavbarStylePreference = prefScreen.findPreference(KEY_THEME_NAVBAR_STYLE);
         updateSummary(mNavbarStylePreference, "com.android.systemui");
-
-        updatePreferences();
     }
 
     @Override
@@ -147,8 +155,8 @@ public class CustomThemeSettings extends DashboardFragment implements
             case KEY_THEME_DARK_UI_MODE:
                 mUiModeManager.setNightModeActivated((boolean) newValue);
                 break;
-            case KEY_THEME_ACCENT_COLOR:
-                updateSummary(mAccentColorPreference, "android");
+            case KEY_THEME_COLORS_ACCENT_COLOR:
+                updateAccentColorSummary();
                 break;
             case KEY_THEME_FONT:
                 updateSummary(mFontPreference, "android");
@@ -163,23 +171,23 @@ public class CustomThemeSettings extends DashboardFragment implements
                 updateSummary(mNavbarStylePreference, "com.android.systemui");
                 break;
         }
-        updatePreferences();
         return true;
     }
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if (preference == mResetColorsPreference) {
+        if (preference == mResetSettingsPreference) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.theme_colors_reset_colors_title)
-                    .setMessage(R.string.theme_colors_reset_colors_message)
+                    .setTitle(R.string.theme_colors_reset_settings_title)
+                    .setMessage(R.string.theme_colors_reset_settings_message)
                     .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
                              mThemeUtils.setOverlayEnabled(ThemeUtils.ACCENT_KEY, "android",
                                     "android");
                              updateSummary(mAccentColorPreference, "android");
-                             mMonetUtils.setOverrideColor(-1);
-                             mMonetUtils.resetAccentColor();
+                             mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
+                             mMonetUtils.setSurfaceTintEnabled(true);
+                             mMonetUtils.setAccurateShadesEnabled(true);
                         }
                     })
                     .setNegativeButton(R.string.dlg_cancel, null);
@@ -203,10 +211,18 @@ public class CustomThemeSettings extends DashboardFragment implements
                 : labels.get(pkgs.indexOf(currentPackageName)));
     }
 
-    public void updatePreferences() {
-        final int colorType = mMonetUtils.getColorType();
-        mMonetColorOverridePreference.setEnabled(colorType == MonetUtils.COLOR_TYPE_CUSTOM);
-        mAccentColorPreference.setEnabled(colorType == MonetUtils.COLOR_TYPE_INTERNAL);
+    public void updateAccentColorSummary() {
+        if (mMonetUtils.isAccentColorSet()) {
+            final String color = String.format("#%06X", (0xFFFFFF & mMonetUtils.getAccentColor()));
+            final int index = mAccentColorValues.indexOf(color.toLowerCase());
+            if (index < 0) {
+                return;
+            }
+            mAccentColorPreference.setSummary(mAccentColorNames.get(index));
+        } else {
+            mAccentColorPreference.setSummary(mResources.getString(
+                    R.string.theme_accent_color_wallpaper));
+        }
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =

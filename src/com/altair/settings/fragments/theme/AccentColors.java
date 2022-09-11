@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
@@ -45,6 +46,8 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settingslib.Utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AccentColors extends SettingsPreferenceFragment {
@@ -53,13 +56,10 @@ public class AccentColors extends SettingsPreferenceFragment {
     private static final String KEY_MONET_COLOR_ACCENT = "monet_engine_color_accent";
 
     private RecyclerView mRecyclerView;
-    private ThemeUtils mThemeUtils;
     private MonetUtils mMonetUtils;
-    private String mCategory = ThemeUtils.ACCENT_KEY;
-    private String mTarget = "android";
 
-    private List<String> mPkgs;
-    private List<Integer> mThemeColors;
+    private List<String> mAccentColorValues;
+    private List<String> mAccentColorNames;
 
     private ContentResolver mResolver;
 
@@ -70,11 +70,11 @@ public class AccentColors extends SettingsPreferenceFragment {
 
         mResolver = getActivity().getContentResolver();
 
-        mThemeUtils = new ThemeUtils(getActivity());
-        mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, mTarget);
-        mThemeColors = mThemeUtils.getColors();
-
         mMonetUtils = new MonetUtils(getActivity());
+
+        final Resources res = getResources();
+        mAccentColorValues = Arrays.asList(res.getStringArray(R.array.theme_accent_color_values));
+        mAccentColorNames = Arrays.asList(res.getStringArray(R.array.theme_accent_color_names));
     }
 
     @Override
@@ -104,8 +104,7 @@ public class AccentColors extends SettingsPreferenceFragment {
 
     public class Adapter extends RecyclerView.Adapter<Adapter.CustomViewHolder> {
         Context context;
-        String mSelectedPkg;
-        String mAppliedPkg;
+        int mSelectedColor;
 
         public Adapter(Context context) {
             this.context = context;
@@ -121,42 +120,41 @@ public class AccentColors extends SettingsPreferenceFragment {
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
-            String accentPkg = mPkgs.get(position);
+            final int color = Color.parseColor(mAccentColorValues.get(position));
+            final int currentColor = mMonetUtils.getAccentColor();
 
-            final int color = mThemeColors.get(position);
             holder.image.setBackgroundResource(R.drawable.accent_background);
-            holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
-
-            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
-                .filter(info -> info.isEnabled())
-                .map(info -> info.packageName)
-                .findFirst()
-                .orElse(mTarget);
-            holder.name.setText(mTarget.equals(accentPkg) ? "Default"
-                    : getLabel(holder.name.getContext(), accentPkg));
-
-            if (currentPackageName.equals(accentPkg)) {
-                mAppliedPkg = accentPkg;
-                if (mSelectedPkg == null) {
-                    mSelectedPkg = accentPkg;
-                }
+            if (position != 0) {
+                holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
+                holder.itemView.setActivated(color == currentColor);
+            } else {
+                holder.image.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+                holder.itemView.setActivated(!mMonetUtils.isAccentColorSet());
             }
+            holder.name.setText(mAccentColorNames.get(position));
 
-            holder.itemView.setActivated(accentPkg == mSelectedPkg);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateActivatedStatus(mSelectedPkg, false);
-                    updateActivatedStatus(accentPkg, true);
-                    mSelectedPkg = accentPkg;
-                    enableOverlays(position);
+                    final String oldColor = String.format("#%06X", (0xFFFFFF & currentColor));
+                    final String selectedColor = String.format("#%06X", (0xFFFFFF & color));
+
+                    updateActivatedStatus(oldColor, false);
+                    updateActivatedStatus(selectedColor, true);
+
+                    if (position != 0) {
+                        mMonetUtils.setAccentColor(
+                                Color.parseColor(mAccentColorValues.get(position)));
+                    } else {
+                        mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
+                    }
                 }
             });
         }
 
         @Override
         public int getItemCount() {
-            return mPkgs.size();
+            return mAccentColorValues.size();
         }
 
         public class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -169,8 +167,8 @@ public class AccentColors extends SettingsPreferenceFragment {
             }
         }
 
-        private void updateActivatedStatus(String pkg, boolean isActivated) {
-            int index = mPkgs.indexOf(pkg);
+        private void updateActivatedStatus(String color, boolean isActivated) {
+            int index = mAccentColorValues.indexOf(color);
             if (index < 0) {
                 return;
             }
@@ -179,35 +177,5 @@ public class AccentColors extends SettingsPreferenceFragment {
                 holder.itemView.setActivated(isActivated);
             }
         }
-    }
-
-    public Drawable getDrawable(Context context, String pkg, String drawableName) {
-        try {
-            PackageManager pm = context.getPackageManager();
-            Resources res = pkg.equals(mTarget) ? Resources.getSystem()
-                    : pm.getResourcesForApplication(pkg);
-            return res.getDrawable(res.getIdentifier(drawableName, "drawable", pkg));
-        }
-        catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public String getLabel(Context context, String pkg) {
-        PackageManager pm = context.getPackageManager();
-        try {
-            return pm.getApplicationInfo(pkg, 0)
-                    .loadLabel(pm).toString();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return pkg;
-    }
-
-    public void enableOverlays(int position) {
-        mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), mTarget);
-        mMonetUtils.setAccentColor(
-                ColorStateList.valueOf(mThemeColors.get(position)).getDefaultColor());
     }
 }
