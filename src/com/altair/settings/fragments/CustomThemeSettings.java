@@ -188,6 +188,7 @@ public class CustomThemeSettings extends DashboardFragment implements
                              mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
                              mMonetUtils.setSurfaceTintEnabled(true);
                              mMonetUtils.setAccurateShadesEnabled(true);
+                             mMonetUtils.setRicherColorsEnabled(false);
                         }
                     })
                     .setNegativeButton(R.string.dlg_cancel, null);

@@ -66,7 +66,7 @@ public class AccentColors extends SettingsPreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_colors_predefined_accent_colors_title);
+        getActivity().setTitle(R.string.theme_colors_accent_colors_title);
 
         mResolver = getActivity().getContentResolver();
 

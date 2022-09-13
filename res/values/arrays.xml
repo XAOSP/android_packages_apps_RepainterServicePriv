@@ -277,17 +277,6 @@
         <item>2</item>
     </string-array>
 
-    <!-- Monet engine color type -->
-    <string-array name="monet_engine_color_type_entries" translatable="false">
-        <item>@string/monet_engine_color_type_wallpaper</item>
-        <item>@string/monet_engine_color_type_theme</item>
-    </string-array>
-
-    <string-array name="monet_engine_color_type_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-
     <!-- Predefined theme accent colors -->
     <string-array name="theme_accent_color_values">
         <item>#000000</item> <!-- Wallpaper -->
@@ -309,13 +298,6 @@
         <item>#e53935</item> <!-- Material Red -->
         <item>#00897b</item> <!-- Material Teal -->
         <item>#fdd835</item> <!-- Material Yellow -->
-        <item>#0857c3</item> <!-- Pantone Blue -->
-        <item>#00873e</item> <!-- Pantone Green -->
-        <item>#de7c00</item> <!-- Pantone Orange -->
-        <item>#da1984</item> <!-- Pantone Pink -->
-        <item>#6a397b</item> <!-- Pantone Purple -->
-        <item>#d01c1f</item> <!-- Pantone Red -->
-        <item>#f1c400</item> <!-- Pantone Yellow -->
     </string-array>
 
     <string-array name="theme_accent_color_names" translatable="false">
@@ -338,13 +320,6 @@
         <item>@string/theme_accent_color_material_red</item>
         <item>@string/theme_accent_color_material_teal</item>
         <item>@string/theme_accent_color_material_yellow</item>
-        <item>@string/theme_accent_color_pantone_blue</item>
-        <item>@string/theme_accent_color_pantone_green</item>
-        <item>@string/theme_accent_color_pantone_orange</item>
-        <item>@string/theme_accent_color_pantone_pink</item>
-        <item>@string/theme_accent_color_pantone_purple</item>
-        <item>@string/theme_accent_color_pantone_red</item>
-        <item>@string/theme_accent_color_pantone_yellow</item>
     </string-array>
 
 </resources>

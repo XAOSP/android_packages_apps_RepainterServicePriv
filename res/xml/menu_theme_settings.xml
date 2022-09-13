@@ -51,13 +51,20 @@
 
         <Preference
             android:key="theme_colors_accent_color"
-            android:title="@string/theme_colors_predefined_accent_colors_title"
+            android:title="@string/theme_colors_accent_colors_title"
             android:fragment="com.altair.settings.fragments.theme.AccentColors"/>
 
         <com.lineage.support.preferences.SecureSettingSwitchPreference
             android:key="monet_engine_accurate_shades"
-            android:title="@string/monet_engine_accurate_shades_title"
+            android:title="@string/theme_colors_monet_accurate_shades_title"
+            android:summary="@string/theme_colors_monet_accurate_shades_summary"
             android:defaultValue="true" />
+
+        <com.lineage.support.preferences.SecureSettingSwitchPreference
+            android:key="monet_engine_richer_colors"
+            android:title="@string/theme_colors_monet_richer_colors_title"
+            android:summary="@string/theme_colors_monet_richer_colors_summary"
+            android:defaultValue="false" />
 
         <com.lineage.support.preferences.SecureSettingSwitchPreference
             android:key="monet_engine_tint_surface"
