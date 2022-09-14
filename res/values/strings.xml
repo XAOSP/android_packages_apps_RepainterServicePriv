@@ -283,8 +283,8 @@
     <string name="theme_colors_monet_accurate_shades_summary">More accurate color shades at the cost of duller colors</string>
     <string name="theme_colors_monet_richer_colors_title">Richer colors</string>
     <string name="theme_colors_monet_richer_colors_summary">Make colors richer and more vibrant, especially in dark mode</string>
-    <string name="theme_colors_monet_tint_surface_title">Tint neutral colors</string>
-    <string name="theme_colors_monet_tint_surface_summary">Use accent color to tint neutral colors for surfaces</string>
+    <string name="theme_colors_monet_tint_surface_title">Tint background</string>
+    <string name="theme_colors_monet_tint_surface_summary">Add a hint of color to background surfaces</string>
     <string name="theme_colors_reset_settings_title">Reset color settings</string>
     <string name="theme_colors_reset_settings_summary">Restore accent color settings to default values</string>
     <string name="theme_colors_reset_settings_message">This will restore the accent color and associated settings to their default values. Are you sure you wish to continue?</string>
