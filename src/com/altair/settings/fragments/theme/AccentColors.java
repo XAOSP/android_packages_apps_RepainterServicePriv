@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -58,9 +59,12 @@ public class AccentColors extends SettingsPreferenceFragment {
     private RecyclerView mRecyclerView;
     private MonetUtils mMonetUtils;
 
-    private List<String> mAccentColorValues;
     private List<String> mAccentColorNames;
+    private List<String> mAccentColorValues;
+    private List<String> mAccentColorValuesDark;
+    private List<String> mAccentColorValuesDarkRich;
 
+    private Context mContext;
     private ContentResolver mResolver;
 
     @Override
@@ -68,13 +72,18 @@ public class AccentColors extends SettingsPreferenceFragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.theme_colors_accent_colors_title);
 
+        mContext = getActivity().getApplicationContext();
         mResolver = getActivity().getContentResolver();
 
         mMonetUtils = new MonetUtils(getActivity());
 
         final Resources res = getResources();
-        mAccentColorValues = Arrays.asList(res.getStringArray(R.array.theme_accent_color_values));
         mAccentColorNames = Arrays.asList(res.getStringArray(R.array.theme_accent_color_names));
+        mAccentColorValues = Arrays.asList(res.getStringArray(R.array.theme_accent_color_values));
+        mAccentColorValuesDark =
+                Arrays.asList(res.getStringArray(R.array.theme_accent_color_values_dark));
+        mAccentColorValuesDarkRich =
+                Arrays.asList(res.getStringArray(R.array.theme_accent_color_values_dark_rich));
     }
 
     @Override
@@ -120,13 +129,14 @@ public class AccentColors extends SettingsPreferenceFragment {
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
-            final int color = Color.parseColor(mAccentColorValues.get(position));
+            final int selectedColor = Color.parseColor(mAccentColorValues.get(position));
             final int currentColor = mMonetUtils.getAccentColor();
 
             holder.image.setBackgroundResource(R.drawable.accent_background);
             if (position != 0) {
-                holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
-                holder.itemView.setActivated(color == currentColor);
+                final int viewColor = Color.parseColor(getViewAccentColor(position));
+                holder.image.setBackgroundTintList(ColorStateList.valueOf(viewColor));
+                holder.itemView.setActivated(selectedColor == currentColor);
             } else {
                 holder.image.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
                 holder.itemView.setActivated(!mMonetUtils.isAccentColorSet());
@@ -137,19 +147,33 @@ public class AccentColors extends SettingsPreferenceFragment {
                 @Override
                 public void onClick(View v) {
                     final String oldColor = String.format("#%06X", (0xFFFFFF & currentColor));
-                    final String selectedColor = String.format("#%06X", (0xFFFFFF & color));
+                    final String newColor = String.format("#%06X", (0xFFFFFF & selectedColor));
 
                     updateActivatedStatus(oldColor, false);
-                    updateActivatedStatus(selectedColor, true);
+                    updateActivatedStatus(newColor, true);
 
                     if (position != 0) {
-                        mMonetUtils.setAccentColor(
-                                Color.parseColor(mAccentColorValues.get(position)));
+                        mMonetUtils.setAccentColor(selectedColor);
                     } else {
                         mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
                     }
                 }
             });
+        }
+
+        private String getViewAccentColor(final int position) {
+            String color;
+            final boolean nightMode = (mContext.getResources().getConfiguration().uiMode &
+                    Configuration.UI_MODE_NIGHT_YES) != 0;
+            final boolean richerColors = mMonetUtils.isRicherColorsEnabled();
+
+            if (nightMode) {
+                color = richerColors ? mAccentColorValuesDarkRich.get(position)
+                                     : mAccentColorValuesDark.get(position);
+            } else {
+                color = mAccentColorValues.get(position);
+            }
+            return color;
         }
 
         @Override
