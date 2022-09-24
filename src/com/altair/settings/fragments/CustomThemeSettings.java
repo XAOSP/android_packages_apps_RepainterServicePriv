@@ -31,12 +31,12 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
 import com.android.internal.logging.nano.MetricsProto;
-import com.android.internal.util.custom.MonetUtils;
-import com.android.internal.util.custom.ThemeUtils;
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.display.darkmode.DarkModePreference;
 import com.android.settings.search.BaseSearchIndexProvider;
+import com.android.settings.utils.MonetUtils;
+import com.android.settings.utils.ThemeUtils;
 import com.android.settingslib.search.SearchIndexable;
 
 import com.lineage.support.colorpicker.SecureSettingColorPickerPreference;
@@ -182,9 +182,6 @@ public class CustomThemeSettings extends DashboardFragment implements
                     .setMessage(R.string.theme_colors_reset_settings_message)
                     .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
-                             mThemeUtils.setOverlayEnabled(ThemeUtils.ACCENT_KEY, "android",
-                                    "android");
-                             updateSummary(mAccentColorPreference, "android");
                              mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
                              mMonetUtils.setSurfaceTintEnabled(true);
                              mMonetUtils.setAccurateShadesEnabled(true);

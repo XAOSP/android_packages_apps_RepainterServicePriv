@@ -37,9 +37,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.custom.ThemeUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.utils.ThemeUtils;
 import com.android.settingslib.Utils;
 
 import java.util.List;
