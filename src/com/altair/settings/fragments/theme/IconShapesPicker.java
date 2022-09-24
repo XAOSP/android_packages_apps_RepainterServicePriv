@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2022 crDroid Android Project
  * Copyright (C) 2022 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +18,11 @@ package com.altair.settings.fragments.theme;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,30 +31,32 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.utils.ThemeUtils;
+import com.android.settingslib.Utils;
 
 import java.util.List;
 
-public class NavbarStyles extends SettingsPreferenceFragment {
+public class IconShapesPicker extends SettingsPreferenceFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private String mCategory = ThemeUtils.NAVBAR_KEY;
-    private String mTarget = "com.android.systemui";
+    private String mCategory = ThemeUtils.ICON_SHAPE_KEY;
+    private String mTarget = "android";
 
     private List<String> mPkgs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_elements_navbar_title);
+        getActivity().setTitle(R.string.theme_elements_icon_shape_title);
 
         mThemeUtils = new ThemeUtils(getActivity());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, mTarget);
@@ -68,7 +69,7 @@ public class NavbarStyles extends SettingsPreferenceFragment {
                 R.layout.item_view, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         Adapter mAdapter = new Adapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -97,49 +98,38 @@ public class NavbarStyles extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.navbar_option,
-                    parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent,
+                    false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
-            String navPkg = mPkgs.get(position);
+            String pkg = mPkgs.get(position);
 
-            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), navPkg,
-                    "ic_sysbar_back"));
-            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), navPkg,
-                    "ic_sysbar_home"));
-            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), navPkg,
-                    "ic_sysbar_recent"));
+            holder.image.setBackgroundDrawable(mThemeUtils.createShapeDrawable(pkg));
 
-            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory, mTarget).stream()
+            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
                 .filter(info -> info.isEnabled())
                 .map(info -> info.packageName)
                 .findFirst()
                 .orElse(mTarget);
 
-            holder.name.setText(mTarget.equals(navPkg) ? "Default"
-                    : getLabel(holder.name.getContext(), navPkg));
+            holder.name.setText(mTarget.equals(pkg) ? "Default"
+                    : getLabel(holder.name.getContext(), pkg));
 
-            if (currentPackageName.equals(navPkg)) {
-                mAppliedPkg = navPkg;
-                if (mSelectedPkg == null) {
-                    mSelectedPkg = navPkg;
-                }
-            }
+            final boolean isDefault = mTarget.equals(currentPackageName) && mTarget.equals(pkg);
+            final int color = ColorUtils.setAlphaComponent(
+                     Utils.getColorAttrDefaultColor(getContext(), android.R.attr.textColorPrimary),
+                     pkg.equals(currentPackageName) || isDefault ? 255 : 61);
+            holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
 
-            holder.itemView.setActivated(navPkg == mSelectedPkg);
+            holder.itemView.findViewById(R.id.option_tile).setBackgroundDrawable(null);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateActivatedStatus(mSelectedPkg, false);
-                    updateActivatedStatus(navPkg, true);
-                    mSelectedPkg = navPkg;
                     enableOverlays(position);
-                    Settings.System.putStringForUser(getContext().getContentResolver(),
-                            Settings.System.NAVBAR_STYLE, navPkg, UserHandle.USER_CURRENT);
                 }
             });
         }
@@ -151,38 +141,21 @@ public class NavbarStyles extends SettingsPreferenceFragment {
 
         public class CustomViewHolder extends RecyclerView.ViewHolder {
             TextView name;
-            ImageView image1;
-            ImageView image2;
-            ImageView image3;
+            ImageView image;
             public CustomViewHolder(View itemView) {
                 super(itemView);
                 name = (TextView) itemView.findViewById(R.id.option_label);
-                image1 = (ImageView) itemView.findViewById(R.id.image1);
-                image2 = (ImageView) itemView.findViewById(R.id.image2);
-                image3 = (ImageView) itemView.findViewById(R.id.image3);
-            }
-        }
-
-        private void updateActivatedStatus(String pkg, boolean isActivated) {
-            int index = mPkgs.indexOf(pkg);
-            if (index < 0) {
-                return;
-            }
-            RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForAdapterPosition(index);
-            if (holder != null && holder.itemView != null) {
-                holder.itemView.setActivated(isActivated);
+                image = (ImageView) itemView.findViewById(R.id.option_thumbnail);
             }
         }
     }
 
     public Drawable getDrawable(Context context, String pkg, String drawableName) {
-        if (pkg.equals(mTarget))
-            pkg = "com.android.settings";
         try {
             PackageManager pm = context.getPackageManager();
-            Resources res = pm.getResourcesForApplication(pkg);
-            int resId = res.getIdentifier(drawableName, "drawable", pkg);
-            return res.getDrawable(resId);
+            Resources res = pkg.equals(mTarget) ? Resources.getSystem()
+                    : pm.getResourcesForApplication(pkg);
+            return res.getDrawable(res.getIdentifier(drawableName, "drawable", pkg));
         }
         catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

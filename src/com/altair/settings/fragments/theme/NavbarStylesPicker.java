@@ -22,6 +22,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,19 +43,19 @@ import com.android.settings.utils.ThemeUtils;
 
 import java.util.List;
 
-public class SignalIcons extends SettingsPreferenceFragment {
+public class NavbarStylesPicker extends SettingsPreferenceFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private String mCategory = ThemeUtils.SIGNAL_ICON_KEY;
-    private String mTarget = "android";
+    private String mCategory = ThemeUtils.NAVBAR_KEY;
+    private String mTarget = "com.android.systemui";
 
     private List<String> mPkgs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_elements_signal_icon_title);
+        getActivity().setTitle(R.string.theme_elements_navbar_title);
 
         mThemeUtils = new ThemeUtils(getActivity());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, mTarget);
@@ -66,7 +68,7 @@ public class SignalIcons extends SettingsPreferenceFragment {
                 R.layout.item_view, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         Adapter mAdapter = new Adapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -95,49 +97,49 @@ public class SignalIcons extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_option, parent,
-                    false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.navbar_option,
+                    parent, false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
         }
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, final int position) {
-            String iconPkg = mPkgs.get(position);
+            String navPkg = mPkgs.get(position);
 
-            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), iconPkg,
-                    "ic_signal_cellular_0_5_bar"));
-            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), iconPkg,
-                    "ic_signal_cellular_1_5_bar"));
-            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), iconPkg,
-                    "ic_signal_cellular_3_5_bar"));
-            holder.image4.setBackgroundDrawable(getDrawable(holder.image4.getContext(), iconPkg,
-                    "ic_signal_cellular_5_5_bar"));
+            holder.image1.setBackgroundDrawable(getDrawable(holder.image1.getContext(), navPkg,
+                    "ic_sysbar_back"));
+            holder.image2.setBackgroundDrawable(getDrawable(holder.image2.getContext(), navPkg,
+                    "ic_sysbar_home"));
+            holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), navPkg,
+                    "ic_sysbar_recent"));
 
-            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
+            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory, mTarget).stream()
                 .filter(info -> info.isEnabled())
                 .map(info -> info.packageName)
                 .findFirst()
                 .orElse(mTarget);
 
-            holder.name.setText(mTarget.equals(iconPkg) ? "Default"
-                    : getLabel(holder.name.getContext(), iconPkg));
+            holder.name.setText(mTarget.equals(navPkg) ? "Default"
+                    : getLabel(holder.name.getContext(), navPkg));
 
-            if (currentPackageName.equals(iconPkg)) {
-                mAppliedPkg = iconPkg;
+            if (currentPackageName.equals(navPkg)) {
+                mAppliedPkg = navPkg;
                 if (mSelectedPkg == null) {
-                    mSelectedPkg = iconPkg;
+                    mSelectedPkg = navPkg;
                 }
             }
 
-            holder.itemView.setActivated(iconPkg == mSelectedPkg);
+            holder.itemView.setActivated(navPkg == mSelectedPkg);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     updateActivatedStatus(mSelectedPkg, false);
-                    updateActivatedStatus(iconPkg, true);
-                    mSelectedPkg = iconPkg;
+                    updateActivatedStatus(navPkg, true);
+                    mSelectedPkg = navPkg;
                     enableOverlays(position);
+                    Settings.System.putStringForUser(getContext().getContentResolver(),
+                            Settings.System.NAVBAR_STYLE, navPkg, UserHandle.USER_CURRENT);
                 }
             });
         }
@@ -152,14 +154,12 @@ public class SignalIcons extends SettingsPreferenceFragment {
             ImageView image1;
             ImageView image2;
             ImageView image3;
-            ImageView image4;
             public CustomViewHolder(View itemView) {
                 super(itemView);
                 name = (TextView) itemView.findViewById(R.id.option_label);
                 image1 = (ImageView) itemView.findViewById(R.id.image1);
                 image2 = (ImageView) itemView.findViewById(R.id.image2);
                 image3 = (ImageView) itemView.findViewById(R.id.image3);
-                image4 = (ImageView) itemView.findViewById(R.id.image4);
             }
         }
 
@@ -176,10 +176,11 @@ public class SignalIcons extends SettingsPreferenceFragment {
     }
 
     public Drawable getDrawable(Context context, String pkg, String drawableName) {
+        if (pkg.equals(mTarget))
+            pkg = "com.android.settings";
         try {
             PackageManager pm = context.getPackageManager();
-            Resources res = pkg.equals(mTarget) ? Resources.getSystem()
-                    : pm.getResourcesForApplication(pkg);
+            Resources res = pm.getResourcesForApplication(pkg);
             int resId = res.getIdentifier(drawableName, "drawable", pkg);
             return res.getDrawable(resId);
         }

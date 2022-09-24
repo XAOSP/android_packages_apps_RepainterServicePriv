@@ -57,27 +57,27 @@
         <Preference
             android:key="android.theme.customization.font"
             android:title="@string/theme_elements_font_title"
-            android:fragment="com.altair.settings.fragments.theme.FontsPicker"/>
+            android:fragment="com.altair.settings.fragments.theme.FontsPicker" />
 
         <Preference
             android:key="android.theme.customization.adaptive_icon_shape"
             android:title="@string/theme_elements_icon_shape_title"
-            android:fragment="com.altair.settings.fragments.theme.IconShapes"/>
+            android:fragment="com.altair.settings.fragments.theme.IconShapesPicker" />
 
         <Preference
             android:key="android.theme.customization.signal_icon"
             android:title="@string/theme_elements_signal_icon_title"
-            android:fragment="com.altair.settings.fragments.theme.SignalIcons"/>
+            android:fragment="com.altair.settings.fragments.theme.SignalIconsPicker" />
 
         <Preference
             android:key="android.theme.customization.wifi_icon"
             android:title="@string/theme_elements_wifi_icon_title"
-            android:fragment="com.altair.settings.fragments.theme.WifiIcons"/>
+            android:fragment="com.altair.settings.fragments.theme.WifiIconsPicker" />
 
         <Preference
             android:key="android.theme.customization.navbar"
             android:title="@string/theme_elements_navbar_title"
-            android:fragment="com.altair.settings.fragments.theme.NavbarStyles"/>
+            android:fragment="com.altair.settings.fragments.theme.NavbarStylesPicker" />
 
     </PreferenceCategory>
 

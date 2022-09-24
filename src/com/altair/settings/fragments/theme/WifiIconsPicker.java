@@ -41,7 +41,7 @@ import com.android.settings.utils.ThemeUtils;
 
 import java.util.List;
 
-public class WifiIcons extends SettingsPreferenceFragment {
+public class WifiIconsPicker extends SettingsPreferenceFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
