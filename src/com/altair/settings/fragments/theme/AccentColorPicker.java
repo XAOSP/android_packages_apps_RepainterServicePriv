@@ -51,8 +51,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AccentColors extends SettingsPreferenceFragment {
-    private static final String TAG = "AccentColors";
+public class AccentColorPicker extends SettingsPreferenceFragment {
+    private static final String TAG = "AccentColorPicker";
 
     private static final String KEY_MONET_COLOR_ACCENT = "monet_engine_color_accent";
 
@@ -70,7 +70,7 @@ public class AccentColors extends SettingsPreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_colors_accent_colors_title);
+        getActivity().setTitle(R.string.theme_elements_accent_color_title);
 
         mContext = getActivity().getApplicationContext();
         mResolver = getActivity().getContentResolver();

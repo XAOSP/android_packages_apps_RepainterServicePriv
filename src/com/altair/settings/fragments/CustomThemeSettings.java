@@ -39,8 +39,6 @@ import com.android.settings.utils.MonetUtils;
 import com.android.settings.utils.ThemeUtils;
 import com.android.settingslib.search.SearchIndexable;
 
-import com.lineage.support.colorpicker.SecureSettingColorPickerPreference;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,8 +49,7 @@ public class CustomThemeSettings extends DashboardFragment implements
     private static final String TAG = "CustomThemeSettings";
 
     private static final String KEY_THEME_DARK_UI_MODE = "theme_dark_ui_mode";
-    private static final String KEY_THEME_COLORS_ACCENT_COLOR = "theme_colors_accent_color";
-    private static final String KEY_THEME_COLORS_RESET_SETTINGS = "theme_colors_reset_settings";
+    private static final String KEY_THEME_ACCENT_COLOR = "theme_element_accent_color";
     private static final String KEY_THEME_FONT = ThemeUtils.FONT_KEY;
     private static final String KEY_THEME_ICON_SHAPE = ThemeUtils.ICON_SHAPE_KEY;
     private static final String KEY_THEME_SIGNAL_ICON = ThemeUtils.SIGNAL_ICON_KEY;
@@ -72,7 +69,6 @@ public class CustomThemeSettings extends DashboardFragment implements
     private DarkModePreference mDarkMode;
 
     private Preference mAccentColorPreference;
-    private Preference mResetSettingsPreference;
 
     private Preference mFontPreference;
     private Preference mIconShapePreference;
@@ -106,10 +102,8 @@ public class CustomThemeSettings extends DashboardFragment implements
         mDarkMode = findPreference(KEY_THEME_DARK_UI_MODE);
         mDarkMode.setOnPreferenceChangeListener(this);
 
-        mAccentColorPreference = prefScreen.findPreference(KEY_THEME_COLORS_ACCENT_COLOR);
+        mAccentColorPreference = prefScreen.findPreference(KEY_THEME_ACCENT_COLOR);
         updateAccentColorSummary();
-
-        mResetSettingsPreference = prefScreen.findPreference(KEY_THEME_COLORS_RESET_SETTINGS);
 
         mFontPreference = prefScreen.findPreference(KEY_THEME_FONT);
         updateSummary(mFontPreference, "android");
@@ -155,7 +149,7 @@ public class CustomThemeSettings extends DashboardFragment implements
             case KEY_THEME_DARK_UI_MODE:
                 mUiModeManager.setNightModeActivated((boolean) newValue);
                 break;
-            case KEY_THEME_COLORS_ACCENT_COLOR:
+            case KEY_THEME_ACCENT_COLOR:
                 updateAccentColorSummary();
                 break;
             case KEY_THEME_FONT:
@@ -172,26 +166,6 @@ public class CustomThemeSettings extends DashboardFragment implements
                 break;
         }
         return true;
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(Preference preference) {
-        if (preference == mResetSettingsPreference) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.theme_colors_reset_settings_title)
-                    .setMessage(R.string.theme_colors_reset_settings_message)
-                    .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
-                         public void onClick(DialogInterface dialog, int id) {
-                             mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
-                             mMonetUtils.setSurfaceTintEnabled(true);
-                             mMonetUtils.setAccurateShadesEnabled(true);
-                             mMonetUtils.setRicherColorsEnabled(false);
-                        }
-                    })
-                    .setNegativeButton(R.string.dlg_cancel, null);
-            builder.show();
-        }
-        return super.onPreferenceTreeClick(preference);
     }
 
     public void updateSummary(Preference preference, String target) {

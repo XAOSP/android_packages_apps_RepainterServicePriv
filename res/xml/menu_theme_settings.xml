@@ -42,40 +42,10 @@
             settings:controller="com.android.settings.display.DarkUIPreferenceController"
             settings:searchable="false" />
 
-    </PreferenceCategory>
-
-    <!-- Theme colors -->
-    <PreferenceCategory
-        android:key="theme_colors"
-        android:title="@string/theme_colors_category_title">
-
         <Preference
-            android:key="theme_colors_accent_color"
-            android:title="@string/theme_colors_accent_colors_title"
-            android:fragment="com.altair.settings.fragments.theme.AccentColors"/>
-
-        <com.lineage.support.preferences.SecureSettingSwitchPreference
-            android:key="monet_engine_accurate_shades"
-            android:title="@string/theme_colors_monet_accurate_shades_title"
-            android:summary="@string/theme_colors_monet_accurate_shades_summary"
-            android:defaultValue="true" />
-
-        <com.lineage.support.preferences.SecureSettingSwitchPreference
-            android:key="monet_engine_richer_colors"
-            android:title="@string/theme_colors_monet_richer_colors_title"
-            android:summary="@string/theme_colors_monet_richer_colors_summary"
-            android:defaultValue="false" />
-
-        <com.lineage.support.preferences.SecureSettingSwitchPreference
-            android:key="monet_engine_tint_surface"
-            android:title="@string/theme_colors_monet_tint_surface_title"
-            android:summary="@string/theme_colors_monet_tint_surface_summary"
-            android:defaultValue="true" />
-
-        <Preference
-            android:key="theme_colors_reset_settings"
-            android:title="@string/theme_colors_reset_settings_title"
-            android:summary="@string/theme_colors_reset_settings_summary" />
+            android:key="theme_element_accent_color"
+            android:title="@string/theme_elements_accent_color_title"
+            android:fragment="com.altair.settings.fragments.theme.AccentColorFragment" />
 
     </PreferenceCategory>
 

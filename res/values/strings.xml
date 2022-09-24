@@ -277,8 +277,7 @@
     <!-- THEMES -->
     <string name="theme_styles_category_title">Styles &amp; wallpapers</string>
 
-    <string name="theme_colors_category_title">Theme colors</string>
-    <string name="theme_colors_accent_colors_title">Accent colors</string>
+    <string name="theme_colors_current_accent_color_title">Current accent color</string>
     <string name="theme_colors_monet_accurate_shades_title">Accurate shades</string>
     <string name="theme_colors_monet_accurate_shades_summary">More accurate color shades at the cost of duller colors</string>
     <string name="theme_colors_monet_richer_colors_title">Richer colors</string>
@@ -286,10 +285,10 @@
     <string name="theme_colors_monet_tint_surface_title">Tint background</string>
     <string name="theme_colors_monet_tint_surface_summary">Add a hint of color to background surfaces</string>
     <string name="theme_colors_reset_settings_title">Reset color settings</string>
-    <string name="theme_colors_reset_settings_summary">Restore accent color settings to default values</string>
     <string name="theme_colors_reset_settings_message">This will restore the accent color and associated settings to their default values. Are you sure you wish to continue?</string>
 
     <string name="theme_elements_category_title">Theme elements</string>
+    <string name="theme_elements_accent_color_title">Accent color</string>
     <string name="theme_elements_font_title">Font</string>
     <string name="theme_elements_icon_shape_title">Icon shape</string>
     <string name="theme_elements_signal_icon_title">Signal icon style</string>
