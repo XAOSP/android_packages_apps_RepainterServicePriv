@@ -118,10 +118,13 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
                     .setMessage(R.string.theme_colors_reset_settings_message)
                     .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
-                             mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
-                             mMonetUtils.setSurfaceTintEnabled(true);
-                             mMonetUtils.setAccurateShadesEnabled(true);
-                             mMonetUtils.setRicherColorsEnabled(false);
+                             //mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
+                             mMonetUtils.setSurfaceTintEnabled(MonetUtils.SURFACE_TINT_DEFAULT);
+                             mMonetUtils.setAccurateShadesEnabled(MonetUtils.ACCURATE_SHADES_DEFAULT);
+                             mMonetUtils.setRicherColorsEnabled(MonetUtils.RICHER_COLORS_DEFAULT);
+                             mMonetUtils.setChromaFactor(MonetUtils.CHROMA_FACTOR_DEFAULT);
+                             mMonetUtils.setWhiteLuminance(MonetUtils.WHITE_LUMINANCE_DEFAULT);
+                             mMonetUtils.setLinearLightnessEnabled(MonetUtils.LINEAR_LIGHTNESS_DEFAULT);
                         }
                     })
                     .setNegativeButton(R.string.dlg_cancel, null);
