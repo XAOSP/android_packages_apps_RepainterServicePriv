@@ -74,10 +74,14 @@ public class CustomNavigationSettings extends DashboardFragment implements
     private static final String KEY_NAVIGATION_ARROW_KEYS = "navigation_bar_menu_arrow_keys";
     private static final String KEY_NAV_BAR_INVERSE = "sysui_nav_bar_inverse";
     private static final String KEY_NAVIGATION_BACK_LONG_PRESS = "navigation_back_long_press";
+    private static final String KEY_NAVIGATION_BACK_DOUBLE_TAP = "navigation_back_double_tap";
     private static final String KEY_NAVIGATION_HOME_LONG_PRESS = "navigation_home_long_press";
     private static final String KEY_NAVIGATION_HOME_DOUBLE_TAP = "navigation_home_double_tap";
+    private static final String KEY_NAVIGATION_APP_SWITCH_PRESS = "navigation_app_switch_press";
     private static final String KEY_NAVIGATION_APP_SWITCH_LONG_PRESS =
             "navigation_app_switch_long_press";
+    private static final String KEY_NAVIGATION_APP_SWITCH_DOUBLE_TAP =
+            "navigation_app_switch_double_tap";
     private static final String KEY_EDGE_LONG_SWIPE = "navigation_bar_edge_long_swipe";
 
     private static final String CATEGORY_NAVBAR_OPTIONS = "navigation_bar_options_category";
@@ -92,9 +96,12 @@ public class CustomNavigationSettings extends DashboardFragment implements
     private SwitchPreference mNavigationArrowKeys;
     private SwitchPreference mNavBarInverse;
     private ListPreference mNavigationBackLongPressAction;
+    private ListPreference mNavigationBackDoubleTapAction;
     private ListPreference mNavigationHomeLongPressAction;
     private ListPreference mNavigationHomeDoubleTapAction;
+    private ListPreference mNavigationAppSwitchPressAction;
     private ListPreference mNavigationAppSwitchLongPressAction;
+    private ListPreference mNavigationAppSwitchDoubleTapAction;
     private ListPreference mEdgeLongSwipeAction;
 
     private PreferenceCategory mNavigationOptionsPreferencesCat;
@@ -128,14 +135,23 @@ public class CustomNavigationSettings extends DashboardFragment implements
 
         Action defaultBackLongPressAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_longPressOnBackBehavior));
+        Action defaultBackDoubleTapAction = Action.fromIntSafe(res.getInteger(
+                org.lineageos.platform.internal.R.integer.config_doubleTapOnBackBehavior));
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_longPressOnHomeBehavior));
         Action defaultHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_doubleTapOnHomeBehavior));
+        Action defaultAppSwitchPressAction = Action.fromIntSafe(res.getInteger(
+                org.lineageos.platform.internal.R.integer.config_pressOnAppSwitchBehavior));
         Action defaultAppSwitchLongPressAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_longPressOnAppSwitchBehavior));
+        Action defaultAppSwitchDoubleTapAction = Action.fromIntSafe(res.getInteger(
+                org.lineageos.platform.internal.R.integer.config_doubleTapOnAppSwitchBehavior));
         Action backLongPressAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION,
+                defaultBackLongPressAction);
+        Action backDoubleTapAction = Action.fromSettings(mResolver,
+                LineageSettings.System.KEY_BACK_DOUBLE_TAP_ACTION,
                 defaultBackLongPressAction);
         Action homeLongPressAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
@@ -143,9 +159,15 @@ public class CustomNavigationSettings extends DashboardFragment implements
         Action homeDoubleTapAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                 defaultHomeDoubleTapAction);
+        Action appSwitchPressAction = Action.fromSettings(mResolver,
+                LineageSettings.System.KEY_APP_SWITCH_ACTION,
+                defaultAppSwitchPressAction);
         Action appSwitchLongPressAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
                 defaultAppSwitchLongPressAction);
+        Action appSwitchDoubleTapAction = Action.fromSettings(mResolver,
+                LineageSettings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION,
+                defaultBackLongPressAction);
         Action edgeLongSwipeAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION,
                 Action.NOTHING);
@@ -157,6 +179,10 @@ public class CustomNavigationSettings extends DashboardFragment implements
         mNavigationBackLongPressAction = initList(KEY_NAVIGATION_BACK_LONG_PRESS,
                 backLongPressAction);
 
+        // Navigation bar back double tap
+        mNavigationBackDoubleTapAction = initList(KEY_NAVIGATION_BACK_DOUBLE_TAP,
+                backDoubleTapAction);
+
         // Navigation bar home long press
         mNavigationHomeLongPressAction = initList(KEY_NAVIGATION_HOME_LONG_PRESS,
                 homeLongPressAction);
@@ -165,9 +191,17 @@ public class CustomNavigationSettings extends DashboardFragment implements
         mNavigationHomeDoubleTapAction = initList(KEY_NAVIGATION_HOME_DOUBLE_TAP,
                 homeDoubleTapAction);
 
+        // Navigation bar app switch press
+        mNavigationAppSwitchPressAction = initList(KEY_NAVIGATION_APP_SWITCH_PRESS,
+                appSwitchPressAction);
+
         // Navigation bar app switch long press
         mNavigationAppSwitchLongPressAction = initList(KEY_NAVIGATION_APP_SWITCH_LONG_PRESS,
                 appSwitchLongPressAction);
+
+        // Navigation bar app switch double tap
+        mNavigationAppSwitchDoubleTapAction = initList(KEY_NAVIGATION_APP_SWITCH_DOUBLE_TAP,
+                appSwitchDoubleTapAction);
 
         // Edge long swipe gesture
         mEdgeLongSwipeAction = initList(KEY_EDGE_LONG_SWIPE, edgeLongSwipeAction);
@@ -227,14 +261,23 @@ public class CustomNavigationSettings extends DashboardFragment implements
         mNavigationBackLongPressAction.setEntries(actionEntries);
         mNavigationBackLongPressAction.setEntryValues(actionValues);
 
+        mNavigationBackDoubleTapAction.setEntries(actionEntries);
+        mNavigationBackDoubleTapAction.setEntryValues(actionValues);
+
         mNavigationHomeLongPressAction.setEntries(actionEntries);
         mNavigationHomeLongPressAction.setEntryValues(actionValues);
 
         mNavigationHomeDoubleTapAction.setEntries(actionEntries);
         mNavigationHomeDoubleTapAction.setEntryValues(actionValues);
 
+        mNavigationAppSwitchPressAction.setEntries(actionEntries);
+        mNavigationAppSwitchPressAction.setEntryValues(actionValues);
+
         mNavigationAppSwitchLongPressAction.setEntries(actionEntries);
         mNavigationAppSwitchLongPressAction.setEntryValues(actionValues);
+
+        mNavigationAppSwitchDoubleTapAction.setEntries(actionEntries);
+        mNavigationAppSwitchDoubleTapAction.setEntryValues(actionValues);
 
         mEdgeLongSwipeAction.setEntries(actionEntries);
         mEdgeLongSwipeAction.setEntryValues(actionValues);
@@ -298,6 +341,10 @@ public class CustomNavigationSettings extends DashboardFragment implements
             handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION);
             return true;
+        } else if (preference == mNavigationBackDoubleTapAction) {
+            handleListChange((ListPreference) preference, newValue,
+                    LineageSettings.System.KEY_BACK_DOUBLE_TAP_ACTION);
+            return true;
         } else if (preference == mNavigationHomeLongPressAction) {
             handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION);
@@ -306,9 +353,17 @@ public class CustomNavigationSettings extends DashboardFragment implements
             handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_HOME_DOUBLE_TAP_ACTION);
             return true;
+        } else if (preference == mNavigationAppSwitchPressAction) {
+            handleListChange((ListPreference) preference, newValue,
+                    LineageSettings.System.KEY_APP_SWITCH_ACTION);
+            return true;
         } else if (preference == mNavigationAppSwitchLongPressAction) {
             handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
+            return true;
+        } else if (preference == mNavigationAppSwitchDoubleTapAction) {
+            handleListChange((ListPreference) preference, newValue,
+                    LineageSettings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
             return true;
         } else if (preference == mEdgeLongSwipeAction) {
             handleListChange(mEdgeLongSwipeAction, newValue,
@@ -352,9 +407,12 @@ public class CustomNavigationSettings extends DashboardFragment implements
         enablePreference(mNavigationArrowKeys, !enabled);
         enablePreference(mNavBarInverse, !enabled);
         enablePreference(mNavigationBackLongPressAction, !enabled);
+        enablePreference(mNavigationBackDoubleTapAction, !enabled);
         enablePreference(mNavigationHomeLongPressAction, !enabled);
         enablePreference(mNavigationHomeDoubleTapAction, !enabled);
+        enablePreference(mNavigationAppSwitchPressAction, !enabled);
         enablePreference(mNavigationAppSwitchLongPressAction, !enabled);
+        enablePreference(mNavigationAppSwitchDoubleTapAction, !enabled);
     }
 
     private static void writeDisableNavkeysOption(Context context, boolean enabled) {
@@ -381,25 +439,40 @@ public class CustomNavigationSettings extends DashboardFragment implements
                     mNavigationActionsPreferencesCat.removePreference(
                             mNavigationBackLongPressAction);
                     mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationBackDoubleTapAction);
+                    mNavigationActionsPreferencesCat.removePreference(
                             mNavigationHomeLongPressAction);
                     mNavigationActionsPreferencesCat.removePreference(
                             mNavigationHomeDoubleTapAction);
                     mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationAppSwitchPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
                             mNavigationAppSwitchLongPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationAppSwitchDoubleTapAction);
                 } else if (DeviceUtils.isSwipeUpEnabled(getContext())) {
                     mNavigationActionsPreferencesCat.addPreference(mNavigationBackLongPressAction);
+                    mNavigationActionsPreferencesCat.addPreference(mNavigationBackDoubleTapAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeLongPressAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeDoubleTapAction);
 
                     mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationAppSwitchPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
                             mNavigationAppSwitchLongPressAction);
+                    mNavigationActionsPreferencesCat.removePreference(
+                            mNavigationAppSwitchDoubleTapAction);
                     mNavigationActionsPreferencesCat.removePreference(mEdgeLongSwipeAction);
                 } else {
                     mNavigationActionsPreferencesCat.addPreference(mNavigationBackLongPressAction);
+                    mNavigationActionsPreferencesCat.addPreference(mNavigationBackDoubleTapAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeLongPressAction);
                     mNavigationActionsPreferencesCat.addPreference(mNavigationHomeDoubleTapAction);
+                    mNavigationActionsPreferencesCat.addPreference(mNavigationAppSwitchPressAction);
                     mNavigationActionsPreferencesCat.addPreference(
                             mNavigationAppSwitchLongPressAction);
+                    mNavigationActionsPreferencesCat.addPreference(
+                            mNavigationAppSwitchDoubleTapAction);
 
                     mNavigationActionsPreferencesCat.removePreference(mEdgeLongSwipeAction);
                 }
@@ -487,8 +560,10 @@ public class CustomNavigationSettings extends DashboardFragment implements
                             keys.add(KEY_NAVIGATION_HOME_LONG_PRESS);
                             keys.add(KEY_NAVIGATION_HOME_DOUBLE_TAP);
                             keys.add(KEY_NAVIGATION_APP_SWITCH_LONG_PRESS);
+                            keys.add(KEY_NAVIGATION_APP_SWITCH_DOUBLE_TAP);
                         } else if (DeviceUtils.isSwipeUpEnabled(context)) {
                             keys.add(KEY_NAVIGATION_APP_SWITCH_LONG_PRESS);
+                            keys.add(KEY_NAVIGATION_APP_SWITCH_DOUBLE_TAP);
                             keys.add(KEY_EDGE_LONG_SWIPE);
                         } else {
                             keys.add(KEY_EDGE_LONG_SWIPE);

@@ -70,17 +70,21 @@ public class CustomButtonSettings extends DashboardFragment implements
     private static final String KEY_CAMERA_SLEEP_ON_RELEASE = "camera_sleep_on_release";
     private static final String KEY_CAMERA_WAKE_SCREEN = "camera_wake_screen";
     private static final String KEY_BACK_LONG_PRESS = "hardware_keys_back_long_press";
+    private static final String KEY_BACK_DOUBLE_TAP = "hardware_keys_back_double_tap";
     private static final String KEY_HOME_LONG_PRESS = "hardware_keys_home_long_press";
     private static final String KEY_HOME_DOUBLE_TAP = "hardware_keys_home_double_tap";
     private static final String KEY_HOME_WAKE_SCREEN = "home_wake_screen";
     private static final String KEY_MENU_PRESS = "hardware_keys_menu_press";
     private static final String KEY_MENU_LONG_PRESS = "hardware_keys_menu_long_press";
+    private static final String KEY_MENU_DOUBLE_TAP = "hardware_keys_menu_double_tap";
     private static final String KEY_MENU_WAKE_SCREEN = "menu_wake_screen";
     private static final String KEY_ASSIST_PRESS = "hardware_keys_assist_press";
     private static final String KEY_ASSIST_LONG_PRESS = "hardware_keys_assist_long_press";
+    private static final String KEY_ASSIST_DOUBLE_TAP = "hardware_keys_assist_double_tap";
     private static final String KEY_ASSIST_WAKE_SCREEN = "assist_wake_screen";
     private static final String KEY_APP_SWITCH_PRESS = "hardware_keys_app_switch_press";
     private static final String KEY_APP_SWITCH_LONG_PRESS = "hardware_keys_app_switch_long_press";
+    private static final String KEY_APP_SWITCH_DOUBLE_TAP = "hardware_keys_app_switch_double_tap";
     private static final String KEY_APP_SWITCH_WAKE_SCREEN = "app_switch_wake_screen";
     private static final String KEY_VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
     private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
@@ -112,14 +116,18 @@ public class CustomButtonSettings extends DashboardFragment implements
     private ContentResolver mResolver;
 
     private ListPreference mBackLongPressAction;
+    private ListPreference mBackDoubleTapAction;
     private ListPreference mHomeLongPressAction;
     private ListPreference mHomeDoubleTapAction;
     private ListPreference mMenuPressAction;
     private ListPreference mMenuLongPressAction;
+    private ListPreference mMenuDoubleTapAction;
     private ListPreference mAssistPressAction;
     private ListPreference mAssistLongPressAction;
+    private ListPreference mAssistDoubleTapAction;
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
+    private ListPreference mAppSwitchDoubleTapAction;
     private SwitchPreference mCameraWakeScreen;
     private SwitchPreference mCameraSleepOnRelease;
     private ListPreference mVolumeKeyCursorControl;
@@ -191,15 +199,22 @@ public class CustomButtonSettings extends DashboardFragment implements
 
         Action defaultBackLongPressAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_longPressOnBackBehavior));
+        Action defaultBackDoubleTapAction = Action.fromIntSafe(res.getInteger(
+                org.lineageos.platform.internal.R.integer.config_doubleTapOnBackBehavior));
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_longPressOnHomeBehavior));
         Action defaultHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_doubleTapOnHomeBehavior));
         Action defaultAppSwitchLongPressAction = Action.fromIntSafe(res.getInteger(
                 org.lineageos.platform.internal.R.integer.config_longPressOnAppSwitchBehavior));
+        Action defaultAppSwitchDoubleTapAction = Action.fromIntSafe(res.getInteger(
+                org.lineageos.platform.internal.R.integer.config_doubleTapOnAppSwitchBehavior));
         Action backLongPressAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION,
                 defaultBackLongPressAction);
+        Action backDoubleTapAction = Action.fromSettings(mResolver,
+                LineageSettings.System.KEY_BACK_DOUBLE_TAP_ACTION,
+                defaultBackDoubleTapAction);
         Action homeLongPressAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
                 defaultHomeLongPressAction);
@@ -209,6 +224,9 @@ public class CustomButtonSettings extends DashboardFragment implements
         Action appSwitchLongPressAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
                 defaultAppSwitchLongPressAction);
+        Action appSwitchDoubleTapAction = Action.fromSettings(mResolver,
+                LineageSettings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION,
+                defaultAppSwitchDoubleTapAction);
         Action edgeLongSwipeAction = Action.fromSettings(mResolver,
                 LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION,
                 Action.NOTHING);
@@ -259,8 +277,10 @@ public class CustomButtonSettings extends DashboardFragment implements
             }
 
             mBackLongPressAction = initList(KEY_BACK_LONG_PRESS, backLongPressAction);
+            mBackDoubleTapAction = initList(KEY_BACK_DOUBLE_TAP, backDoubleTapAction);
             if (navkeysEnabled) {
                 mBackLongPressAction.setEnabled(false);
+                mBackDoubleTapAction.setEnabled(false);
             }
         }
         if (!hasBackKey || backCategory.getPreferenceCount() == 0) {
@@ -280,6 +300,11 @@ public class CustomButtonSettings extends DashboardFragment implements
                         LineageSettings.System.KEY_MENU_LONG_PRESS_ACTION,
                         hasAssistKey ? Action.NOTHING : Action.APP_SWITCH);
             mMenuLongPressAction = initList(KEY_MENU_LONG_PRESS, longPressAction);
+
+            Action doubleTapAction = Action.fromSettings(mResolver,
+                        LineageSettings.System.KEY_MENU_DOUBLE_TAP_ACTION,
+                        Action.NOTHING);
+            mMenuDoubleTapAction = initList(KEY_MENU_DOUBLE_TAP, doubleTapAction);
         }
         if (!hasMenuKey || menuCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(menuCategory);
@@ -297,6 +322,10 @@ public class CustomButtonSettings extends DashboardFragment implements
             Action longPressAction = Action.fromSettings(mResolver,
                     LineageSettings.System.KEY_ASSIST_LONG_PRESS_ACTION, Action.VOICE_SEARCH);
             mAssistLongPressAction = initList(KEY_ASSIST_LONG_PRESS, longPressAction);
+
+            Action doubleTapAction = Action.fromSettings(mResolver,
+                    LineageSettings.System.KEY_ASSIST_DOUBLE_TAP_ACTION, Action.NOTHING);
+            mAssistLongPressAction = initList(KEY_ASSIST_DOUBLE_TAP, doubleTapAction);
         }
         if (!hasAssistKey || assistCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(assistCategory);
@@ -313,6 +342,8 @@ public class CustomButtonSettings extends DashboardFragment implements
 
             mAppSwitchLongPressAction = initList(KEY_APP_SWITCH_LONG_PRESS,
                     appSwitchLongPressAction);
+            mAppSwitchDoubleTapAction = initList(KEY_APP_SWITCH_DOUBLE_TAP,
+                    appSwitchDoubleTapAction);
         }
         if (!hasAppSwitchKey || appSwitchCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(appSwitchCategory);
@@ -426,6 +457,9 @@ public class CustomButtonSettings extends DashboardFragment implements
         if (hasBackKey) {
             mBackLongPressAction.setEntries(actionEntries);
             mBackLongPressAction.setEntryValues(actionValues);
+
+            mBackDoubleTapAction.setEntries(actionEntries);
+            mBackDoubleTapAction.setEntryValues(actionValues);
         }
 
         if (hasHomeKey) {
@@ -442,6 +476,9 @@ public class CustomButtonSettings extends DashboardFragment implements
 
             mMenuLongPressAction.setEntries(actionEntries);
             mMenuLongPressAction.setEntryValues(actionValues);
+
+            mMenuDoubleTapAction.setEntries(actionEntries);
+            mMenuDoubleTapAction.setEntryValues(actionValues);
         }
 
         if (hasAssistKey) {
@@ -450,6 +487,9 @@ public class CustomButtonSettings extends DashboardFragment implements
 
             mAssistLongPressAction.setEntries(actionEntries);
             mAssistLongPressAction.setEntryValues(actionValues);
+
+            mAssistDoubleTapAction.setEntries(actionEntries);
+            mAssistDoubleTapAction.setEntryValues(actionValues);
         }
 
         if (hasAppSwitchKey) {
@@ -458,6 +498,9 @@ public class CustomButtonSettings extends DashboardFragment implements
 
             mAppSwitchLongPressAction.setEntries(actionEntries);
             mAppSwitchLongPressAction.setEntryValues(actionValues);
+
+            mAppSwitchDoubleTapAction.setEntries(actionEntries);
+            mAppSwitchDoubleTapAction.setEntryValues(actionValues);
         }
     }
 
@@ -539,6 +582,10 @@ public class CustomButtonSettings extends DashboardFragment implements
             handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION);
             return true;
+        } else if (preference == mBackDoubleTapAction) {
+            handleListChange((ListPreference) preference, newValue,
+                    LineageSettings.System.KEY_BACK_DOUBLE_TAP_ACTION);
+            return true;
         } else if (preference == mHomeLongPressAction) {
             handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION);
@@ -548,35 +595,47 @@ public class CustomButtonSettings extends DashboardFragment implements
                     LineageSettings.System.KEY_HOME_DOUBLE_TAP_ACTION);
             return true;
         } else if (preference == mMenuPressAction) {
-            handleListChange(mMenuPressAction, newValue,
+            handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_MENU_ACTION);
             return true;
         } else if (preference == mMenuLongPressAction) {
-            handleListChange(mMenuLongPressAction, newValue,
+            handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_MENU_LONG_PRESS_ACTION);
             return true;
+        } else if (preference == mMenuDoubleTapAction) {
+            handleListChange((ListPreference) preference, newValue,
+                    LineageSettings.System.KEY_MENU_DOUBLE_TAP_ACTION);
+            return true;
         } else if (preference == mAssistPressAction) {
-            handleListChange(mAssistPressAction, newValue,
+            handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_ASSIST_ACTION);
             return true;
         } else if (preference == mAssistLongPressAction) {
-            handleListChange(mAssistLongPressAction, newValue,
+            handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_ASSIST_LONG_PRESS_ACTION);
             return true;
+        } else if (preference == mAssistDoubleTapAction) {
+            handleListChange((ListPreference) preference, newValue,
+                    LineageSettings.System.KEY_ASSIST_DOUBLE_TAP_ACTION);
+            return true;
         } else if (preference == mAppSwitchPressAction) {
-            handleListChange(mAppSwitchPressAction, newValue,
+            handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_APP_SWITCH_ACTION);
             return true;
         } else if (preference == mAppSwitchLongPressAction) {
             handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
             return true;
+        } else if (preference == mAppSwitchDoubleTapAction) {
+            handleListChange((ListPreference) preference, newValue,
+                    LineageSettings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
+            return true;
         } else if (preference == mVolumeKeyCursorControl) {
-            handleSystemListChange(mVolumeKeyCursorControl, newValue,
+            handleListChange((ListPreference) preference, newValue,
                     Settings.System.VOLUME_KEY_CURSOR_CONTROL);
             return true;
         } else if (preference == mTorchLongPressPowerTimeout) {
-            handleListChange(mTorchLongPressPowerTimeout, newValue,
+            handleListChange((ListPreference) preference, newValue,
                     LineageSettings.System.TORCH_LONG_PRESS_POWER_TIMEOUT);
             return true;
         } else if (preference == mSwapCapacitiveKeys) {
@@ -619,6 +678,7 @@ public class CustomButtonSettings extends DashboardFragment implements
         /* Toggle hardkey control availability depending on navbar state */
         if (backCategory != null) {
             enablePreference(mBackLongPressAction, !navbarEnabled);
+            enablePreference(mBackDoubleTapAction, !navbarEnabled);
         }
         if (homeCategory != null) {
             enablePreference(mHomeAnswerCall, !navbarEnabled);
@@ -628,14 +688,17 @@ public class CustomButtonSettings extends DashboardFragment implements
         if (menuCategory != null) {
             enablePreference(mMenuPressAction, !navbarEnabled);
             enablePreference(mMenuLongPressAction, !navbarEnabled);
+            enablePreference(mMenuDoubleTapAction, !navbarEnabled);
         }
         if (assistCategory != null) {
             enablePreference(mAssistPressAction, !navbarEnabled);
             enablePreference(mAssistLongPressAction, !navbarEnabled);
+            enablePreference(mAssistDoubleTapAction, !navbarEnabled);
         }
         if (appSwitchCategory != null) {
             enablePreference(mAppSwitchPressAction, !navbarEnabled);
             enablePreference(mAppSwitchLongPressAction, !navbarEnabled);
+            enablePreference(mAppSwitchDoubleTapAction, !navbarEnabled);
         }
     }
 
@@ -739,6 +802,8 @@ public class CustomButtonSettings extends DashboardFragment implements
 
                     if (!DeviceUtils.hasBackKey(context)) {
                         keys.add(CATEGORY_BACK);
+                        keys.add(KEY_BACK_LONG_PRESS);
+                        keys.add(KEY_BACK_DOUBLE_TAP);
                         keys.add(KEY_BACK_WAKE_SCREEN);
                     } else if (!DeviceUtils.canWakeUsingHomeKey(context)) {
                         keys.add(KEY_BACK_WAKE_SCREEN);
@@ -759,6 +824,7 @@ public class CustomButtonSettings extends DashboardFragment implements
                         keys.add(KEY_MENU_PRESS);
                         keys.add(KEY_MENU_LONG_PRESS);
                         keys.add(KEY_MENU_WAKE_SCREEN);
+                        keys.add(KEY_MENU_DOUBLE_TAP);
                     } else if (!DeviceUtils.canWakeUsingMenuKey(context)) {
                         keys.add(KEY_MENU_WAKE_SCREEN);
                     }
@@ -767,6 +833,7 @@ public class CustomButtonSettings extends DashboardFragment implements
                         keys.add(CATEGORY_ASSIST);
                         keys.add(KEY_ASSIST_PRESS);
                         keys.add(KEY_ASSIST_LONG_PRESS);
+                        keys.add(KEY_ASSIST_DOUBLE_TAP);
                         keys.add(KEY_ASSIST_WAKE_SCREEN);
                     } else if (!DeviceUtils.canWakeUsingAssistKey(context)) {
                         keys.add(KEY_ASSIST_WAKE_SCREEN);
@@ -776,6 +843,7 @@ public class CustomButtonSettings extends DashboardFragment implements
                         keys.add(CATEGORY_APPSWITCH);
                         keys.add(KEY_APP_SWITCH_PRESS);
                         keys.add(KEY_APP_SWITCH_LONG_PRESS);
+                        keys.add(KEY_APP_SWITCH_DOUBLE_TAP);
                         keys.add(KEY_APP_SWITCH_WAKE_SCREEN);
                     } else if (!DeviceUtils.canWakeUsingAppSwitchKey(context)) {
                         keys.add(KEY_APP_SWITCH_WAKE_SCREEN);
