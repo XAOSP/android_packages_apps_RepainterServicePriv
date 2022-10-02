@@ -91,9 +91,9 @@
     <string name="click_partial_screenshot_summary">Short click Volume Down and Power to take partial screenshot</string>
     <string name="camera_double_tap_power_gesture_title">Press power button twice for camera</string>
     <string name="camera_double_tap_power_gesture_desc">Quickly open camera without unlocking your screen</string>
-    <string name="torch_long_press_power_gesture_title">Long press for torch</string>
-    <string name="torch_long_press_power_gesture_desc">Activate the torch by long pressing the power button while the display is off</string>
-    <string name="torch_long_press_power_timeout_title">Automatically turn torch off</string>
+    <string name="torch_long_press_power_gesture_title">Long press for flashlight</string>
+    <string name="torch_long_press_power_gesture_desc">Activate the flashlight by long pressing the power button while the display is off</string>
+    <string name="torch_long_press_power_timeout_title">Automatically turn flashlight off</string>
     <string name="torch_long_press_power_timeout_never">Never</string>
     <string name="torch_long_press_power_timeout_1min">1 minute</string>
     <string name="torch_long_press_power_timeout_2min">2 minutes</string>
@@ -125,7 +125,7 @@
     <string name="hardware_keys_action_last_app">Last app</string>
     <string name="hardware_keys_action_split_screen">Split screen</string>
     <string name="hardware_keys_action_kill_app">Kill foreground app</string>
-    <string name="hardware_keys_action_torch">Toggle torch</string>
+    <string name="hardware_keys_action_torch">Toggle flashlight</string>
     <string name="hardware_keys_action_screenshot">Take screenshot</string>
     <string name="hardware_keys_action_volume_panel">Toggle volume panel</string>
     <string name="hardware_keys_action_clear_all_notifications">Clear all notifications</string>
