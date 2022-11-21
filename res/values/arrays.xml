@@ -159,6 +159,21 @@
         <item>0</item>
     </string-array>
 
+    <!-- QS smart pulldown-->
+    <string-array name="qs_smart_pulldown_entries" translatable="false">
+        <item>@string/qs_smart_pulldown_off</item>
+        <item>@string/qs_smart_pulldown_dismissable</item>
+        <item>@string/qs_smart_pulldown_ongoing</item>
+        <item>@string/qs_smart_pulldown_none</item>
+    </string-array>
+
+    <string-array name="qs_smart_pulldown_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <!-- Smart Pixels -->
     <string-array name="smart_pixels_percent_strings" translatable="false">
         <item>12</item>

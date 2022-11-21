@@ -175,6 +175,19 @@
     <string name="qs_quick_pulldown_left">Left</string>
     <string name="qs_quick_pulldown_right">Right</string>
 
+    <!-- QS smart pulldown-->
+    <string name="qs_smart_pulldown_title">Smart pulldown</string>
+    <string name="qs_smart_pulldown_summary">Open quick settings when there are %1$s notifications</string>
+    <string name="qs_smart_pulldown_none_summary">Open quick settings when there are no notifications</string>
+    <string name="qs_smart_pulldown_off">Off</string>
+    <string name="qs_smart_pulldown_none">No notifications</string>
+    <string name="qs_smart_pulldown_dismissable">No dismissible</string>
+    <string name="qs_smart_pulldown_ongoing">No ongoing</string>
+
+    <!-- Disable QS on secure lockscreen -->
+    <string name="disable_qs_title">Hide QS on secure lock screen</string>
+    <string name="disable_qs_summary">Prevent access to QS tiles on secure lock screen</string>
+
     <!-- QS tiles layout  -->
     <string name="qs_layout_category_title">Tiles layout</string>
     <string name="qs_tile_label_hide_title">Hide label</string>
@@ -191,14 +204,26 @@
     <string name="qs_brightness_slider_auto_title">Auto brightness</string>
     <string name="qs_brightness_slider_auto_summary">Show toggle for adaptive brightness near the slider</string>
 
+    <string name="qs_footer_category">Footer</string>
+    <string name="qs_footer_warnings_title">Footer alerts</string>
+    <string name="qs_footer_warnings_summary">Display an alert at bottom of QS panel when network is monitored by external apps or VPN</string>
+
     <!-- STATUS BAR -->
     <string name="status_bar_icons_title">Status bar icons</string>
     <string name="status_bar_system_icons_title">System icons</string>
     <string name="status_bar_system_icons_summary">Control which status bar icons are shown</string>
+    <string name="status_bar_colored_icons_title">Colored icons</string>
+    <string name="status_bar_colored_icons_summary">Use proper app icons for notification icons in statusbar</string>
+    <string name="status_bar_bluetooth_battery_title">Bluetooth battery status</string>
+    <string name="status_bar_bluetooth_battery_summary">Display battery status for the connected bluetooth device, if available</string>
+
+    <!-- Privacy indicators -->
     <string name="status_bar_mic_camera_privacy_indicator_title">Microphone and camera privacy indicator</string>
     <string name="status_bar_mic_camera_privacy_indicator_summary">Show separate indicator when any app uses microphone or camera</string>
     <string name="status_bar_location_privacy_indicator_title">Location privacy indicator</string>
     <string name="status_bar_location_privacy_indicator_summary">Show separate indicator when any app uses location services</string>
+    <string name="status_bar_projection_privacy_indicator_title">Media projection privacy indicator</string>
+    <string name="status_bar_projection_privacy_indicator_summary">Show indicator when device screen is projected</string>
 
     <string name="status_bar_network_category_title">Network</string>
 
@@ -349,5 +374,9 @@
 
     <string name="charging_animation_title">Charging animation</string>
     <string name="charging_animation_summary">Display an animation when the device is plugged in</string>
+    <string name="lockscreen_battery_info_title">Battery info</string>
+    <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
+    <string name="app_volume_title">Per-app volume control</string>
+    <string name="app_volume_summary">Show per-app volume button in volume dialog</string>
 
 </resources>
