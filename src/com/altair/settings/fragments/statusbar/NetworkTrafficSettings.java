@@ -21,7 +21,7 @@ import android.content.ContentResolver;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.preference.DropDownPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
 import com.android.internal.logging.nano.MetricsProto;
@@ -38,9 +38,9 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment
     private static final String TAG = "NetworkTrafficSettings";
     private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock";
 
-    private DropDownPreference mNetTrafficMode;
+    private ListPreference mNetTrafficMode;
     private LineageSecureSettingSwitchPreference mNetTrafficAutohide;
-    private DropDownPreference mNetTrafficUnits;
+    private ListPreference mNetTrafficUnits;
     private LineageSecureSettingSwitchPreference mNetTrafficShowUnits;
 
     @Override
