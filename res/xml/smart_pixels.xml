@@ -20,12 +20,14 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/smart_pixels_title" >
 
+    <!-- Enable Smart Pixels -->
     <com.lineage.support.preferences.SystemSettingSwitchPreference
         android:key="smart_pixels_enable"
         android:title="@string/smart_pixels_enable_title"
         android:summary="@string/smart_pixels_enable_summary"
         android:defaultValue="false" />
 
+    <!-- Auto-enable on battery saver -->
     <com.lineage.support.preferences.SystemSettingSwitchPreference
         android:key="smart_pixels_on_power_save"
         android:dependency="smart_pixels_enable"
@@ -33,6 +35,7 @@
         android:summary="@string/smart_pixels_on_power_save_summary"
         android:defaultValue="false" />
 
+    <!-- Percent of pixels to disable -->
     <com.lineage.support.preferences.SystemSettingListPreference
         android:key="smart_pixels_pattern"
         android:dependency="smart_pixels_enable"
@@ -42,6 +45,7 @@
         android:title="@string/smart_pixels_percent"
         android:dialogTitle="@string/smart_pixels_percent" />
 
+    <!-- Shift pixels to prevent burn-in -->
     <com.lineage.support.preferences.SystemSettingListPreference
         android:key="smart_pixels_shift_timeout"
         android:dependency="smart_pixels_enable"

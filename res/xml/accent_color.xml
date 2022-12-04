@@ -20,6 +20,7 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/theme_elements_accent_color_title">
 
+    <!-- Accent color -->
     <Preference
         android:key="theme_colors_accent_color"
         android:title="@string/theme_colors_current_accent_color_title"
@@ -30,24 +31,28 @@
         android:key="theme_colors_monet"
         android:title="@string/theme_colors_monet_category_title">
 
+        <!-- Use accurate shades -->
         <com.lineage.support.preferences.SecureSettingSwitchPreference
             android:key="monet_engine_accurate_shades"
             android:title="@string/theme_colors_monet_accurate_shades_title"
             android:summary="@string/theme_colors_monet_accurate_shades_summary"
             android:defaultValue="true" />
 
+        <!-- Use richer accent colors -->
         <com.lineage.support.preferences.SecureSettingSwitchPreference
             android:key="monet_engine_richer_colors"
             android:title="@string/theme_colors_monet_richer_colors_title"
             android:summary="@string/theme_colors_monet_richer_colors_summary"
             android:defaultValue="false" />
 
+        <!-- Tint surfaces with accent color -->
         <com.lineage.support.preferences.SecureSettingSwitchPreference
             android:key="monet_engine_tint_surface"
             android:title="@string/theme_colors_monet_tint_surface_title"
             android:summary="@string/theme_colors_monet_tint_surface_summary"
             android:defaultValue="true" />
 
+        <!-- Chroma factor -->
         <com.lineage.support.preferences.SecureSettingSeekBarPreference
             android:key="monet_engine_chroma_factor"
             android:title="@string/theme_colors_monet_chroma_factor_title"
@@ -56,6 +61,7 @@
             settings:min="0"
             settings:interval="25"/>
 
+        <!-- White luminance -->
         <com.lineage.support.preferences.SecureSettingSeekBarPreference
             android:key="monet_engine_white_luminance_user"
             android:title="@string/theme_colors_monet_white_luminance_user_title"
@@ -64,6 +70,7 @@
             settings:min="0"
             settings:interval="25"/>
 
+        <!-- Use linear lightness -->
         <com.lineage.support.preferences.SecureSettingSwitchPreference
             android:key="monet_engine_linear_lightness"
             android:title="@string/theme_colors_monet_linear_lightness_title"

@@ -19,27 +19,32 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Enable screenshot button -->
     <SwitchPreference
         android:key="screenshot"
         android:title="@string/power_menu_screenshot_title"
         android:summary="@string/power_menu_screenshot_summary"
         android:defaultValue="false" />
 
+    <!-- Enable airplane mode toggle -->
     <SwitchPreference
         android:key="airplane"
         android:title="@string/power_menu_airplane_title"
         android:defaultValue="false" />
 
+    <!-- Enable user selection button -->
     <SwitchPreference
         android:key="users"
         android:title="@string/power_menu_users_title"
         android:defaultValue="false" />
 
+    <!-- Enable emergency button -->
     <SwitchPreference
         android:key="emergency"
         android:title="@string/power_menu_emergency_title"
         android:defaultValue="false" />
 
+    <!-- Enable device controls button -->
     <SwitchPreference
         android:key="devicecontrols"
         android:title="@string/power_menu_devicecontrols_title"

@@ -25,6 +25,7 @@
         android:key="theme_styles"
         android:title="@string/theme_styles_category_title">
 
+        <!-- Change wallpaper -->
         <com.android.settingslib.RestrictedPreference
             android:key="wallpaper"
             android:title="@string/wallpaper_settings_title"
@@ -33,6 +34,7 @@
             settings:controller="com.android.settings.display.WallpaperPreferenceController">
         </com.android.settingslib.RestrictedPreference>
 
+        <!-- Dark mode -->
         <com.android.settings.display.darkmode.DarkModePreference
             android:key="theme_dark_ui_mode"
             android:title="@string/dark_ui_mode"
@@ -42,6 +44,7 @@
             settings:controller="com.android.settings.display.DarkUIPreferenceController"
             settings:searchable="false" />
 
+        <!-- Accent color -->
         <Preference
             android:key="theme_element_accent_color"
             android:title="@string/theme_elements_accent_color_title"
@@ -54,26 +57,31 @@
         android:key="theme_elements"
         android:title="@string/theme_elements_category_title">
 
+        <!-- Font -->
         <Preference
             android:key="android.theme.customization.font"
             android:title="@string/theme_elements_font_title"
             android:fragment="com.altair.settings.fragments.theme.FontsPicker" />
 
+        <!-- Icon shape -->
         <Preference
             android:key="android.theme.customization.adaptive_icon_shape"
             android:title="@string/theme_elements_icon_shape_title"
             android:fragment="com.altair.settings.fragments.theme.IconShapesPicker" />
 
+        <!-- Signal icon style -->
         <Preference
             android:key="android.theme.customization.signal_icon"
             android:title="@string/theme_elements_signal_icon_title"
             android:fragment="com.altair.settings.fragments.theme.SignalIconsPicker" />
 
+        <!-- Wi-Fi icon style -->
         <Preference
             android:key="android.theme.customization.wifi_icon"
             android:title="@string/theme_elements_wifi_icon_title"
             android:fragment="com.altair.settings.fragments.theme.WifiIconsPicker" />
 
+        <!-- Navigation bar style -->
         <Preference
             android:key="android.theme.customization.navbar"
             android:title="@string/theme_elements_navbar_title"
