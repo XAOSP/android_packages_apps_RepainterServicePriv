@@ -49,6 +49,7 @@ public class CustomQSSettings extends DashboardFragment implements
     private static final int PULLDOWN_DIR_NONE = 0;
     private static final int PULLDOWN_DIR_RIGHT = 1;
     private static final int PULLDOWN_DIR_LEFT = 2;
+    private static final int PULLDOWN_DIR_ALWAYS = 3;
 
     private LineageSystemSettingListPreference mQuickPulldown;
 
@@ -128,6 +129,11 @@ public class CustomQSSettings extends DashboardFragment implements
                     getResources().getString(value == PULLDOWN_DIR_LEFT
                         ? R.string.qs_quick_pulldown_summary_left
                         : R.string.qs_quick_pulldown_summary_right));
+                break;
+
+            case PULLDOWN_DIR_ALWAYS:
+                summary = getResources().getString(
+                    R.string.qs_quick_pulldown_always);
                 break;
         }
         mQuickPulldown.setSummary(summary);
