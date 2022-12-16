@@ -29,12 +29,14 @@
         android:defaultValue="0" />
 
     <!-- Quick Settings smart pulldown -->
+    <!--
     <com.lineage.support.preferences.SystemSettingListPreference
         android:key="qs_smart_pulldown"
         android:title="@string/qs_smart_pulldown_title"
         android:entries="@array/qs_smart_pulldown_entries"
         android:entryValues="@array/qs_smart_pulldown_values"
         android:defaultValue="0" />
+    -->
 
     <!-- Disable Quick Settings on secure lockscreen -->
     <com.lineage.support.preferences.SystemSettingSwitchPreference
