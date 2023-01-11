@@ -18,11 +18,10 @@
 package com.altair.settings.fragments.theme;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
