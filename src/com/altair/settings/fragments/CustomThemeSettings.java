@@ -52,6 +52,7 @@ public class CustomThemeSettings extends DashboardFragment implements
     private static final String KEY_THEME_SIGNAL_ICON = ThemeUtils.SIGNAL_ICON_KEY;
     private static final String KEY_THEME_WIFI_ICON = ThemeUtils.WIFI_ICON_KEY;
     private static final String KEY_THEME_NAVBAR_STYLE = ThemeUtils.NAVBAR_KEY;
+    private static final String KEY_THEME_LOCKSCREEN_FONT = ThemeUtils.LOCKSCREEN_FONT_KEY;
 
     private Context mContext;
     private Resources mResources;
@@ -66,6 +67,7 @@ public class CustomThemeSettings extends DashboardFragment implements
     private Preference mSignalIconPreference;
     private Preference mWiFiIconPreference;
     private Preference mNavbarStylePreference;
+    private Preference mLockScreenClockFontPreference;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -97,6 +99,8 @@ public class CustomThemeSettings extends DashboardFragment implements
         updateSummary(mWiFiIconPreference, "android");
         mNavbarStylePreference = prefScreen.findPreference(KEY_THEME_NAVBAR_STYLE);
         updateSummary(mNavbarStylePreference, "com.android.systemui");
+        mLockScreenClockFontPreference = prefScreen.findPreference(KEY_THEME_LOCKSCREEN_FONT);
+        updateSummary(mLockScreenClockFontPreference, "android");
     }
 
     @Override
@@ -142,6 +146,9 @@ public class CustomThemeSettings extends DashboardFragment implements
                 break;
             case KEY_THEME_NAVBAR_STYLE:
                 updateSummary(mNavbarStylePreference, "com.android.systemui");
+                break;
+            case KEY_THEME_LOCKSCREEN_FONT:
+                updateSummary(mLockScreenClockFontPreference, "android");
                 break;
         }
         return true;
