@@ -26,6 +26,8 @@
     <string name="menu_display_settings_summary">Adjust various elements of the display screen</string>
     <string name="menu_gesture_settings_title">Gestures</string>
     <string name="menu_gesture_settings_summary">Adjust touchscreen gestures and button quick actions</string>
+    <string name="menu_miscellaneous_settings_title">Miscellaneous</string>
+    <string name="menu_miscellaneous_settings_summary">Miscellaneous configuration settings</string>
     <string name="menu_navigation_settings_title">Navigation</string>
     <string name="menu_navigation_settings_summary">Customize navigation bar and hardware keys</string>
     <string name="menu_qs_settings_title">Quick settings</string>
@@ -143,6 +145,8 @@
     <string name="smart_pixels_percent">Percent of pixels to disable</string>
     <string name="smart_pixels_shift">Prevent burn-in by shifting pixels every</string>
     <string name="smart_pixels_warning_text">Smart pixels is a power saving feature. Depending on how many pixels you decide to turn off, you could see improvement in battery life. Note that in some cases, it can result in unresponsive areas on the touch screen.</string>
+
+    <!-- MISCELLANEOUS -->
 
     <!-- NAVIGATION -->
     <string name="disable_navkeys_title">Enable on-screen nav bar</string>

@@ -44,6 +44,14 @@
         android:fragment="com.android.settings.gestures.GestureSettings"
         settings:controller="com.android.settings.gestures.GesturesSettingPreferenceController"/>
 
+    <!-- Miscellaneous -->
+    <Preference
+        android:key="miscellaneous_category"
+        android:title="@string/menu_miscellaneous_settings_title"
+        android:summary="@string/menu_miscellaneous_settings_summary"
+        android:fragment="com.altair.settings.fragments.CustomMiscellaneousSettings"
+        android:icon="@drawable/ic_settings_menu_misc" />
+
     <!-- Navigation -->
     <Preference
         android:key="navigation_category"
