@@ -147,6 +147,8 @@
     <string name="smart_pixels_warning_text">Smart pixels is a power saving feature. Depending on how many pixels you decide to turn off, you could see improvement in battery life. Note that in some cases, it can result in unresponsive areas on the touch screen.</string>
 
     <!-- MISCELLANEOUS -->
+    <string name="parallel_space_title">Parallel space</string>
+    <string name="parallel_space_summary">Allow running multiple instances of the same application in parallel</string>
 
     <!-- NAVIGATION -->
     <string name="disable_navkeys_title">Enable on-screen nav bar</string>

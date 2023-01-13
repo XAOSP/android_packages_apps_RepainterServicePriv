@@ -20,4 +20,14 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/menu_miscellaneous_settings_title">
 
+    <!-- Parallel space -->
+    <Preference
+        android:key="parallel_space"
+        android:title="@string/parallel_space_title"
+        android:summary="@string/parallel_space_summary">
+        <intent
+            android:targetPackage="ink.kscope.parallelspace"
+            android:targetClass="ink.kscope.parallelspace.MainActivity" />
+    </Preference>
+
 </PreferenceScreen>
