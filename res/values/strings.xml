@@ -382,10 +382,12 @@
     <string name="less_boring_heads_up_title">Limited heads up</string>
     <string name="less_boring_heads_up_summary">Display popup notifications only for alarm, dialer and messaging app</string>
 
-    <string name="charging_animation_title">Charging animation</string>
-    <string name="charging_animation_summary">Display an animation when the device is plugged in</string>
+    <string name="lockscreen_category_title">Lock screen</string>
     <string name="lockscreen_battery_info_title">Battery info</string>
     <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
+
+    <string name="charging_animation_title">Charging animation</string>
+    <string name="charging_animation_summary">Display an animation when the device is plugged in</string>
     <string name="app_volume_title">Per-app volume control</string>
     <string name="app_volume_summary">Show per-app volume button in volume dialog</string>
 
