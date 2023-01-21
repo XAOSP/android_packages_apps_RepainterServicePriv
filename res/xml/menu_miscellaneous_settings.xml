@@ -30,4 +30,11 @@
             android:targetClass="ink.kscope.parallelspace.MainActivity" />
     </Preference>
 
+    <!-- Google services -->
+    <Preference
+        android:key="gms_enabled_settings"
+        android:title="@string/gms_enabled_title"
+        android:summary="@string/gms_enabled_summary"
+        android:fragment="com.altair.settings.fragments.misc.GmsSwitch"/>
+
 </PreferenceScreen>

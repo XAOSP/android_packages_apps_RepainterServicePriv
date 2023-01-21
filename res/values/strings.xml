@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2022 Altair ROM Project
+     Copyright (C) 2019-2023 Altair ROM Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@
     <string name="cancel">Cancel</string>
     <string name="none">None</string>
     <string name="dlg_ok">OK</string>
+    <string name="enable">Enable</string>
 
     <!-- Dialogs -->
     <string name="systemui_restart_title">SystemUI restart required</string>
@@ -149,6 +150,10 @@
     <!-- MISCELLANEOUS -->
     <string name="parallel_space_title">Parallel space</string>
     <string name="parallel_space_summary">Allow running multiple instances of the same application in parallel</string>
+
+    <string name="gms_enabled_title">Google services</string>
+    <string name="gms_enabled_summary">Control Google services and core apps</string>
+    <string name="gms_enabled_footer">Before disabling Google services and core apps, you should disable "Find My Device" and 2-step verification on your Google account. It is strongly recommended to keep this setting enabled else apps dependent on Google components will be affected. If you run into any issues after changing this setting, perform a factory reset.</string>
 
     <!-- NAVIGATION -->
     <string name="disable_navkeys_title">Enable on-screen nav bar</string>
