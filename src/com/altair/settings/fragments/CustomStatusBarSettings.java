@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 Altair ROM Project
+ * Copyright (C) 2019-2023 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -189,10 +189,10 @@ public class CustomStatusBarSettings extends DashboardFragment implements
         if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
             if (disallowCenteredClock) {
                 mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries_notch_rtl);
-                mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values_notch_rtl);
+                mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values_notch);
             } else {
                 mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries_rtl);
-                mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values_rtl);
+                mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values);
             }
         } else if (disallowCenteredClock) {
             mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries_notch);
