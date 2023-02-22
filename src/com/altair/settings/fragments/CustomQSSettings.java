@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 Altair ROM Project
+ * Copyright (C) 2019-2023 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,6 @@ public class CustomQSSettings extends DashboardFragment implements
         // Adjust QS panel preferences for RTL
         if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
             mQuickPulldown.setEntries(R.array.qs_quick_pulldown_entries_rtl);
-            mQuickPulldown.setEntryValues(R.array.qs_quick_pulldown_values_rtl);
         }
     }
 
