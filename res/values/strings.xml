@@ -53,6 +53,9 @@
     <!-- Common category titles -->
     <string name="miscellaneous_category_title">Miscellaneous</string>
 
+    <!-- Units -->
+    <string name="unit_seconds">seconds</string>
+
     <!-- BUTTONS -->
     <string name="swap_capacitive_keys_title">Swap capacitive buttons</string>
     <string name="swap_capacitive_keys_summary">Swap the order of recents and back buttons</string>
@@ -200,6 +203,10 @@
     <string name="disable_qs_title">Hide QS on secure lock screen</string>
     <string name="disable_qs_summary">Prevent access to QS tiles on secure lock screen</string>
 
+    <!-- QS Transparency -->
+    <string name="qs_transparency_title">Background transparency</string>
+    <string name="qs_transparency_summary">Set transparency level for QS background</string>
+
     <!-- QS tiles layout  -->
     <string name="qs_layout_category_title">Tiles layout</string>
     <string name="qs_tile_label_hide_title">Hide label</string>
@@ -228,6 +235,10 @@
     <string name="status_bar_colored_icons_summary">Use proper app icons for notification icons in statusbar</string>
     <string name="status_bar_bluetooth_battery_title">Bluetooth battery status</string>
     <string name="status_bar_bluetooth_battery_summary">Display battery status for the connected bluetooth device, if available</string>
+
+    <!-- Notification count -->
+    <string name="statusbar_notif_count_title">Show notification count</string>
+    <string name="statusbar_notif_count_summary">Display the number of pending notifications</string>
 
     <!-- Privacy indicators -->
     <string name="status_bar_mic_camera_privacy_indicator_title">Microphone and camera privacy indicator</string>
@@ -288,7 +299,12 @@
     <string name="status_bar_clock_show_seconds_summary">Show hours, minutes, and seconds</string>
 
     <string name="status_bar_clock_auto_hide_title">Auto hide</string>
-    <string name="status_bar_clock_auto_hide_summary">Hide clock if launcher is visible</string>
+    <string name="status_bar_clock_auto_hide_launcher_summary">Hide clock if launcher is visible</string>
+    <string name="status_bar_clock_auto_hide_summary">Hide clock at regular interval</string>
+    <string name="status_bar_clock_auto_hide_hdur_title">Hide duration</string>
+    <string name="status_bar_clock_auto_hide_hdur_summary">Number of seconds to hide clock</string>
+    <string name="status_bar_clock_auto_hide_sdur_title">Show duration</string>
+    <string name="status_bar_clock_auto_hide_sdur_summary">Number of seconds to wait before hiding clock</string>
 
     <string name="status_bar_am_pm_title">AM/PM style</string>
     <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
@@ -380,12 +396,18 @@
     <string name="toast_icon_summary">Display the app icon corresponding with the toast</string>
 
     <string name="notifications_category_title">Notifications</string>
+    <string name="reticker_title">reTicker</string>
+    <string name="reticker_summary">Replace heads-up notification with slim and less invasive version of redesigned ticker</string>
+    <string name="reticker_colored_title">Use app colored background</string>
+    <string name="reticker_colored_summary">Replace reTicker background color using notification app main color</string>
     <string name="notification_guts_kill_app_button_title">Kill app button</string>
     <string name="notification_guts_kill_app_button_summary">Show a kill app button in the notification\'s longpress menu</string>
     <string name="notification_heads_up_title">Heads up</string>
     <string name="notification_heads_up_summary">Allow pop up notifications</string>
     <string name="less_boring_heads_up_title">Limited heads up</string>
     <string name="less_boring_heads_up_summary">Display popup notifications only for alarm, dialer and messaging app</string>
+    <string name="notification_heads_up_timeout_title">Timeout</string>
+    <string name="notification_heads_up_timeout_summary">Time to display heads up notifications</string>
 
     <string name="lockscreen_category_title">Lock screen</string>
     <string name="lockscreen_battery_info_title">Battery info</string>
