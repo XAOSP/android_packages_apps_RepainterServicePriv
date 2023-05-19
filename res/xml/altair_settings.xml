@@ -60,6 +60,14 @@
         android:fragment="com.altair.settings.fragments.CustomNavigationSettings"
         android:icon="@drawable/ic_settings_menu_navigation" />
 
+    <!-- Notifications -->
+    <Preference
+        android:key="notification_category"
+        android:title="@string/menu_notification_settings_title"
+        android:summary="@string/menu_notification_settings_summary"
+        android:fragment="com.altair.settings.fragments.CustomNotificationSettings"
+        android:icon="@drawable/ic_settings_menu_notification" />
+
     <!-- Quick settings panel -->
     <Preference
         android:key="quicksettings_category"

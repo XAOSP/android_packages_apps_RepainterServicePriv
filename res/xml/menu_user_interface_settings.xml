@@ -40,59 +40,6 @@
 
     </PreferenceCategory>
 
-    <!-- Notifications -->
-    <PreferenceCategory
-        android:key="notifications_category"
-        android:title="@string/notifications_category_title">
-
-        <!-- reTicker -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="reticker_status"
-            android:title="@string/reticker_title"
-            android:summary="@string/reticker_summary" />
-
-        <!-- Use app colored background for reTicker -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="reticker_colored"
-            android:title="@string/reticker_colored_title"
-            android:summary="@string/reticker_colored_summary"
-            android:dependency="reticker_status" />
-
-        <!-- Notification guts kill app button -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="notification_guts_kill_app_button"
-            android:title="@string/notification_guts_kill_app_button_title"
-            android:summary="@string/notification_guts_kill_app_button_summary"
-            android:defaultValue="false" />
-
-        <!-- Heads up -->
-        <com.lineage.support.preferences.GlobalSettingSwitchPreference
-            android:key="heads_up_notifications_enabled"
-            android:title="@string/notification_heads_up_title"
-            android:summary="@string/notification_heads_up_summary"
-            android:defaultValue="true" />
-
-        <!-- Less boring heads up -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="less_boring_heads_up"
-            android:title="@string/less_boring_heads_up_title"
-            android:summary="@string/less_boring_heads_up_summary"
-            android:defaultValue="false"
-            android:dependency="heads_up_notifications_enabled" />
-
-        <!-- Heads up timeout -->
-        <com.lineage.support.preferences.SystemSettingSeekBarPreference
-            android:key="heads_up_timeout"
-            android:title="@string/notification_heads_up_timeout_title"
-            android:summary="@string/notification_heads_up_timeout_summary"
-            settings:units="@string/unit_seconds"
-            android:defaultValue="5"
-            settings:min="1"
-            android:max="10"
-            android:dependency="heads_up_notifications_enabled" />
-
-    </PreferenceCategory>
-
     <!-- Lock screen -->
     <PreferenceCategory
         android:key="lockscreen"

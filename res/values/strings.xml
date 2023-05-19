@@ -30,6 +30,8 @@
     <string name="menu_miscellaneous_settings_summary">Miscellaneous configuration settings</string>
     <string name="menu_navigation_settings_title">Navigation</string>
     <string name="menu_navigation_settings_summary">Customize navigation bar and hardware keys</string>
+    <string name="menu_notification_settings_title">Notifications</string>
+    <string name="menu_notification_settings_summary">Adjust notification settings</string>
     <string name="menu_qs_settings_title">Quick settings</string>
     <string name="menu_qs_settings_summary">Manage your quick settings tiles</string>
     <string name="menu_status_bar_settings_title">Status bar</string>
@@ -179,6 +181,26 @@
     <string name="navigation_bar_app_switch_long_press_title">Recents long press action</string>
     <string name="navigation_bar_app_switch_double_tap_title">Recents double tap action</string>
     <string name="navigation_bar_edge_long_swipe_title">Edge long swipe action</string>
+
+    <!-- NOTIFICATIONS -->
+
+    <!-- reTicker -->
+    <string name="reticker_title">reTicker</string>
+    <string name="reticker_summary">Replace heads-up notification with slim and less invasive version of redesigned ticker</string>
+    <string name="reticker_colored_title">Use app colored background</string>
+    <string name="reticker_colored_summary">Replace reTicker background color using notification app main color</string>
+
+    <!-- Kill app button -->
+    <string name="notification_guts_kill_app_button_title">Kill app button</string>
+    <string name="notification_guts_kill_app_button_summary">Show a kill app button in the notification\'s longpress menu</string>
+
+    <!-- Heads up -->
+    <string name="notification_heads_up_title">Heads up</string>
+    <string name="notification_heads_up_summary">Allow pop up notifications</string>
+    <string name="less_boring_heads_up_title">Limited heads up</string>
+    <string name="less_boring_heads_up_summary">Display popup notifications only for alarm, dialer and messaging app</string>
+    <string name="notification_heads_up_timeout_title">Timeout</string>
+    <string name="notification_heads_up_timeout_summary">Time to display heads up notifications</string>
 
     <!-- QUICK SETTINGS -->
     <string name="qs_quick_pulldown_title">Quick pulldown</string>
@@ -394,20 +416,6 @@
 
     <string name="toast_icon_title">Toast icon</string>
     <string name="toast_icon_summary">Display the app icon corresponding with the toast</string>
-
-    <string name="notifications_category_title">Notifications</string>
-    <string name="reticker_title">reTicker</string>
-    <string name="reticker_summary">Replace heads-up notification with slim and less invasive version of redesigned ticker</string>
-    <string name="reticker_colored_title">Use app colored background</string>
-    <string name="reticker_colored_summary">Replace reTicker background color using notification app main color</string>
-    <string name="notification_guts_kill_app_button_title">Kill app button</string>
-    <string name="notification_guts_kill_app_button_summary">Show a kill app button in the notification\'s longpress menu</string>
-    <string name="notification_heads_up_title">Heads up</string>
-    <string name="notification_heads_up_summary">Allow pop up notifications</string>
-    <string name="less_boring_heads_up_title">Limited heads up</string>
-    <string name="less_boring_heads_up_summary">Display popup notifications only for alarm, dialer and messaging app</string>
-    <string name="notification_heads_up_timeout_title">Timeout</string>
-    <string name="notification_heads_up_timeout_summary">Time to display heads up notifications</string>
 
     <string name="lockscreen_category_title">Lock screen</string>
     <string name="lockscreen_battery_info_title">Battery info</string>
