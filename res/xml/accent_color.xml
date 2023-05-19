@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2020-2022 Altair ROM Project
+     Copyright (C) 2020-2023 Altair ROM Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:lineage="http://schemas.android.com/apk/res/lineageos.platform"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
-    android:title="@string/theme_elements_accent_color_title">
+    android:title="@string/theme_accent_color_title">
 
     <!-- Accent color -->
     <Preference
@@ -29,7 +29,7 @@
     <!-- Monet settings -->
     <PreferenceCategory
         android:key="theme_colors_monet"
-        android:title="@string/theme_colors_monet_category_title">
+        android:title="@string/theme_colors_monet_category">
 
         <!-- Use accurate shades -->
         <com.lineage.support.preferences.SecureSettingSwitchPreference

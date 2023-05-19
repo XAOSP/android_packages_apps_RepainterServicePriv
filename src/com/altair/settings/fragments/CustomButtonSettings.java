@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 Altair ROM Project
+ * Copyright (C) 2019-2023 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -432,9 +432,9 @@ public class CustomButtonSettings extends DashboardFragment implements
 
         List<Integer> unsupportedValues = new ArrayList<>();
         List<String> entries = new ArrayList<>(
-                Arrays.asList(res.getStringArray(R.array.hardware_keys_action_entries)));
+                Arrays.asList(res.getStringArray(R.array.navbar_key_action_entries)));
         List<String> values = new ArrayList<>(
-                Arrays.asList(res.getStringArray(R.array.hardware_keys_action_values)));
+                Arrays.asList(res.getStringArray(R.array.navbar_key_action_values)));
 
         // hide split screen option unconditionally - it doesn't work at the moment
         // once someone gets it working again: hide it only for low-ram devices

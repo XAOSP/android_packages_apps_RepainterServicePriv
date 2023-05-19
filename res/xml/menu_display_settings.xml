@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2022 Altair ROM Project
+     Copyright (C) 2019-2023 Altair ROM Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -20,18 +20,11 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/menu_display_settings_title">
 
-    <!-- Miscellaneous -->
-    <PreferenceCategory
-        android:key="miscellaneous"
-        android:title="@string/miscellaneous_category_title">
-
-        <!-- Smart Pixels -->
-        <Preference
-            android:key="smart_pixels"
-            android:title="@string/smart_pixels_title"
-            android:summary="@string/smart_pixels_summary"
-            android:fragment="com.altair.settings.fragments.display.SmartPixels" />
-
-    </PreferenceCategory>
+    <!-- Smart Pixels -->
+    <Preference
+        android:key="smart_pixels"
+        android:title="@string/smart_pixels_title"
+        android:summary="@string/smart_pixels_summary"
+        android:fragment="com.altair.settings.fragments.display.SmartPixels" />
 
 </PreferenceScreen>

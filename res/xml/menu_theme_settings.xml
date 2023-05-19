@@ -23,7 +23,7 @@
     <!-- Styles & wallpapers -->
     <PreferenceCategory
         android:key="theme_styles"
-        android:title="@string/theme_styles_category_title">
+        android:title="@string/theme_styles_category">
 
         <!-- Change wallpaper -->
         <com.android.settingslib.RestrictedPreference
@@ -46,9 +46,9 @@
 
         <!-- Accent color -->
         <Preference
-            android:key="theme_element_accent_color"
-            android:title="@string/theme_elements_accent_color_title"
-            android:summary="@string/theme_elements_accent_color_summary"
+            android:key="theme_accent_color"
+            android:title="@string/theme_accent_color_title"
+            android:summary="@string/theme_accent_color_summary"
             android:fragment="com.altair.settings.fragments.theme.AccentColorFragment" />
 
     </PreferenceCategory>
@@ -56,7 +56,7 @@
     <!-- Theme elements -->
     <PreferenceCategory
         android:key="theme_elements"
-        android:title="@string/theme_elements_category_title">
+        android:title="@string/theme_elements_category">
 
         <!-- Font -->
         <Preference

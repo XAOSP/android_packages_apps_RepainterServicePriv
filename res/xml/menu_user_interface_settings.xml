@@ -23,7 +23,7 @@
     <!-- Power menu -->
     <PreferenceCategory
         android:key="power_menu_category"
-        android:title="@string/power_menu_title">
+        android:title="@string/power_menu_category">
 
         <!-- Power menu items -->
         <Preference
@@ -43,7 +43,7 @@
     <!-- Lock screen -->
     <PreferenceCategory
         android:key="lockscreen"
-        android:title="@string/lockscreen_category_title">
+        android:title="@string/lockscreen_category">
 
         <!-- Battery charing info on lock screen -->
         <com.lineage.support.preferences.SystemSettingSwitchPreference
@@ -57,7 +57,7 @@
     <!-- Miscellaneous -->
     <PreferenceCategory
         android:key="miscellaneous"
-        android:title="@string/miscellaneous_category_title">
+        android:title="@string/miscellaneous_category">
 
         <!-- Toast icon -->
         <com.lineage.support.preferences.SystemSettingSwitchPreference

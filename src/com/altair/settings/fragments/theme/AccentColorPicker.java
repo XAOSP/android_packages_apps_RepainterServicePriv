@@ -70,7 +70,7 @@ public class AccentColorPicker extends SettingsPreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.theme_elements_accent_color_title);
+        getActivity().setTitle(R.string.theme_accent_color_title);
 
         mContext = getActivity().getApplicationContext();
         mResolver = getActivity().getContentResolver();
