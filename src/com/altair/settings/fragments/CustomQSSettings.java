@@ -16,6 +16,7 @@
 
 package com.altair.settings.fragments;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -27,6 +28,8 @@ import android.view.View;
 
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceScreen;
+import androidx.preference.SwitchPreference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
@@ -38,13 +41,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import lineageos.preference.LineageSystemSettingListPreference;
+import lineageos.providers.LineageSettings;
 
 @SearchIndexable(forTarget = SearchIndexable.ALL & ~SearchIndexable.ARC)
 public class CustomQSSettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "CustomQSSettings";
 
-    private static final String QS_QUICK_PULLDOWN = "qs_quick_pulldown";
+    private static final String KEY_QUICK_PULLDOWN = "qs_quick_pulldown";
+    private static final String KEY_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
+    private static final String KEY_BRIGHTNESS_SLIDER_POSITION = "qs_brightness_slider_position";
+    private static final String KEY_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
 
     private static final int PULLDOWN_DIR_NONE = 0;
     private static final int PULLDOWN_DIR_RIGHT = 1;
@@ -52,6 +59,9 @@ public class CustomQSSettings extends DashboardFragment implements
     private static final int PULLDOWN_DIR_ALWAYS = 3;
 
     private LineageSystemSettingListPreference mQuickPulldown;
+    private SwitchPreference mShowBrightnessSlider;
+    private ListPreference mBrightnessSliderPosition;
+    private SwitchPreference mShowAutoBrightness;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -62,9 +72,30 @@ public class CustomQSSettings extends DashboardFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mQuickPulldown = findPreference(QS_QUICK_PULLDOWN);
+        final Context mContext = getActivity().getApplicationContext();
+        final ContentResolver resolver = mContext.getContentResolver();
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        mQuickPulldown = findPreference(KEY_QUICK_PULLDOWN);
         mQuickPulldown.setOnPreferenceChangeListener(this);
         updateQuickPulldownSummary(mQuickPulldown.getIntValue(0));
+
+        mShowBrightnessSlider = findPreference(KEY_SHOW_BRIGHTNESS_SLIDER);
+        mShowBrightnessSlider.setOnPreferenceChangeListener(this);
+        boolean showSlider = LineageSettings.Secure.getIntForUser(resolver,
+                LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER, 1, UserHandle.USER_CURRENT) != 0;
+
+        mBrightnessSliderPosition = findPreference(KEY_BRIGHTNESS_SLIDER_POSITION);
+        mBrightnessSliderPosition.setEnabled(showSlider);
+
+        mShowAutoBrightness = findPreference(KEY_SHOW_AUTO_BRIGHTNESS);
+        boolean automaticAvailable = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_automatic_brightness_available);
+        if (automaticAvailable) {
+            mShowAutoBrightness.setEnabled(showSlider);
+        } else {
+            prefScreen.removePreference(mShowAutoBrightness);
+        }
     }
 
     @Override
@@ -101,9 +132,15 @@ public class CustomQSSettings extends DashboardFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         switch (key) {
-            case QS_QUICK_PULLDOWN:
+            case KEY_QUICK_PULLDOWN:
                 updateQuickPulldownSummary(Integer.parseInt((String) newValue));
                 break;
+            case KEY_SHOW_BRIGHTNESS_SLIDER:
+                final boolean value = (Boolean) newValue;
+                mBrightnessSliderPosition.setEnabled(value);
+                if (mShowAutoBrightness != null)
+                    mShowAutoBrightness.setEnabled(value);
+                return true;
         }
         return true;
     }

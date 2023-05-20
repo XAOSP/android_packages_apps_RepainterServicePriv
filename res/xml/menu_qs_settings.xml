@@ -105,6 +105,14 @@
             android:summary="@string/qs_brightness_slider_summary"
             android:defaultValue="true" />
 
+        <!-- Brightness slider position -->
+        <lineageos.preference.LineageSecureSettingListPreference
+            android:key="qs_brightness_slider_position"
+            android:title="@string/qs_brightness_slider_position_title"
+            android:entries="@array/qs_brightness_slider_position_entries"
+            android:entryValues="@array/qs_brightness_slider_position_values"
+            android:defaultValue="0" />
+
         <!-- Show auto-brightness button -->
         <lineageos.preference.LineageSecureSettingSwitchPreference
             android:key="qs_show_auto_brightness"

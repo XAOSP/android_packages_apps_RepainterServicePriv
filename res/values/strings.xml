@@ -256,6 +256,9 @@
 
     <string name="qs_brightness_slider_title">Brightness slider</string>
     <string name="qs_brightness_slider_summary">Adjust brightness from the Quick Settings</string>
+    <string name="qs_brightness_slider_position_title">Brightness slider position</string>
+    <string name="qs_brightness_slider_position_top">Top</string>
+    <string name="qs_brightness_slider_position_bottom">Bottom</string>
     <string name="qs_brightness_slider_auto_title">Auto brightness</string>
     <string name="qs_brightness_slider_auto_summary">Show toggle for adaptive brightness near the slider</string>
 

@@ -151,6 +151,17 @@
         <item>3</item>
     </string-array>
 
+    <!-- Brightness slider position -->
+    <string-array name="qs_brightness_slider_position_entries" translatable="false">
+        <item>@string/qs_brightness_slider_position_top</item>
+        <item>@string/qs_brightness_slider_position_bottom</item>
+    </string-array>
+
+    <string-array name="qs_brightness_slider_position_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
     <!-- Smart Pixels -->
     <string-array name="smart_pixels_percent_strings" translatable="false">
         <item>12</item>
