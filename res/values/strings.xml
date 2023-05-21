@@ -26,6 +26,8 @@
     <string name="menu_display_settings_summary">Adjust various elements of the display screen</string>
     <string name="menu_gesture_settings_title">Gestures</string>
     <string name="menu_gesture_settings_summary">Adjust touchscreen gestures and button quick actions</string>
+    <string name="menu_lockscreen_settings_title">Lock screen</string>
+    <string name="menu_lockscreen_settings_summary">Manage lock screen settings</string>
     <string name="menu_miscellaneous_settings_title">Miscellaneous</string>
     <string name="menu_miscellaneous_settings_summary">Miscellaneous configuration settings</string>
     <string name="menu_navigation_settings_title">Navigation</string>
@@ -159,6 +161,27 @@
     <string name="smart_pixels_percent">Percent of pixels to disable</string>
     <string name="smart_pixels_shift">Prevent burn-in by shifting pixels every</string>
     <string name="smart_pixels_warning_text">Smart pixels is a power saving feature. Depending on how many pixels you decide to turn off, you could see improvement in battery life. Note that in some cases, it can result in unresponsive areas on the touch screen.</string>
+
+    <!-- LOCKSCREEN -->
+
+    <!-- Bottom shortcuts -->
+    <string name="lockscreen_shortcuts_category">Bottom shortcuts</string>
+
+    <string name="lockscreen_shortcut_start_title">Left shortcut</string>
+    <string name="lockscreen_shortcut_end_title">Right shortcut</string>
+    <string name="lockscreen_shortcut_wallet">Wallet</string>
+    <string name="lockscreen_shortcut_home">Home controls</string>
+    <string name="lockscreen_shortcut_flashlight">Flashlight</string>
+    <string name="lockscreen_shortcut_qr">QR code scanner</string>
+    <string name="lockscreen_shortcut_camera">Camera</string>
+    <string name="lockscreen_shortcut_dnd">DND</string>
+    <string name="lockscreen_shortcut_none">None</string>
+    <string name="lockscreen_shortcut_enforce_title">Enforce shortcuts</string>
+    <string name="lockscreen_shortcut_enforce_summary">Do not display next available shortcut if chosen shortcut is not available</string>
+
+    <!-- Miscellaneous -->
+    <string name="lockscreen_battery_info_title">Battery info</string>
+    <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
 
     <!-- MISCELLANEOUS -->
 
@@ -442,24 +465,6 @@
     <string name="power_menu_items_title">Power menu items</string>
     <string name="power_menu_advanced_restart_title">Advanced restart</string>
     <string name="power_menu_advanced_restart_summary">When unlocked, include options in the power menu for restarting into recovery or bootloader</string>
-
-    <!-- Lock screen -->
-    <string name="lockscreen_category">Lock screen</string>
-
-    <string name="lockscreen_battery_info_title">Battery info</string>
-    <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
-    <string name="lockscreen_shortcut_category">Bottom shortcuts</string>
-    <string name="lockscreen_shortcut_start_title">Left shortcut</string>
-    <string name="lockscreen_shortcut_end_title">Right shortcut</string>
-    <string name="lockscreen_shortcut_wallet">Wallet</string>
-    <string name="lockscreen_shortcut_home">Home controls</string>
-    <string name="lockscreen_shortcut_flashlight">Flashlight</string>
-    <string name="lockscreen_shortcut_qr">QR code scanner</string>
-    <string name="lockscreen_shortcut_camera">Camera</string>
-    <string name="lockscreen_shortcut_dnd">DND</string>
-    <string name="lockscreen_shortcut_none">None</string>
-    <string name="lockscreen_shortcut_enforce_title">Enforce shortcuts</string>
-    <string name="lockscreen_shortcut_enforce_summary">Do not display next available shortcut if chosen shortcut is not available</string>
 
     <!-- Miscellaneous -->
     <string name="toast_icon_title">Toast icon</string>

@@ -44,6 +44,14 @@
         android:fragment="com.android.settings.gestures.GestureSettings"
         settings:controller="com.android.settings.gestures.GesturesSettingPreferenceController"/>
 
+    <!-- Lockscreen -->
+    <Preference
+        android:key="lockscreen_category"
+        android:title="@string/menu_lockscreen_settings_title"
+        android:summary="@string/menu_lockscreen_settings_summary"
+        android:fragment="com.altair.settings.fragments.CustomLockscreenSettings"
+        android:icon="@drawable/ic_settings_menu_lockscreen" />
+
     <!-- Miscellaneous -->
     <Preference
         android:key="miscellaneous_category"

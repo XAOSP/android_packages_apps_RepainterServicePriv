@@ -40,42 +40,6 @@
 
     </PreferenceCategory>
 
-    <!-- Lock screen -->
-    <PreferenceCategory
-        android:key="lockscreen"
-        android:title="@string/lockscreen_category">
-
-        <!-- Battery charing info on lock screen -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="lockscreen_battery_info"
-            android:title="@string/lockscreen_battery_info_title"
-            android:summary="@string/lockscreen_battery_info_summary"
-            android:defaultValue="true" />
-
-        <com.lineage.support.preferences.SystemSettingListPreference
-            android:key="lockscreen_shortcut_start"
-            android:title="@string/lockscreen_shortcut_start_title"
-            android:summary="%s"
-            android:entries="@array/lockscreen_shortcut_entries"
-            android:entryValues="@array/lockscreen_shortcut_values"
-            android:defaultValue="1" />
-
-        <com.lineage.support.preferences.SystemSettingListPreference
-            android:key="lockscreen_shortcut_end"
-            android:title="@string/lockscreen_shortcut_end_title"
-            android:summary="%s"
-            android:entries="@array/lockscreen_shortcut_entries"
-            android:entryValues="@array/lockscreen_shortcut_values"
-            android:defaultValue="0" />
-
-        <SwitchPreference
-            android:key="lockscreen_shortcut_enforce"
-            android:title="@string/lockscreen_shortcut_enforce_title"
-            android:summary="@string/lockscreen_shortcut_enforce_summary"
-            android:defaultValue="false" />
-
-    </PreferenceCategory>
-
     <!-- Miscellaneous -->
     <PreferenceCategory
         android:key="miscellaneous"
