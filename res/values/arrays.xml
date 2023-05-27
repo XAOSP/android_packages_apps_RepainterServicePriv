@@ -283,9 +283,7 @@
     <!-- Predefined theme accent colors -->
     <!-- Base accent colors derived from system_accent1_500 -->
     <string-array name="theme_accent_color_values">
-        <item>#000000</item> <!-- Wallpaper -->
         <item>#1a73e8</item> <!-- Google Blue -->
-        <item>#9e9e9e</item> <!-- Grayscale -->
         <item>#ffb300</item> <!-- Material Amber -->
         <item>#1e88e5</item> <!-- Material Blue -->
         <item>#6d4c41</item> <!-- Material Brown -->
@@ -303,13 +301,12 @@
         <item>#e53935</item> <!-- Material Red -->
         <item>#00897b</item> <!-- Material Teal -->
         <item>#fdd835</item> <!-- Material Yellow -->
+        <item>#9e9e9e</item> <!-- Grayscale -->
     </string-array>
 
     <!-- Dark mode colors derived from system_accent1_200 -->
     <string-array name="theme_accent_color_values_dark">
-        <item>#000000</item> <!-- Wallpaper -->
         <item>#8d9bf4</item> <!-- Google Blue -->
-        <item>#eeeeee</item> <!-- Grayscale -->
         <item>#ffe082</item> <!-- Material Amber -->
         <item>#90caf9</item> <!-- Material Blue -->
         <item>#bcaaa4</item> <!-- Material Brown -->
@@ -327,13 +324,12 @@
         <item>#ffcdd2</item> <!-- Material Red -->
         <item>#b2dfdb</item> <!-- Material Teal -->
         <item>#fff9c4</item> <!-- Material Yellow -->
+        <item>#eeeeee</item> <!-- Grayscale -->
     </string-array>
 
     <!-- Dark mode (rich) colors derived from system_accent1_300 -->
     <string-array name="theme_accent_color_values_dark_rich">
-        <item>#000000</item> <!-- Wallpaper -->
         <item>#5f9def</item> <!-- Google Blue -->
-        <item>#e0e0e0</item> <!-- Grayscale -->
         <item>#ffd54f</item> <!-- Material Amber -->
         <item>#64b5f6</item> <!-- Material Blue -->
         <item>#a1887f</item> <!-- Material Brown -->
@@ -351,12 +347,11 @@
         <item>#e57373</item> <!-- Material Red -->
         <item>#4db6ac</item> <!-- Material Teal -->
         <item>#fff176</item> <!-- Material Yellow -->
+        <item>#e0e0e0</item> <!-- Grayscale -->
     </string-array>
 
     <string-array name="theme_accent_color_names" translatable="false">
-        <item>@string/theme_accent_color_wallpaper</item>
         <item>@string/theme_accent_color_google_blue</item>
-        <item>@string/theme_accent_color_grayscale</item>
         <item>@string/theme_accent_color_material_amber</item>
         <item>@string/theme_accent_color_material_blue</item>
         <item>@string/theme_accent_color_material_brown</item>
@@ -374,6 +369,7 @@
         <item>@string/theme_accent_color_material_red</item>
         <item>@string/theme_accent_color_material_teal</item>
         <item>@string/theme_accent_color_material_yellow</item>
+        <item>@string/theme_accent_color_grayscale</item>
     </string-array>
 
     <!-- Lockscreen bottom shortcuts -->

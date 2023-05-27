@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Altair ROM Project
+ * Copyright (C) 2022-2023 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.altair.settings.fragments.theme;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
@@ -28,6 +29,9 @@ import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -35,6 +39,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
@@ -84,6 +89,8 @@ public class AccentColorPicker extends SettingsPreferenceFragment {
                 Arrays.asList(res.getStringArray(R.array.theme_accent_color_values_dark));
         mAccentColorValuesDarkRich =
                 Arrays.asList(res.getStringArray(R.array.theme_accent_color_values_dark_rich));
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -111,6 +118,38 @@ public class AccentColorPicker extends SettingsPreferenceFragment {
         super.onResume();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.reset_button, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        for (int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.reset_button) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.theme_colors_reset_accent_color_title)
+                    .setMessage(R.string.theme_colors_reset_accent_color_message)
+                    .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
+                        }
+                    })
+                    .setNegativeButton(R.string.dlg_cancel, null);
+            builder.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public class Adapter extends RecyclerView.Adapter<Adapter.CustomViewHolder> {
         Context context;
         int mSelectedColor;
@@ -133,14 +172,9 @@ public class AccentColorPicker extends SettingsPreferenceFragment {
             final int currentColor = mMonetUtils.getAccentColor();
 
             holder.image.setBackgroundResource(R.drawable.accent_background);
-            if (position != 0) {
-                final int viewColor = Color.parseColor(getViewAccentColor(position));
-                holder.image.setBackgroundTintList(ColorStateList.valueOf(viewColor));
-                holder.itemView.setActivated(selectedColor == currentColor);
-            } else {
-                holder.image.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
-                holder.itemView.setActivated(!mMonetUtils.isAccentColorSet());
-            }
+            final int viewColor = Color.parseColor(getViewAccentColor(position));
+            holder.image.setBackgroundTintList(ColorStateList.valueOf(viewColor));
+            holder.itemView.setActivated(selectedColor == currentColor);
             holder.name.setText(mAccentColorNames.get(position));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -152,11 +186,7 @@ public class AccentColorPicker extends SettingsPreferenceFragment {
                     updateActivatedStatus(oldColor, false);
                     updateActivatedStatus(newColor, true);
 
-                    if (position != 0) {
-                        mMonetUtils.setAccentColor(selectedColor);
-                    } else {
-                        mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
-                    }
+                    mMonetUtils.setAccentColor(selectedColor);
                 }
             });
         }

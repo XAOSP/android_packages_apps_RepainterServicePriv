@@ -422,6 +422,7 @@
 
     <!-- Accent color dialog -->
     <string name="theme_colors_current_accent_color_title">Current accent color</string>
+    <string name="theme_colors_wallpaper_accent_color">Wallpaper (default)</string>
     <string name="theme_colors_monet_category">Monet settings</string>
     <string name="theme_colors_monet_accurate_shades_title">Accurate shades</string>
     <string name="theme_colors_monet_accurate_shades_summary">More accurate color shades at the cost of duller colors</string>
@@ -434,11 +435,11 @@
     <string name="theme_colors_monet_linear_lightness_title">Use linear lightness</string>
     <string name="theme_colors_reset_settings_title">Reset Monet settings</string>
     <string name="theme_colors_reset_settings_message">This will reset the Monet settings to their default values. The accent color will remain unchanged.\n\nAre you sure you wish to continue?</string>
+    <string name="theme_colors_reset_accent_color_title">Reset accent color</string>
+    <string name="theme_colors_reset_accent_color_message">This will remove the current accent color and restore the color obtained from the current wallpaper.\n\nAre you sure you wish to continue?</string>
 
     <!-- Accent color picker entries -->
-    <string name="theme_accent_color_wallpaper">Wallpaper (default)</string>
     <string name="theme_accent_color_google_blue">Google Blue</string>
-    <string name="theme_accent_color_grayscale">Grayscale</string>
     <string name="theme_accent_color_material_amber">Material Amber</string>
     <string name="theme_accent_color_material_blue">Material Blue</string>
     <string name="theme_accent_color_material_brown">Material Brown</string>
@@ -456,6 +457,7 @@
     <string name="theme_accent_color_material_red">Material Red</string>
     <string name="theme_accent_color_material_teal">Material Teal</string>
     <string name="theme_accent_color_material_yellow">Material Yellow</string>
+    <string name="theme_accent_color_grayscale">Grayscale</string>
 
     <!-- USER INTERFACE -->
 

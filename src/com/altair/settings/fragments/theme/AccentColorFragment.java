@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Altair ROM Project
+ * Copyright (C) 2022-2023 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,10 @@
 
 package com.altair.settings.fragments.theme;
 
-//import android.app.UiModeManager;
 import android.content.Context;
 import android.content.DialogInterface;
-//import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-//import android.os.UserHandle;
-//import android.provider.SearchIndexableResource;
-//import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,12 +31,8 @@ import androidx.preference.PreferenceScreen;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-//import com.android.settings.dashboard.DashboardFragment;
-//import com.android.settings.display.darkmode.DarkModePreference;
-//import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.utils.MonetUtils;
 import com.android.settings.utils.ThemeUtils;
-//import com.android.settingslib.search.SearchIndexable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,7 +90,7 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.reset_accent_color_settings, menu);
+        inflater.inflate(R.menu.reset_button, menu);
     }
 
     @Override
@@ -112,13 +103,12 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.reset_accent_color_settings) {
+        if (item.getItemId() == R.id.reset_button) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.theme_colors_reset_settings_title)
                     .setMessage(R.string.theme_colors_reset_settings_message)
                     .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
-                             //mMonetUtils.setAccentColor(MonetUtils.ACCENT_COLOR_DISABLED);
                              mMonetUtils.setSurfaceTintEnabled(MonetUtils.SURFACE_TINT_DEFAULT);
                              mMonetUtils.setAccurateShadesEnabled(MonetUtils.ACCURATE_SHADES_DEFAULT);
                              mMonetUtils.setRicherColorsEnabled(MonetUtils.RICHER_COLORS_DEFAULT);
@@ -170,7 +160,7 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
             mAccentColorPreference.setSummary(mAccentColorNames.get(index));
         } else {
             mAccentColorPreference.setSummary(mResources.getString(
-                    R.string.theme_accent_color_wallpaper));
+                    R.string.theme_colors_wallpaper_accent_color));
         }
     }
 }
