@@ -61,8 +61,7 @@ public class FontsPicker extends SettingsPreferenceFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(
-                R.layout.item_view, container, false);
+        View view = inflater.inflate(R.layout.picker_recycler_view, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
@@ -94,7 +93,7 @@ public class FontsPicker extends SettingsPreferenceFragment {
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fonts_option,
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.picker_option_font,
                     parent, false);
             CustomViewHolder vh = new CustomViewHolder(v);
             return vh;
