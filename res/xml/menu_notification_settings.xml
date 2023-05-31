@@ -27,34 +27,14 @@
         android:summary="@string/notification_guts_kill_app_button_summary"
         android:defaultValue="false" />
 
-    <!-- reTicker -->
-    <PreferenceCategory
-        android:key="notification_reticker_category"
-        android:title="@string/notification_reticker_category" >
-
-        <!-- Enable reTicker -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="reticker_status"
-            android:title="@string/reticker_title"
-            android:summary="@string/reticker_summary" />
-
-        <!-- Use app colored background for reTicker -->
-        <com.lineage.support.preferences.SystemSettingSwitchPreference
-            android:key="reticker_colored"
-            android:title="@string/reticker_colored_title"
-            android:summary="@string/reticker_colored_summary"
-            android:dependency="reticker_status" />
-
-    </PreferenceCategory>
-
     <!-- Heads up -->
     <PreferenceCategory
-        android:key="notification_reticker_category"
-        android:title="@string/notification_reticker_category" >
+        android:key="notification_heads_up_category"
+        android:title="@string/notification_heads_up_category" >
 
         <!-- Enable heads up -->
         <com.lineage.support.preferences.GlobalSettingSwitchPreference
-            android:key="heads_up_notifications"
+            android:key="heads_up_notifications_enabled"
             android:title="@string/heads_up_notifications_title"
             android:summary="@string/heads_up_notifications_summary"
             android:defaultValue="true" />
@@ -65,7 +45,7 @@
             android:title="@string/less_boring_heads_up_title"
             android:summary="@string/less_boring_heads_up_summary"
             android:defaultValue="false"
-            android:dependency="heads_up_notifications" />
+            android:dependency="heads_up_notifications_enabled" />
 
         <!-- Heads up timeout -->
         <com.lineage.support.preferences.SystemSettingSeekBarPreference
@@ -76,7 +56,28 @@
             android:defaultValue="5"
             settings:min="1"
             android:max="10"
-            android:dependency="heads_up_notifications" />
+            android:dependency="heads_up_notifications_enabled" />
+
+    </PreferenceCategory>
+
+    <!-- reTicker -->
+    <PreferenceCategory
+        android:key="notification_reticker_category"
+        android:title="@string/notification_reticker_category" >
+
+        <!-- Enable reTicker -->
+        <com.lineage.support.preferences.SystemSettingSwitchPreference
+            android:key="reticker_status"
+            android:title="@string/reticker_title"
+            android:summary="@string/reticker_summary"
+            android:dependency="heads_up_notifications_enabled" />
+
+        <!-- Use app colored background for reTicker -->
+        <com.lineage.support.preferences.SystemSettingSwitchPreference
+            android:key="reticker_colored"
+            android:title="@string/reticker_colored_title"
+            android:summary="@string/reticker_colored_summary"
+            android:dependency="reticker_status" />
 
     </PreferenceCategory>
 
