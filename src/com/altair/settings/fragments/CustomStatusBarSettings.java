@@ -91,9 +91,6 @@ public class CustomStatusBarSettings extends DashboardFragment implements
 
     private PreferenceCategory mStatusBarBatteryCategory;
     private PreferenceCategory mStatusBarClockCategory;
-    private Preference mNetworkTrafficPref;
-
-    private boolean mHasCenteredCutout;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -137,13 +134,6 @@ public class CustomStatusBarSettings extends DashboardFragment implements
             useOldMobileType.setChecked(showing);
         }
 
-        mNetworkTrafficPref = findPreference(NETWORK_TRAFFIC_SETTINGS);
-
-        mHasCenteredCutout = DeviceUtils.hasCenteredCutout(getActivity());
-        if (mHasCenteredCutout) {
-            networkCategory.removePreference(mNetworkTrafficPref);
-        }
-
         mClockIcon = new StatusBarIcon(mContext, "clock");
         mStatusBarClockCategory = prefScreen.findPreference(CATEGORY_CLOCK);
 
@@ -183,7 +173,8 @@ public class CustomStatusBarSettings extends DashboardFragment implements
             mStatusBarAmPm.setSummary(R.string.status_bar_am_pm_info);
         }
 
-        final boolean disallowCenteredClock = mHasCenteredCutout || getNetworkTrafficStatus() != 0;
+        final boolean disallowCenteredClock = DeviceUtils.hasCenteredCutout(getActivity())
+                    || getNetworkTrafficStatus() != 0;
 
         // Adjust status bar preferences for RTL
         if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
@@ -202,9 +193,6 @@ public class CustomStatusBarSettings extends DashboardFragment implements
             mStatusBarClock.setEntryValues(R.array.status_bar_clock_position_values);
         }
 
-        // Disable network traffic preferences if clock is centered in the status bar
-        updateNetworkTrafficStatus(getClockPosition());
-
         mStatusBarShowBattery.setChecked(mBatteryIcon.isEnabled());
     }
 
@@ -222,9 +210,6 @@ public class CustomStatusBarSettings extends DashboardFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         switch (key) {
-            case STATUS_BAR_CLOCK_STYLE:
-                updateNetworkTrafficStatus(Integer.parseInt((String) newValue));
-                break;
             case STATUS_BAR_SHOW_BATTERY:
                 mBatteryIcon.setEnabled((Boolean) newValue);
                 break;
@@ -239,23 +224,12 @@ public class CustomStatusBarSettings extends DashboardFragment implements
         mStatusBarBatteryShowPercent.setEnabled(batteryIconStyle != STATUS_BAR_BATTERY_STYLE_TEXT);
     }
 
-    private void updateNetworkTrafficStatus(int clockPosition) {
-        if (mHasCenteredCutout) {
-            // Unconditional no network traffic for you
-            return;
-        }
-
-        boolean isClockCentered = clockPosition == 1;
-        mNetworkTrafficPref.setEnabled(!isClockCentered);
-        mNetworkTrafficPref.setSummary(getResources().getString(isClockCentered ?
-                R.string.network_traffic_disabled_clock :
-                R.string.network_traffic_settings_summary
-        ));
-    }
-
     private int getNetworkTrafficStatus() {
-        return LineageSettings.Secure.getInt(getActivity().getContentResolver(),
+        int mode = LineageSettings.Secure.getInt(getActivity().getContentResolver(),
                 LineageSettings.Secure.NETWORK_TRAFFIC_MODE, 0);
+        int position = LineageSettings.Secure.getInt(getActivity().getContentResolver(),
+                LineageSettings.Secure.NETWORK_TRAFFIC_POSITION, /* Center */ 1);
+        return mode != 0 && position == 1 ? 1 : 0;
     }
 
     private int getClockPosition() {
@@ -281,10 +255,6 @@ public class CustomStatusBarSettings extends DashboardFragment implements
                 @Override
                 public List<String> getNonIndexableKeys(Context context) {
                     List<String> keys = super.getNonIndexableKeys(context);
-
-                    if (DeviceUtils.hasCenteredCutout(context)) {
-                        keys.add(NETWORK_TRAFFIC_SETTINGS);
-                    }
 
                     return keys;
                 }
