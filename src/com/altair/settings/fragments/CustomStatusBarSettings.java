@@ -80,6 +80,8 @@ public class CustomStatusBarSettings extends DashboardFragment implements
     private Context mContext;
     private ContentResolver mResolver;
 
+    private SwitchPreference mUseOldMobileType;
+
     private StatusBarIcon mClockIcon;
     private StatusBarIcon mBatteryIcon;
 
@@ -107,7 +109,7 @@ public class CustomStatusBarSettings extends DashboardFragment implements
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         final PreferenceCategory networkCategory = prefScreen.findPreference(CATEGORY_NETWORK);
-        SystemSettingSwitchPreference useOldMobileType = findPreference(KEY_USE_OLD_MOBILETYPE);
+        mUseOldMobileType = findPreference(Settings.System.USE_OLD_MOBILETYPE);
         SystemSettingSwitchPreference dataDisabledIcon = findPreference(KEY_DATA_DISABLED_ICON);
         SystemSettingSwitchPreference roamingIndicatorIcon =
                 findPreference(KEY_ROAMING_INDICATOR_ICON);
@@ -118,7 +120,7 @@ public class CustomStatusBarSettings extends DashboardFragment implements
                 findPreference(KEY_VOLTE_VOWIFI_OVERRIDE);
 
         if (!TelephonyUtils.isVoiceCapable(getActivity())) {
-            networkCategory.removePreference(useOldMobileType);
+            networkCategory.removePreference(mUseOldMobileType);
             networkCategory.removePreference(dataDisabledIcon);
             networkCategory.removePreference(roamingIndicatorIcon);
             networkCategory.removePreference(showFourgIcon);
@@ -131,7 +133,8 @@ public class CustomStatusBarSettings extends DashboardFragment implements
             boolean showing = Settings.System.getIntForUser(mResolver,
                     Settings.System.USE_OLD_MOBILETYPE,
                     configUseOldMobileType ? 1 : 0, UserHandle.USER_CURRENT) != 0;
-            useOldMobileType.setChecked(showing);
+            mUseOldMobileType.setChecked(showing);
+            mUseOldMobileType.setOnPreferenceChangeListener(this);
         }
 
         mClockIcon = new StatusBarIcon(mContext, "clock");
@@ -215,6 +218,10 @@ public class CustomStatusBarSettings extends DashboardFragment implements
                 break;
             case STATUS_BAR_BATTERY_STYLE:
                 enableStatusBarBatteryDependents(Integer.parseInt((String) newValue));
+                break;
+            case KEY_USE_OLD_MOBILETYPE:
+                Settings.System.putIntForUser(mResolver, Settings.System.USE_OLD_MOBILETYPE,
+                        (Boolean) newValue ? 1 : 0, UserHandle.USER_CURRENT);
                 break;
         }
         return true;
