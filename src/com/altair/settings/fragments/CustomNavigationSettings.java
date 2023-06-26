@@ -53,7 +53,7 @@ import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
-import static com.android.systemui.shared.recents.utilities.Utilities.isTablet;
+import static com.android.systemui.shared.recents.utilities.Utilities.isLargeScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -227,14 +227,14 @@ public class CustomNavigationSettings extends DashboardFragment implements
 
         mEnableTaskbar = findPreference(KEY_ENABLE_TASKBAR);
         if (mEnableTaskbar != null) {
-            if (!isTablet(getContext()) || !hasNavigationBar()) {
+            if (!isLargeScreen(getContext()) || !hasNavigationBar()) {
                 mNavigationOptionsPreferencesCat.removePreference(mEnableTaskbar);
                 mNavigationActionsPreferencesCat.removePreference(mEnableTaskbar);
             } else {
                 mEnableTaskbar.setOnPreferenceChangeListener(this);
                 mEnableTaskbar.setChecked(LineageSettings.System.getInt(mResolver,
                         LineageSettings.System.ENABLE_TASKBAR,
-                        isTablet(getContext()) ? 1 : 0) == 1);
+                        isLargeScreen(getContext()) ? 1 : 0) == 1);
                 toggleTaskBarDependencies(mEnableTaskbar.isChecked());
             }
         }
