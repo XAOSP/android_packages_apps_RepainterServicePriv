@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 Altair ROM Project
+ * Copyright (C) 2019-2023 Altair ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ public class CustomDisplaySettings extends DashboardFragment implements
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.ALTAIR;
+        return MetricsProto.MetricsEvent.ALTAIR_SETTINGS;
     }
 
     @Override

@@ -75,7 +75,7 @@ public class WifiIconsPicker extends SettingsPreferenceFragment {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ALTAIR;
+        return MetricsEvent.ALTAIR_SETTINGS;
     }
 
     @Override

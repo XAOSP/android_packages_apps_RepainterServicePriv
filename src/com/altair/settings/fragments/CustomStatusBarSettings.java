@@ -159,7 +159,7 @@ public class CustomStatusBarSettings extends DashboardFragment implements
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.ALTAIR;
+        return MetricsProto.MetricsEvent.ALTAIR_SETTINGS;
     }
 
     @Override
