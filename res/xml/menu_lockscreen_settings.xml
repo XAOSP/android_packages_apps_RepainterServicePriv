@@ -20,38 +20,6 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/menu_lockscreen_settings_title">
 
-    <!-- Shortcuts -->
-    <PreferenceCategory
-        android:key="lockscreen"
-        android:title="@string/lockscreen_shortcuts_category">
-
-        <!-- Left shortcut -->
-        <com.lineage.support.preferences.SystemSettingListPreference
-            android:key="lockscreen_shortcut_start"
-            android:title="@string/lockscreen_shortcut_start_title"
-            android:summary="%s"
-            android:entries="@array/lockscreen_shortcut_entries"
-            android:entryValues="@array/lockscreen_shortcut_values"
-            android:defaultValue="1" />
-
-        <!-- Right shortcut -->
-        <com.lineage.support.preferences.SystemSettingListPreference
-            android:key="lockscreen_shortcut_end"
-            android:title="@string/lockscreen_shortcut_end_title"
-            android:summary="%s"
-            android:entries="@array/lockscreen_shortcut_entries"
-            android:entryValues="@array/lockscreen_shortcut_values"
-            android:defaultValue="0" />
-
-        <!-- Enforce shortcuts -->
-        <SwitchPreference
-            android:key="lockscreen_shortcut_enforce"
-            android:title="@string/lockscreen_shortcut_enforce_title"
-            android:summary="@string/lockscreen_shortcut_enforce_summary"
-            android:defaultValue="false" />
-
-    </PreferenceCategory>
-
     <!-- Miscellaneous -->
     <PreferenceCategory
         android:key="lockscreen"

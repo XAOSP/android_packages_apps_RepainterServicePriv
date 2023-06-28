@@ -164,21 +164,6 @@
 
     <!-- LOCKSCREEN -->
 
-    <!-- Bottom shortcuts -->
-    <string name="lockscreen_shortcuts_category">Bottom shortcuts</string>
-
-    <string name="lockscreen_shortcut_start_title">Left shortcut</string>
-    <string name="lockscreen_shortcut_end_title">Right shortcut</string>
-    <string name="lockscreen_shortcut_wallet">Wallet</string>
-    <string name="lockscreen_shortcut_home">Home controls</string>
-    <string name="lockscreen_shortcut_flashlight">Flashlight</string>
-    <string name="lockscreen_shortcut_qr">QR code scanner</string>
-    <string name="lockscreen_shortcut_camera">Camera</string>
-    <string name="lockscreen_shortcut_dnd">DND</string>
-    <string name="lockscreen_shortcut_none">None</string>
-    <string name="lockscreen_shortcut_enforce_title">Enforce shortcuts</string>
-    <string name="lockscreen_shortcut_enforce_summary">Do not display next available shortcut if chosen shortcut is not available</string>
-
     <!-- Miscellaneous -->
     <string name="lockscreen_battery_info_title">Battery info</string>
     <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
