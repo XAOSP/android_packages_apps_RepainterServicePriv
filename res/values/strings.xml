@@ -168,6 +168,9 @@
     <string name="lockscreen_battery_info_title">Battery info</string>
     <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
 
+    <string name="disable_qs_title">Hide QS on secure lock screen</string>
+    <string name="disable_qs_summary">Prevent access to QS tiles on secure lock screen</string>
+
     <!-- MISCELLANEOUS -->
 
     <!-- Parallel space -->
@@ -239,10 +242,6 @@
     <string name="qs_quick_pulldown_left">Left</string>
     <string name="qs_quick_pulldown_right">Right</string>
     <string name="qs_quick_pulldown_always">Always show quick settings on status bar pull down</string>
-
-    <!-- Disable QS on secure lockscreen -->
-    <string name="disable_qs_title">Hide QS on secure lock screen</string>
-    <string name="disable_qs_summary">Prevent access to QS tiles on secure lock screen</string>
 
     <!-- QS background opacity -->
     <string name="qs_transparency_title">Background opacity</string>

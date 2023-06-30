@@ -32,6 +32,12 @@
             android:summary="@string/lockscreen_battery_info_summary"
             android:defaultValue="true" />
 
+        <!-- Disable Quick Settings on secure lockscreen -->
+        <com.lineage.support.preferences.SystemSettingSwitchPreference
+            android:key="secure_lockscreen_qs_disabled"
+            android:title="@string/disable_qs_title"
+            android:summary="@string/disable_qs_summary"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

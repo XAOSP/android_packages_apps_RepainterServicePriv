@@ -28,12 +28,6 @@
         android:entryValues="@array/qs_quick_pulldown_values"
         android:defaultValue="0" />
 
-    <!-- Disable Quick Settings on secure lockscreen -->
-    <com.lineage.support.preferences.SystemSettingSwitchPreference
-        android:key="secure_lockscreen_qs_disabled"
-        android:title="@string/disable_qs_title"
-        android:summary="@string/disable_qs_summary"/>
-
     <!-- QS background transparency -->
     <com.lineage.support.preferences.SystemSettingSeekBarPreference
         android:key="qs_transparency"
