@@ -38,6 +38,13 @@
             android:title="@string/disable_qs_title"
             android:summary="@string/disable_qs_summary"/>
 
+        <!-- Enable power menu on secure lockscreen -->
+        <com.lineage.support.preferences.SystemSettingSwitchPreference
+               android:key="lockscreen_enable_power_menu"
+               android:title="@string/lockscreen_enable_power_menu_title"
+               android:summary="@string/lockscreen_enable_power_menu_summary"
+               android:defaultValue="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
