@@ -244,9 +244,9 @@
     <string name="disable_qs_title">Hide QS on secure lock screen</string>
     <string name="disable_qs_summary">Prevent access to QS tiles on secure lock screen</string>
 
-    <!-- QS background transparency -->
-    <string name="qs_transparency_title">Background transparency</string>
-    <string name="qs_transparency_summary">Set transparency level for QS background</string>
+    <!-- QS background opacity -->
+    <string name="qs_transparency_title">Background opacity</string>
+    <string name="qs_transparency_summary">Set opacity level for QS background</string>
 
     <!-- QS tiles layout  -->
     <string name="qs_layout_category">Tiles layout</string>
