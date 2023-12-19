@@ -54,6 +54,7 @@ public class CustomQSSettings extends DashboardFragment implements
     private static final String KEY_BRIGHTNESS_SLIDER_POSITION = "qs_brightness_slider_position";
     private static final String KEY_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
     private static final String KEY_QS_UI_STYLE = "qs_tile_ui_style";
+    private static final String KEY_QS_PANEL_STYLE = "qs_panel_style";
 
     private static final int PULLDOWN_DIR_NONE = 0;
     private static final int PULLDOWN_DIR_RIGHT = 1;
@@ -65,6 +66,7 @@ public class CustomQSSettings extends DashboardFragment implements
     private ListPreference mBrightnessSliderPosition;
     private SwitchPreference mShowAutoBrightness;
     private ListPreference mQsUI;
+    private ListPreference mQsPanelStyle;
 
     private static ThemeUtils mThemeUtils;
 
@@ -112,6 +114,15 @@ public class CustomQSSettings extends DashboardFragment implements
         mQsUI.setValue(isA11Style);
         mQsUI.setSummary(mQsUI.getEntries()[index]);
         mQsUI.setOnPreferenceChangeListener(this);
+
+        String qsPanelStyle = Integer.toString(Settings.System.getIntForUser(resolver,
+                Settings.System.QS_PANEL_STYLE , 0, UserHandle.USER_CURRENT));
+
+        mQsPanelStyle = findPreference(KEY_QS_PANEL_STYLE);
+        index = mQsPanelStyle.findIndexOfValue(qsPanelStyle);
+        mQsPanelStyle.setValue(qsPanelStyle);
+        mQsPanelStyle.setSummary(mQsPanelStyle.getEntries()[index]);
+        mQsPanelStyle.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -168,6 +179,15 @@ public class CustomQSSettings extends DashboardFragment implements
                         Settings.System.QS_TILE_UI_STYLE, value, UserHandle.USER_CURRENT);
                 updateQsStyle(getActivity());
                 return true;
+            case KEY_QS_PANEL_STYLE:
+                int value = Integer.parseInt((String) newValue);
+                int index = mQsPanelStyle.findIndexOfValue((String) newValue);
+                mQsPanelStyle.setValue((String) newValue);
+                mQsPanelStyle.setSummary(mQsPanelStyle.getEntries()[index]);
+                Settings.System.putIntForUser(resolver,
+                        Settings.System.QS_PANEL_STYLE, value, UserHandle.USER_CURRENT);
+                updateQsPanelStyle(getActivity());
+                return true;
         }
         return true;
     }
@@ -222,6 +242,58 @@ public class CustomQSSettings extends DashboardFragment implements
 	    if (isA11Style) {
             mThemeUtils.setOverlayEnabled(qsUIStyleCategory, overlayThemePackage, overlayThemeTarget);
 	    }
+    }
+
+    private static void updateQsPanelStyle(Context context) {
+        ContentResolver resolver = context.getContentResolver();
+
+        int qsPanelStyle = Settings.System.getIntForUser(resolver,
+                Settings.System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT);
+
+        String qsPanelStyleCategory = ThemeUtils.QS_PANEL_KEY;
+        String overlayThemeTarget = "com.android.systemui";
+        String overlayThemePackage = "com.android.systemui";
+
+        switch (qsPanelStyle) {
+            case 1:
+              overlayThemePackage = "com.android.system.qs.outline";
+              break;
+            case 2:
+            case 3:
+              overlayThemePackage = "com.android.system.qs.twotoneaccent";
+              break;
+            case 4:
+              overlayThemePackage = "com.android.system.qs.shaded";
+              break;
+            case 5:
+              overlayThemePackage = "com.android.system.qs.cyberpunk";
+              break;
+            case 6:
+              overlayThemePackage = "com.android.system.qs.neumorph";
+              break;
+            case 7:
+              overlayThemePackage = "com.android.system.qs.reflected";
+              break;
+            case 8:
+              overlayThemePackage = "com.android.system.qs.surround";
+              break;
+            case 9:
+              overlayThemePackage = "com.android.system.qs.thin";
+              break;
+            default:
+              break;
+        }
+
+        if (mThemeUtils == null) {
+            mThemeUtils = new ThemeUtils(context);
+        }
+
+        // reset all overlays before applying
+        mThemeUtils.setOverlayEnabled(qsPanelStyleCategory, overlayThemeTarget, overlayThemeTarget);
+
+        if (qsPanelStyle > 0) {
+            mThemeUtils.setOverlayEnabled(qsPanelStyleCategory, overlayThemePackage, overlayThemeTarget);
+        }
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
