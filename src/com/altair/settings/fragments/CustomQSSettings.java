@@ -35,6 +35,7 @@ import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
+import com.android.settings.utils.ThemeUtils;
 import com.android.settingslib.search.SearchIndexable;
 
 import java.util.Arrays;
@@ -52,6 +53,7 @@ public class CustomQSSettings extends DashboardFragment implements
     private static final String KEY_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
     private static final String KEY_BRIGHTNESS_SLIDER_POSITION = "qs_brightness_slider_position";
     private static final String KEY_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
+    private static final String KEY_QS_UI_STYLE = "qs_tile_ui_style";
 
     private static final int PULLDOWN_DIR_NONE = 0;
     private static final int PULLDOWN_DIR_RIGHT = 1;
@@ -62,6 +64,9 @@ public class CustomQSSettings extends DashboardFragment implements
     private SwitchPreference mShowBrightnessSlider;
     private ListPreference mBrightnessSliderPosition;
     private SwitchPreference mShowAutoBrightness;
+    private ListPreference mQsUI;
+
+    private static ThemeUtils mThemeUtils;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -75,6 +80,8 @@ public class CustomQSSettings extends DashboardFragment implements
         final Context mContext = getActivity().getApplicationContext();
         final ContentResolver resolver = mContext.getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        mThemeUtils = new ThemeUtils(getActivity());
 
         mQuickPulldown = findPreference(KEY_QUICK_PULLDOWN);
         mQuickPulldown.setOnPreferenceChangeListener(this);
@@ -96,6 +103,15 @@ public class CustomQSSettings extends DashboardFragment implements
         } else {
             prefScreen.removePreference(mShowAutoBrightness);
         }
+
+        String isA11Style = Integer.toString(Settings.System.getIntForUser(resolver,
+                Settings.System.QS_TILE_UI_STYLE , 0, UserHandle.USER_CURRENT));
+
+        mQsUI = findPreference(KEY_QS_UI_STYLE);
+        int index = mQsUI.findIndexOfValue(isA11Style);
+        mQsUI.setValue(isA11Style);
+        mQsUI.setSummary(mQsUI.getEntries()[index]);
+        mQsUI.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -130,6 +146,8 @@ public class CustomQSSettings extends DashboardFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        ContentResolver resolver = getActivity().getContentResolver();
+
         String key = preference.getKey();
         switch (key) {
             case KEY_QUICK_PULLDOWN:
@@ -140,6 +158,15 @@ public class CustomQSSettings extends DashboardFragment implements
                 mBrightnessSliderPosition.setEnabled(value);
                 if (mShowAutoBrightness != null)
                     mShowAutoBrightness.setEnabled(value);
+                return true;
+            case KEY_QS_UI_STYLE:
+                int value = Integer.parseInt((String) newValue);
+                int index = mQsUI.findIndexOfValue((String) newValue);
+                mQsUI.setValue((String) newValue);
+                mQsUI.setSummary(mQsUI.getEntries()[index]);
+                Settings.System.putIntForUser(resolver,
+                        Settings.System.QS_TILE_UI_STYLE, value, UserHandle.USER_CURRENT);
+                updateQsStyle(getActivity());
                 return true;
         }
         return true;
@@ -173,6 +200,28 @@ public class CustomQSSettings extends DashboardFragment implements
                 break;
         }
         mQuickPulldown.setSummary(summary);
+    }
+
+    private static void updateQsStyle(Context context) {
+        ContentResolver resolver = context.getContentResolver();
+
+        boolean isA11Style = Settings.System.getIntForUser(resolver,
+                Settings.System.QS_TILE_UI_STYLE , 0, UserHandle.USER_CURRENT) != 0;
+
+	    String qsUIStyleCategory = ThemeUtils.QS_UI_KEY;
+        String overlayThemeTarget = "com.android.systemui";
+        String overlayThemePackage = "com.android.system.qs.ui.A11";
+
+        if (mThemeUtils == null) {
+            mThemeUtils = new ThemeUtils(context);
+        }
+
+	    // reset all overlays before applying
+        mThemeUtils.setOverlayEnabled(qsUIStyleCategory, overlayThemeTarget, overlayThemeTarget);
+
+	    if (isA11Style) {
+            mThemeUtils.setOverlayEnabled(qsUIStyleCategory, overlayThemePackage, overlayThemeTarget);
+	    }
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =

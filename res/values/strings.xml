@@ -253,6 +253,10 @@
     <!-- QS tiles layout  -->
     <string name="qs_layout_category">Tiles layout</string>
 
+    <string name="qs_tile_ui_style_title">QS tiles style</string>
+    <string name="qs_tile_ui_style_a11_circle">Circle tiles</string>
+    <string name="qs_tile_ui_style_a11_square">Square tiles</string>
+    <string name="qs_tile_ui_style_a11_mix">Circle &amp; square tiles</string>
     <string name="qs_tile_label_hide_title">Hide label</string>
     <string name="qs_tile_label_hide_summary">Only show icon in tile</string>
     <string name="qs_tile_label_size_title">Label text size</string>
