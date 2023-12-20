@@ -49,6 +49,7 @@
     <string name="none">None</string>
     <string name="dlg_ok">OK</string>
     <string name="enable">Enable</string>
+    <string name="sys_default">System default</string>
 
     <!-- Units -->
     <string name="unit_seconds">seconds</string>
@@ -258,7 +259,6 @@
     <string name="qs_tile_ui_style_a11_square">Square tiles</string>
     <string name="qs_tile_ui_style_a11_mix">Circle &amp; square tiles</string>
     <string name="qs_panel_style_title">QS panel style</string>
-    <string name="qs_panel_style_default">Default</string>
     <string name="qs_panel_style_outline">Outline</string>
     <string name="qs_panel_style_two_tone">Two-Tone accent</string>
     <string name="qs_panel_style_color_pop">Color pop</string>
