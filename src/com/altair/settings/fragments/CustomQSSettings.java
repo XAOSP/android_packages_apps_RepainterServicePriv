@@ -161,16 +161,16 @@ public class CustomQSSettings extends DashboardFragment implements
                     mShowAutoBrightness.setEnabled(value);
                 return true;
             case KEY_QS_UI_STYLE:
-                int value = Integer.parseInt((String) newValue);
                 Settings.System.putIntForUser(resolver,
-                        Settings.System.QS_TILE_UI_STYLE, value, UserHandle.USER_CURRENT);
+                        Settings.System.QS_TILE_UI_STYLE, Integer.parseInt((String) newValue),
+                        UserHandle.USER_CURRENT);
                 updateQsStyle(getActivity());
                 checkQSOverlays(getActivity());
                 return true;
             case KEY_QS_PANEL_STYLE:
-                int value = Integer.parseInt((String) newValue);
                 Settings.System.putIntForUser(resolver,
-                        Settings.System.QS_PANEL_STYLE, value, UserHandle.USER_CURRENT);
+                        Settings.System.QS_PANEL_STYLE, Integer.parseInt((String) newValue),
+                        UserHandle.USER_CURRENT);
                 updateQsPanelStyle(getActivity());
                 checkQSOverlays(getActivity());
                 return true;
