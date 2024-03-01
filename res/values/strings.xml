@@ -304,6 +304,8 @@
 
     <string name="qs_footer_warnings_title">Footer alerts</string>
     <string name="qs_footer_warnings_summary">Display an alert at bottom of QS panel when network is monitored by external apps or VPN</string>
+    <string name="qs_footer_opacity_title">Footer opacity</string>
+    <string name="qs_footer_opacity_summary">Set opacity level for QS footer</string>
 
     <!-- SOUND -->
 
