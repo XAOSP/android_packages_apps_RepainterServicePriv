@@ -37,6 +37,7 @@ import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.utils.ThemeUtils;
 import com.android.settingslib.search.SearchIndexable;
+import com.lineage.support.preferences.CustomSeekBarPreference;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +56,9 @@ public class CustomQSSettings extends DashboardFragment implements
     private static final String KEY_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
     private static final String KEY_QS_UI_STYLE = "qs_tile_ui_style";
     private static final String KEY_QS_PANEL_STYLE = "qs_panel_style";
+    private static final String KEY_TILE_ANIMATION_STYLE = "qs_tile_animation_style";
+    private static final String KEY_TILE_ANIMATION_DURATION = "qs_tile_animation_duration";
+    private static final String KEY_TILE_ANIMATION_INTERPOLATOR = "qs_tile_animation_interpolator";
 
     private static final int PULLDOWN_DIR_NONE = 0;
     private static final int PULLDOWN_DIR_RIGHT = 1;
@@ -67,6 +71,9 @@ public class CustomQSSettings extends DashboardFragment implements
     private SwitchPreference mShowAutoBrightness;
     private ListPreference mQsUI;
     private ListPreference mQsPanelStyle;
+    private ListPreference mTileAnimationStyle;
+    private CustomSeekBarPreference mTileAnimationDuration;
+    private ListPreference mTileAnimationInterpolator;
 
     private static ThemeUtils mThemeUtils;
 
@@ -113,6 +120,16 @@ public class CustomQSSettings extends DashboardFragment implements
         mQsPanelStyle.setOnPreferenceChangeListener(this);
 
         checkQSOverlays(mContext);
+
+        mTileAnimationStyle = findPreference(KEY_TILE_ANIMATION_STYLE);
+        mTileAnimationDuration = findPreference(KEY_TILE_ANIMATION_DURATION);
+        mTileAnimationInterpolator = findPreference(KEY_TILE_ANIMATION_INTERPOLATOR);
+
+        mTileAnimationStyle.setOnPreferenceChangeListener(this);
+
+        int tileAnimationStyle = Settings.System.getIntForUser(resolver,
+                Settings.System.QS_TILE_ANIMATION_STYLE, 0, UserHandle.USER_CURRENT);
+        updateAnimTileStyle(tileAnimationStyle);
     }
 
     @Override
@@ -173,6 +190,9 @@ public class CustomQSSettings extends DashboardFragment implements
                         UserHandle.USER_CURRENT);
                 updateQsPanelStyle(getActivity());
                 checkQSOverlays(getActivity());
+                return true;
+            case KEY_TILE_ANIMATION_STYLE:
+                updateAnimTileStyle(Integer.parseInt((String) newValue));
                 return true;
         }
         return true;
@@ -320,6 +340,11 @@ public class CustomQSSettings extends DashboardFragment implements
         index = mQsPanelStyle.findIndexOfValue(Integer.toString(qsPanelStyle));
         mQsPanelStyle.setValue(Integer.toString(qsPanelStyle));
         mQsPanelStyle.setSummary(mQsPanelStyle.getEntries()[index]);
+    }
+
+    private void updateAnimTileStyle(int tileAnimationStyle) {
+        mTileAnimationDuration.setEnabled(tileAnimationStyle != 0);
+        mTileAnimationInterpolator.setEnabled(tileAnimationStyle != 0);
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
