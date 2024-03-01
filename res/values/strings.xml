@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2023 Altair ROM Project
+     Copyright (C) 2019-2024 Altair ROM Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -36,6 +36,8 @@
     <string name="menu_notification_settings_summary">Adjust notification settings</string>
     <string name="menu_qs_settings_title">Quick settings</string>
     <string name="menu_qs_settings_summary">Manage your quick settings tiles</string>
+    <string name="menu_sound_settings_title">Sound</string>
+    <string name="menu_sound_settings_summary">Adjust various sound-related settings</string>
     <string name="menu_status_bar_settings_title">Status bar</string>
     <string name="menu_status_bar_settings_summary">Adjust various status bar elements</string>
     <string name="menu_theme_settings_title">Themes</string>
@@ -53,6 +55,7 @@
 
     <!-- Units -->
     <string name="unit_seconds">seconds</string>
+    <string name="unit_steps">steps</string>
 
     <!-- Common category titles -->
     <string name="miscellaneous_category">Miscellaneous</string>
@@ -130,8 +133,6 @@
     <string name="volbtn_cursor_control_on_reverse">Volume up/down moves cursor right/left</string>
     <string name="swap_volume_buttons_title">Reorient</string>
     <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated</string>
-    <string name="volume_panel_on_left_title">Show panel on left</string>
-    <string name="volume_panel_on_left_summary">Display volume panel on the left side of the screen</string>
 
     <!-- Extras -->
     <string name="extras_title">Extras</string>
@@ -297,6 +298,20 @@
 
     <string name="qs_footer_warnings_title">Footer alerts</string>
     <string name="qs_footer_warnings_summary">Display an alert at bottom of QS panel when network is monitored by external apps or VPN</string>
+
+    <!-- SOUND -->
+
+    <!-- Volume panel -->
+    <string name="volume_panel_title">Volume panel</string>
+    <string name="volume_panel_on_left_title">Show panel on left</string>
+    <string name="volume_panel_on_left_summary">Display volume panel on the left side of the screen</string>
+    <string name="volume_dialog_timeout_title">Volume panel timeout</string>
+
+    <!-- Volume steps -->
+    <string name="volume_steps_title">Volume Steps</string>
+    <string name="max_music_volume_title">Media</string>
+    <string name="max_call_volume_title">Calls</string>
+    <string name="max_alarm_volume_title">Alarms</string>
 
     <!-- STATUS BAR -->
 

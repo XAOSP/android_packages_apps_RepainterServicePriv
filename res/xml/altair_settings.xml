@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2023 Altair ROM Project
+     Copyright (C) 2019-2024 Altair ROM Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -83,6 +83,14 @@
         android:summary="@string/menu_qs_settings_summary"
         android:fragment="com.altair.settings.fragments.CustomQSSettings"
         android:icon="@drawable/ic_settings_menu_qs"/>
+
+    <!-- Sound -->
+    <Preference
+        android:key="sound_category"
+        android:title="@string/menu_sound_settings_title"
+        android:summary="@string/menu_sound_settings_summary"
+        android:fragment="com.altair.settings.fragments.CustomSoundSettings"
+        android:icon="@drawable/ic_settings_menu_sound"/>
 
     <!-- Status bar -->
     <Preference

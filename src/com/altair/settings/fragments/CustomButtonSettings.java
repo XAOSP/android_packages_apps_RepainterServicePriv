@@ -88,7 +88,6 @@ public class CustomButtonSettings extends DashboardFragment implements
     private static final String KEY_APP_SWITCH_WAKE_SCREEN = "app_switch_wake_screen";
     private static final String KEY_VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
     private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
-    private static final String KEY_VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
     private static final String KEY_VOLUME_WAKE_SCREEN = "volume_wake_screen";
     private static final String KEY_VOLUME_ANSWER_CALL = "volume_answer_call";
     private static final String KEY_POWER_END_CALL = "power_end_call";
@@ -132,7 +131,6 @@ public class CustomButtonSettings extends DashboardFragment implements
     private SwitchPreference mCameraSleepOnRelease;
     private ListPreference mVolumeKeyCursorControl;
     private SwitchPreference mSwapVolumeButtons;
-    private SwitchPreference mVolumePanelOnLeft;
     private SwitchPreference mPowerEndCall;
     private SwitchPreference mHomeAnswerCall;
     private ListPreference mTorchLongPressPowerTimeout;
@@ -385,13 +383,6 @@ public class CustomButtonSettings extends DashboardFragment implements
             mSwapVolumeButtons = prefScreen.findPreference(KEY_SWAP_VOLUME_BUTTONS);
             if (mSwapVolumeButtons != null) {
                 mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
-            }
-
-            final boolean volumePanelOnLeft = LineageSettings.Secure.getIntForUser(mResolver,
-                    LineageSettings.Secure.VOLUME_PANEL_ON_LEFT, 0, UserHandle.USER_CURRENT) != 0;
-            mVolumePanelOnLeft = prefScreen.findPreference(KEY_VOLUME_PANEL_ON_LEFT);
-            if (mVolumePanelOnLeft != null) {
-                mVolumePanelOnLeft.setChecked(volumePanelOnLeft);
             }
         } else {
             extrasCategory.removePreference(findPreference(KEY_CLICK_PARTIAL_SCREENSHOT));
@@ -750,11 +741,6 @@ public class CustomButtonSettings extends DashboardFragment implements
             }
             LineageSettings.System.putInt(mResolver,
                     LineageSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION, value);
-        } else if (preference == mVolumePanelOnLeft) {
-            LineageSettings.Secure.putIntForUser(mResolver,
-                    LineageSettings.Secure.VOLUME_PANEL_ON_LEFT,
-                    mVolumePanelOnLeft.isChecked() ? 1 : 0, UserHandle.USER_CURRENT);
-            return true;
         } else if (preference == mPowerEndCall) {
             handleTogglePowerButtonEndsCallPreferenceClick();
             return true;
@@ -864,7 +850,6 @@ public class CustomButtonSettings extends DashboardFragment implements
                         keys.add(KEY_VOLUME_ANSWER_CALL);
                         keys.add(KEY_VOLUME_KEY_CURSOR_CONTROL);
                         keys.add(KEY_VOLUME_MUSIC_CONTROLS);
-                        keys.add(KEY_VOLUME_PANEL_ON_LEFT);
                         keys.add(KEY_VOLUME_WAKE_SCREEN);
                         keys.add(KEY_CLICK_PARTIAL_SCREENSHOT);
                     } else if (!DeviceUtils.canWakeUsingVolumeKeys(context)) {
