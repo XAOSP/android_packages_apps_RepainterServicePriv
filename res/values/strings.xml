@@ -250,6 +250,10 @@
     <string name="qs_quick_pulldown_right">Right</string>
     <string name="qs_quick_pulldown_always">Always show quick settings on status bar pull down</string>
 
+    <!-- QS dual tone background -->
+    <string name="qs_dual_tone_title">Dual tone themed</string>
+    <string name="qs_dual_tone_summary">Use dual tone background colors instead of AOSP single tone</string>
+
     <!-- QS background opacity -->
     <string name="qs_transparency_title">Background opacity</string>
     <string name="qs_transparency_summary">Set opacity level for QS background</string>
