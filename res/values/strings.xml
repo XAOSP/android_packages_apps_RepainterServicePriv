@@ -166,13 +166,18 @@
 
     <!-- LOCKSCREEN -->
 
-    <!-- Miscellaneous -->
+    <!-- Lockscreen interface -->
+    <string name="lockscreen_interface_category">Interface</string>
+
     <string name="lockscreen_battery_info_title">Battery info</string>
     <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
 
+    <!-- Lockscreen gestures -->
+    <string name="lockscreen_gestures_category">Gestures</string>
+
+    <!-- Lockscreen miscellaneous -->
     <string name="disable_qs_title">Hide QS on secure lock screen</string>
     <string name="disable_qs_summary">Prevent access to QS tiles on secure lock screen</string>
-
     <string name="lockscreen_enable_power_menu_title">Power menu</string>
     <string name="lockscreen_enable_power_menu_summary">Allow accessing power menu on secure lockscreen</string>
 

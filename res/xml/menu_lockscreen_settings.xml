@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2023 Altair ROM Project
+     Copyright (C) 2019-2024 Altair ROM Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/menu_lockscreen_settings_title">
 
-    <!-- Miscellaneous -->
+    <!-- Interface -->
     <PreferenceCategory
-        android:key="lockscreen"
-        android:title="@string/miscellaneous_category">
+        android:key="lockscreen_interface"
+        android:title="@string/lockscreen_interface_category">
 
         <!-- Battery charging info -->
         <com.lineage.support.preferences.SystemSettingSwitchPreference
@@ -31,6 +31,20 @@
             android:title="@string/lockscreen_battery_info_title"
             android:summary="@string/lockscreen_battery_info_summary"
             android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <!-- Gestures -->
+    <PreferenceCategory
+        android:key="lockscreen_gestures"
+        android:title="@string/lockscreen_gestures_category">
+
+    </PreferenceCategory>
+
+    <!-- Miscellaneous -->
+    <PreferenceCategory
+        android:key="lockscreen_misc"
+        android:title="@string/miscellaneous_category">
 
         <!-- Disable Quick Settings on secure lockscreen -->
         <com.lineage.support.preferences.SystemSettingSwitchPreference
