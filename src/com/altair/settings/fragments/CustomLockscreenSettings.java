@@ -17,6 +17,7 @@
 package com.altair.settings.fragments;
 
 import android.content.Context;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
@@ -42,6 +43,15 @@ public class CustomLockscreenSettings extends DashboardFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "CustomUserInterfaceSettings";
 
+    private static final String LOCKSCREEN_GESTURES_CATEGORY = "lockscreen_gestures_category";
+    private static final String KEY_FP_SUCCESS_VIBRATE = "fp_success_vibrate";
+    private static final String KEY_FP_ERROR_VIBRATE = "fp_error_vibrate";
+    private static final String KEY_RIPPLE_EFFECT = "enable_ripple_effect";
+
+    private Preference mFingerprintVib;
+    private Preference mFingerprintVibErr;
+    private Preference mRippleEffect;
+
     @Override
     protected int getPreferenceScreenResId() {
         return R.xml.menu_lockscreen_settings;
@@ -50,6 +60,21 @@ public class CustomLockscreenSettings extends DashboardFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PreferenceCategory gestCategory = findPreference(LOCKSCREEN_GESTURES_CATEGORY);
+
+        FingerprintManager mFingerprintManager = (FingerprintManager)
+                getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+
+        mFingerprintVib = findPreference(KEY_FP_SUCCESS_VIBRATE);
+        mFingerprintVibErr = findPreference(KEY_FP_ERROR_VIBRATE);
+        mRippleEffect = findPreference(KEY_RIPPLE_EFFECT);
+
+        if (mFingerprintManager == null || !mFingerprintManager.isHardwareDetected()) {
+            gestCategory.removePreference(mFingerprintVib);
+            gestCategory.removePreference(mFingerprintVibErr);
+            gestCategory.removePreference(mRippleEffect);
+        }
     }
 
     @Override
@@ -100,6 +125,14 @@ public class CustomLockscreenSettings extends DashboardFragment implements
                 @Override
                 public List<String> getNonIndexableKeys(Context context) {
                     List<String> keys = super.getNonIndexableKeys(context);
+
+                    FingerprintManager mFingerprintManager = (FingerprintManager)
+                            context.getSystemService(Context.FINGERPRINT_SERVICE);
+                    if (mFingerprintManager == null || !mFingerprintManager.isHardwareDetected()) {
+                        keys.add(KEY_FP_SUCCESS_VIBRATE);
+                        keys.add(KEY_FP_ERROR_VIBRATE);
+                        keys.add(KEY_RIPPLE_EFFECT);
+                    }
 
                     return keys;
                 }
