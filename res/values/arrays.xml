@@ -324,7 +324,6 @@
         <item>#e53935</item> <!-- Material Red -->
         <item>#00897b</item> <!-- Material Teal -->
         <item>#fdd835</item> <!-- Material Yellow -->
-        <item>#9e9e9e</item> <!-- Grayscale -->
     </string-array>
 
     <!-- Dark mode colors derived from system_accent1_200 -->
@@ -347,7 +346,6 @@
         <item>#ffcdd2</item> <!-- Material Red -->
         <item>#b2dfdb</item> <!-- Material Teal -->
         <item>#fff9c4</item> <!-- Material Yellow -->
-        <item>#eeeeee</item> <!-- Grayscale -->
     </string-array>
 
     <!-- Dark mode (rich) colors derived from system_accent1_300 -->
@@ -370,7 +368,6 @@
         <item>#e57373</item> <!-- Material Red -->
         <item>#4db6ac</item> <!-- Material Teal -->
         <item>#fff176</item> <!-- Material Yellow -->
-        <item>#e0e0e0</item> <!-- Grayscale -->
     </string-array>
 
     <string-array name="theme_accent_color_names" translatable="false">
@@ -392,7 +389,6 @@
         <item>@string/theme_accent_color_material_red</item>
         <item>@string/theme_accent_color_material_teal</item>
         <item>@string/theme_accent_color_material_yellow</item>
-        <item>@string/theme_accent_color_grayscale</item>
     </string-array>
 
     <!-- QS Tiles Style -->
