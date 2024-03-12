@@ -169,6 +169,14 @@
     <!-- Lockscreen interface -->
     <string name="lockscreen_interface_category">Interface</string>
 
+    <string name="lockscreen_media_art_title">Media cover art</string>
+    <string name="lockscreen_media_art_summary">Display media cover art when available</string>
+    <string name="lockscreen_albumart_filter_title">Media cover art filter</string>
+    <string name="lockscreen_albumart_filter_none">None</string>
+    <string name="lockscreen_albumart_filter_grayscale">Grayscale</string>
+    <string name="lockscreen_albumart_filter_tint">Accent tinted</string>
+    <string name="lockscreen_albumart_filter_blur">Blur</string>
+    <string name="lockscreen_albumart_filter_grayblur">Grayscale and blurred</string>
     <string name="lockscreen_battery_info_title">Battery info</string>
     <string name="lockscreen_battery_info_summary">Display battery info when charging</string>
 
