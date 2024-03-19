@@ -34,6 +34,9 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.utils.MonetUtils;
 import com.android.settings.utils.ThemeUtils;
 
+import com.lineage.support.preferences.SecureSettingSeekBarPreference;
+import com.lineage.support.preferences.SecureSettingSwitchPreference;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +45,9 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
     private static final String KEY_THEME_COLORS_ACCENT_COLOR = "theme_colors_accent_color";
+    private static final String KEY_MONET_ENGINE_RICHER_COLORS = "monet_engine_richer_colors";
+    private static final String KEY_MONET_ENGINE_CHROMA_FACTOR = "monet_engine_chroma_factor";
+    private static final String KEY_MONET_ENGINE_LUMINANCE_FACTOR = "monet_engine_luminance_factor";
 
     private Context mContext;
     private Resources mResources;
@@ -53,6 +59,9 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
     private List<String> mAccentColorNames;
 
     private Preference mAccentColorPreference;
+    private SecureSettingSwitchPreference mRicherColorsPreference;
+    private SecureSettingSeekBarPreference mChromaFactorPreference;
+    private SecureSettingSeekBarPreference mLuminanceFactorPreference;
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -78,6 +87,11 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
 
         mAccentColorPreference = prefScreen.findPreference(KEY_THEME_COLORS_ACCENT_COLOR);
         updateAccentColorSummary();
+
+        mRicherColorsPreference = prefScreen.findPreference(KEY_MONET_ENGINE_RICHER_COLORS);
+        mChromaFactorPreference = prefScreen.findPreference(KEY_MONET_ENGINE_CHROMA_FACTOR);
+        mLuminanceFactorPreference = prefScreen.findPreference(KEY_MONET_ENGINE_LUMINANCE_FACTOR);
+        updateMonetPreferences();
 
         setHasOptionsMenu(true);
     }
@@ -144,6 +158,9 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
             case KEY_THEME_COLORS_ACCENT_COLOR:
                 updateAccentColorSummary();
                 break;
+            case KEY_MONET_ENGINE_RICHER_COLORS:
+                updateMonetPreferences();
+                break;
         }
         return true;
     }
@@ -160,5 +177,11 @@ public class AccentColorFragment extends SettingsPreferenceFragment implements
             mAccentColorPreference.setSummary(mResources.getString(
                     R.string.theme_colors_wallpaper_accent_color));
         }
+    }
+
+    private void updateMonetPreferences() {
+        final boolean richerColors = mRicherColorsPreference.isChecked();
+        mChromaFactorPreference.setEnabled(!richerColors);
+        mLuminanceFactorPreference.setEnabled(!richerColors);
     }
 }
